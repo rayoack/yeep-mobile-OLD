@@ -1,13 +1,23 @@
-import { createAppContainer, createStackNavigator } from 'react-navigation'
+import { createAppContainer, createStackNavigator, createSwitchNavigator } from 'react-navigation'
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import ExampleScreen from 'App/Containers/Example/ExampleScreen'
-import SplashScreen from 'App/Containers/SplashScreen/SplashScreen'
+import {
+  ExampleScreen,
+  SplashScreen,
+  AccessScreen,
+  LoginScreen,
+  RoleSelectorScreen,
+  RegisterScreen
+} from '../Containers'
 
-/**
- * The root screen contains the application's navigation.
- *
- * @see https://reactnavigation.org/docs/en/hello-react-navigation.html#creating-a-stack-navigator
- */
+const AuthNavigator = createSwitchNavigator({
+  AccessScreen,
+  LoginScreen,
+  RoleSelectorScreen,
+  RegisterScreen
+})
+
 const StackNavigator = createStackNavigator(
   {
     // Create the application routes here (the key is the route name, the value is the target screen)
@@ -25,4 +35,9 @@ const StackNavigator = createStackNavigator(
   }
 )
 
-export default createAppContainer(StackNavigator)
+const AppContainer = createSwitchNavigator({
+  AuthRoutes: { screen: AuthNavigator },
+  Stack: { screen: StackNavigator }
+})
+
+export default createAppContainer(AppContainer)
