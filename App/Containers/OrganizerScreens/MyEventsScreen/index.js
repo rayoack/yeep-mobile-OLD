@@ -3,7 +3,7 @@ import { Platform, Text, View, Button, ActivityIndicator, Image } from 'react-na
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import { ApplicationStyles, Helpers, Images, Metrics } from 'App/Theme'
-import { translate } from '../../Locales'
+import { translate } from '../../../Locales'
 import * as RNLocalize from "react-native-localize";
 
 // import { Container } from './styles'
@@ -20,9 +20,6 @@ class MyEventsScreen extends React.Component {
     )
   }
 
-  _fetchUser() {
-    this.props.fetchUser()
-  }
 }
 
 MyEventsScreen.propTypes = {

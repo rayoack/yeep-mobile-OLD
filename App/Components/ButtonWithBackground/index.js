@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 
 import { ButtonContainer, ButtonText } from './styles';
 
@@ -7,14 +7,25 @@ const ButtonWithBackground = ({
   onPress,
   text,
   backgroundColor,
-  textColor
+  textColor,
+  disabled,
+  loading,
+  loadingSize,
+  loadingColor,
 }) => {
   return (
     <ButtonContainer
       onPress={() => onPress()}
       backgroundColor={backgroundColor}
+      disabled={disabled}
+      activeOpacity={0.7}
     >
-      <ButtonText textColor={textColor}>{text}</ButtonText>
+      {!loading ?(
+        <ButtonText textColor={textColor}>{text}</ButtonText>
+      )
+      : (
+        <ActivityIndicator size={loadingSize} color={loadingColor} />
+      )}
     </ButtonContainer>
   );
 }
@@ -24,6 +35,10 @@ ButtonWithBackground.defaultProps = {
   text: '',
   backgroundColor: '#8965A3',
   textColor: '#fff',
+  disabled: false,
+  loading: false,
+  loadingSize: 'large',
+  loadingColor: '#fff',
 }
 
 export default ButtonWithBackground;

@@ -11,6 +11,7 @@ export default {
   white: '#ffffff',
   text: '#212529',
   primary: '#8965A3',
+  secondary: '#FFDE59',
   success: '#28a745',
   error: '#dc3545',
 }

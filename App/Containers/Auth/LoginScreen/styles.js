@@ -9,13 +9,14 @@ export const Container = styled.View`
   flex: 1;
 `;
 
+export const TopContainer = styled.View`
+  flex-direction: row;
+  margin-bottom: 23px;
+`;
+
 export const Logo = styled(FastImage)`
   width: 263px;
   height: 263px;
-`
-
-export const LoginButtonContainer = styled.View`
-  margin-top: 55px;
 `
 
 export const Footer = styled.TouchableOpacity`

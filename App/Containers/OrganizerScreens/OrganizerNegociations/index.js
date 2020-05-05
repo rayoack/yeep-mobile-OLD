@@ -3,29 +3,26 @@ import { Platform, Text, View, Button, ActivityIndicator, Image } from 'react-na
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import { ApplicationStyles, Helpers, Images, Metrics } from 'App/Theme'
-import { translate } from '../../Locales'
+import { translate } from '../../../Locales'
 import * as RNLocalize from "react-native-localize";
 
 // import { Container } from './styles'
 
-class MyEventsScreen extends React.Component {
+class OrganizerNegociations extends React.Component {
   componentDidMount() {
   }
 
   render() {
     return (
       <View>
-        <Text>MyEventsScreen</Text>
+        <Text>OrganizerNegociations</Text>
       </View>
     )
   }
 
-  _fetchUser() {
-    this.props.fetchUser()
-  }
 }
 
-MyEventsScreen.propTypes = {
+OrganizerNegociations.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
@@ -37,4 +34,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MyEventsScreen)
+)(OrganizerNegociations)

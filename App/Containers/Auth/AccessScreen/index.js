@@ -2,7 +2,7 @@ import React from 'react'
 import { Platform, Text, View, Button, ActivityIndicator, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
-import { ApplicationStyles, Helpers, Images, Metrics } from 'App/Theme'
+import { ApplicationStyles, Colors, Helpers, Images, Metrics } from 'App/Theme'
 import { translate } from '../../../Locales'
 import * as RNLocalize from "react-native-localize";
 
@@ -35,15 +35,15 @@ class AccessScreen extends React.Component {
     return (
       <Container>
         <Logo
-          source={require('../../../Assets/Images/yeep-logo-2.png')}
+          source={Images.logo}
         />
 
         <LoginButtonContainer>
           <ButtonWithBackground
             onPress={this.navigateToLogin}
             text={translate('loginWithEmail')}
-            backgroundColor={'#8965A3'}
-            textColor={'#fff'}
+            backgroundColor={Colors.primary}
+            textColor={Colors.white}
           />
         </LoginButtonContainer>
 

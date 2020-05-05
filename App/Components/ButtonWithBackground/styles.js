@@ -7,6 +7,7 @@ export const ButtonContainer = styled.TouchableOpacity`
   background-color: ${props => props.backgroundColor};
   align-items: center;
   justify-content: center;
+  opacity: ${props => props.disabled ? 0.8 : 1}
 `
 
 export const ButtonText = styled.Text`
