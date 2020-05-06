@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image'
 import { Colors } from 'App/Theme'
 
-
 export const KeyboardAvoiding = styled.KeyboardAvoidingView`
   flex: 1;
 `;
@@ -31,13 +30,13 @@ export const Footer = styled.TouchableOpacity`
   flex-direction: row;
 `
 
-export const AskRegisterText = styled.Text`
+export const AskSignInText = styled.Text`
   color: ${Colors.primary};
   font-size: 14px;
   font-family: "Nunito Semi Bold"
 `
 
-export const SignupText = styled.Text`
+export const SignInText = styled.Text`
   color: ${Colors.secondary};
   font-size: 14px;
   font-family: "Nunito Extra Bold";

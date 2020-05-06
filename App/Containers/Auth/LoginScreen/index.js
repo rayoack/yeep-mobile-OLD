@@ -1,10 +1,8 @@
 import React from 'react'
-import { Platform, BackHandler, Keyboard, Alert  } from 'react-native'
+import { Platform, BackHandler, Keyboard, Alert, View  } from 'react-native'
 import { connect } from 'react-redux'
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import * as RNLocalize from "react-native-localize";
-import { PropTypes } from 'prop-types'
 import { Images, Colors } from 'App/Theme'
 
 import { Creators as AuthActions } from '../../../Stores/reducers/auth'
@@ -20,6 +18,7 @@ import {
 
 import {
   Container,
+  KeyboardAvoiding,
   Logo,
   TopContainer,
   Footer,
@@ -91,91 +90,101 @@ class LoginScreen extends React.Component {
     // Keyboard.dismiss
   }
 
+  navigateToRegister = () => {
+    return this.props.navigation.navigate('RoleSelectorScreen')
+  }
+
   render() {
     const { keyboardIsOpen, loading } = this.state
 
     return (
-      <Container>
-        <TopContainer>
-          {/* <BackButton
-            size={40}
-            color={'black'}
-            paddingTop={20}
-          /> */}
+      <KeyboardAvoiding behavior={Platform.OS == "ios" ? "padding" : "height"}>
+        <Container>
+          <TopContainer>
+            {/* <BackButton
+              size={40}
+              color={'black'}
+              paddingTop={20}
+            /> */}
 
-          <Logo
-            source={Images.logo}
-          />
-        </TopContainer>
+            <Logo
+              source={Images.logo}
+            />
+          </TopContainer>
 
-        <Formik
-          initialValues={{ email: '', password: '' }}
-          onSubmit={values => this.SignIn(values)}
-          validationSchema={
-            Yup.object().shape({
-              email: Yup
-                .string()
-                .email(translate('emailNotValid'))
-                .required(translate('emailRequired')),
-              password: Yup
-                .string()
-                .required(translate('passwordRequired'))
-                .min(6, translate('passwordMin'))
-            })
-          }
-        >
-          {({
-            values,
-            handleChange,
-            handleSubmit,
-            errors,
-            setFieldTouched,
-            touched
-          }) => (
-            <>
-              <CustomInput
-                value={values.email}
-                onChangeText={handleChange('email')}
-                placeholder={translate('yourEmail')}
-                marginBottom={20}
-                error={touched.email && errors.email}
-                onBlur={() => setFieldTouched('email')}
-                errorText={errors.email}
-                autoCapitalize={'none'}
-              />
+          <Formik
+            initialValues={{ email: '', password: '' }}
+            onSubmit={values => this.SignIn(values)}
+            validationSchema={
+              Yup.object().shape({
+                email: Yup
+                  .string()
+                  .email(translate('emailNotValid'))
+                  .required(translate('emailRequired')),
+                password: Yup
+                  .string()
+                  .required(translate('passwordRequired'))
+                  .min(6, translate('passwordMin'))
+              })
+            }
+          >
+            {({
+              values,
+              handleChange,
+              handleSubmit,
+              errors,
+              setFieldTouched,
+              touched
+            }) => (
+              <>
+                <CustomInput
+                  value={values.email}
+                  onChangeText={handleChange('email')}
+                  placeholder={translate('yourEmail')}
+                  marginBottom={20}
+                  error={touched.email && errors.email}
+                  onBlur={() => setFieldTouched('email')}
+                  errorText={errors.email}
+                  autoCapitalize={'none'}
+                />
 
-              <CustomInput
-                value={values.password}
-                onChangeText={handleChange('password')}
-                onBlur={() => setFieldTouched('password')}
-                placeholder={translate('yourPassword')}
-                marginBottom={30}
-                secureTextEntry={true}
-                error={touched.password && errors.password}
-                errorText={errors.password}
-              />
+                <CustomInput
+                  value={values.password}
+                  onChangeText={handleChange('password')}
+                  onBlur={() => setFieldTouched('password')}
+                  placeholder={translate('yourPassword')}
+                  marginBottom={30}
+                  secureTextEntry={true}
+                  error={touched.password && errors.password}
+                  errorText={errors.password}
+                />
 
-              <ButtonWithBackground
-                onPress={handleSubmit}
-                text={translate('signIn')}
-                backgroundColor={Colors.primary}
-                textColor={Colors.white}
-                disabled={loading}
-                loading={loading}
-                loadingSize={'small'}
-                loadingColor={'#fff'}
-              />
-            </>
-          )}
-        </Formik>
+                <ButtonWithBackground
+                  onPress={handleSubmit}
+                  text={translate('signIn')}
+                  backgroundColor={Colors.primary}
+                  textColor={Colors.white}
+                  disabled={loading}
+                  loading={loading}
+                  loadingSize={'small'}
+                  loadingColor={'#fff'}
+                />
+              </>
+            )}
+          </Formik>
 
-        {!keyboardIsOpen ?
-          <Footer>
-            <AskRegisterText>{translate('dontHaveAccount')}</AskRegisterText>
-            <SignupText>{translate('signupHere')}</SignupText>
-          </Footer>
-        : null}
-      </Container>
+          {!keyboardIsOpen ?
+            <Footer
+              onPress={() => this.navigateToRegister()}
+              activeOpacity={0.7}
+            >
+              <AskRegisterText>{translate('dontHaveAccount')}</AskRegisterText>
+              <SignupText>{translate('signupHere')}</SignupText>
+            </Footer>
+          : null}
+          <View style={{ flex: 1 }}/>
+        </Container>
+      </KeyboardAvoiding>
     )
   }
 

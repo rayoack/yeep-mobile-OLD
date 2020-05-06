@@ -5,6 +5,7 @@ import AccessScreen from './Auth/AccessScreen'
 import LoginScreen from './Auth/LoginScreen'
 import RoleSelectorScreen from './Auth/RoleSelectorScreen'
 import RegisterScreen from './Auth/RegisterScreen'
+import AdressRegisterScreen from './Auth/AdressRegisterScreen'
 
 import MyEventsScreen from './OrganizerScreens/MyEventsScreen'
 import OrganizerNegociations from './OrganizerScreens/OrganizerNegociations'
@@ -20,6 +21,7 @@ export {
   LoginScreen,
   RoleSelectorScreen,
   RegisterScreen,
+  AdressRegisterScreen,
 
   // Organizer
   MyEventsScreen,

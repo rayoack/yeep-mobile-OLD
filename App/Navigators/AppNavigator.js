@@ -13,6 +13,7 @@ import {
   LoginScreen,
   RoleSelectorScreen,
   RegisterScreen,
+  AdressRegisterScreen,
   MyEventsScreen,
   OrganizerNegociations,
   PlacesScreen,
@@ -23,7 +24,8 @@ const AuthNavigator = createSwitchNavigator({
   AccessScreen,
   LoginScreen,
   RoleSelectorScreen,
-  RegisterScreen
+  RegisterScreen,
+  AdressRegisterScreen
 })
 
 const OrganizerNavigator = createBottomTabNavigator(

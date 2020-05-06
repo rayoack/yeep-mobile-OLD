@@ -10,6 +10,10 @@ export default {
   // Example colors:
   white: '#ffffff',
   text: '#212529',
+  ligthGray: '#ECECEC',
+  mediumGray: '#999999',
+  backgroundGray: '#F5F5F5',
+  labelBlack: '#373A42',
   primary: '#8965A3',
   secondary: '#FFDE59',
   success: '#28a745',

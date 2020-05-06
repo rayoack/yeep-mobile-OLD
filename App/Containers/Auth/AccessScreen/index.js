@@ -31,6 +31,10 @@ class AccessScreen extends React.Component {
     return navigation.navigate('LoginScreen')
   }
 
+  navigateToRegister = () => {
+    return this.props.navigation.navigate('RoleSelectorScreen')
+  }
+
   render() {
     return (
       <Container>
@@ -47,7 +51,10 @@ class AccessScreen extends React.Component {
           />
         </LoginButtonContainer>
 
-        <Footer>
+        <Footer
+          onPress={() => this.navigateToRegister()}
+          activeOpacity={0.7}
+        >
           <AskRegisterText>{translate('dontHaveAccount')}</AskRegisterText>
           <SignupText>{translate('signupHere')}</SignupText>
         </Footer>
