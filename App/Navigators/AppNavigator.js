@@ -17,7 +17,8 @@ import {
   MyEventsScreen,
   OrganizerNegociations,
   PlacesScreen,
-  ProvidersScreen
+  ProvidersScreen,
+  SuccessRegisterScreen
 } from '../Containers'
 
 const AuthNavigator = createSwitchNavigator({
@@ -25,7 +26,8 @@ const AuthNavigator = createSwitchNavigator({
   LoginScreen,
   RoleSelectorScreen,
   RegisterScreen,
-  AdressRegisterScreen
+  AdressRegisterScreen,
+  SuccessRegisterScreen,
 })
 
 const OrganizerNavigator = createBottomTabNavigator(
@@ -79,6 +81,12 @@ const OrganizerNavigator = createBottomTabNavigator(
 
 const StackNavigator = createStackNavigator(
   {
+    auth:{
+      screen: AuthNavigator,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
     tabs: {
       screen: OrganizerNavigator,
       navigationOptions: {

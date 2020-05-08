@@ -23,6 +23,18 @@ import {
 
 class AccessScreen extends React.Component {
   componentDidMount() {
+    this.redirectIfLogged()
+  }
+
+  redirectIfLogged = () => {
+    if(this.props.user && this.props.user.token) {
+      switch (this.props.user.role) {
+        case 'organizer':
+          return this.props.navigation.navigate('MyEventsScreen')
+        default:
+          return this.props.navigation.navigate('AccessScreen')
+      }
+    }
   }
 
   navigateToLogin = () => {
@@ -71,6 +83,7 @@ AccessScreen.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
+  user: state.auth.user
 })
 
 const mapDispatchToProps = (dispatch) => ({

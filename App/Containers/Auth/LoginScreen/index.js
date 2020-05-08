@@ -71,10 +71,7 @@ class LoginScreen extends React.Component {
 
       this.props.setSigned({ ...data.user, token: data.token })
 
-      if(data.user.role == 'organizer') {
-        this.setState({ loading: false })
-        this.props.navigation.navigate('MyEventsScreen')
-      }
+      this.redirectAfterSignIn(data)
 
     } catch (error) {
       this.setState({ loading: false })
@@ -88,6 +85,18 @@ class LoginScreen extends React.Component {
       );
     }
     // Keyboard.dismiss
+  }
+
+  redirectAfterSignIn = (data) => {
+
+    if(data.user.new_user == true) {
+      return this.props.navigation.navigate('SuccessRegisterScreen')
+    }
+
+    if(data.user.role == 'organizer') {
+      this.setState({ loading: false })
+      this.props.navigation.navigate('MyEventsScreen')
+    }
   }
 
   navigateToRegister = () => {

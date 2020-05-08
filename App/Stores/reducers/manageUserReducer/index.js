@@ -60,7 +60,7 @@ const INITIAL_STATE = {
     name: '',
     email: '',
     password: '',
-    role: '',
+    role: 'organizer',
     adress: '',
     city: '',
     state: '',

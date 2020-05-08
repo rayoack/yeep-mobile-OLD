@@ -1,11 +1,12 @@
 import React from 'react'
-import { Platform, Keyboard, ActivityIndicator, BackHandler, View } from 'react-native'
+import { Platform, Keyboard, ActivityIndicator, BackHandler, View, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { Creators as ManageUserActions } from '../../../Stores/reducers/manageUserReducer'
+import { Creators as AuthActions } from '../../../Stores/reducers/auth'
 
+import api from '../../../Services/api'
 import { Images, Colors } from 'App/Theme'
 import countriesList from '../../../Services/countries.json'
 import { translate } from '../../../Locales'
@@ -36,10 +37,6 @@ class AdressRegisterScreen extends React.Component {
       keyboardIsOpen: false,
       loading: false,
       countryStates: [],
-      adress: '',
-      city: '',
-      state: '',
-      country: ''
     }
   }
 
@@ -69,23 +66,38 @@ class AdressRegisterScreen extends React.Component {
     return true;
   }
 
-  saveUserAndNavigate = (values) => {
+  saveUserAndNavigate = async (values) => {
     this.setState({ loading: true })
-    const user = { role, ...values }
-    
-    this.props.setUser(user)
+    const user = { ...this.props.user, ...values }
+    console.log(user)
+    try {
+      const { data: newUser } = await api.post('/users', { ...user })
 
-    // this.props.navigation.navigate('AdressAdressRegisterScreen')
+      if(newUser) {
+        const { email, password } = user
+        
+        const { data } = await api.post('/sessions', { email, password } )
+        
+        this.props.setSigned({ ...data.user, token: data.token })
+        
+        this.setState({ loading: false })
+        return this.props.navigation.navigate('SuccessRegisterScreen')
+      }
+    } catch (error) {
+      this.setState({ loading: false })
+      Alert.alert(
+        translate('registerErrorTitle'),
+        translate('registerErrorMessage'),
+        [
+          {text: 'Ok', onPress: () => console.log({error})}
+        ],
+        // {cancelable: false},
+      );
+    }
   }
 
   backToRegister = () => {
     return this.props.navigation.navigate('RegisterScreen')
-  }
-
-  setCountry = (country) => {
-    this.setState({ country })
-
-    this.setCountryStates(country)
   }
 
   setCountryStates = (countryName) => {
@@ -116,7 +128,6 @@ class AdressRegisterScreen extends React.Component {
 
     const countries = this.setCountries()
 
-    console.log(this.state.country)
     return (
       <KeyboardAvoiding
         behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -128,10 +139,10 @@ class AdressRegisterScreen extends React.Component {
 
           <Formik
             initialValues={{
-              adress: this.state.adress,
-              city: this.state.city,
-              state: this.state.state,
-              country: this.state.country
+              adress: '',
+              city: '',
+              state: '',
+              country: ''
             }}
             onSubmit={values => this.saveUserAndNavigate(values)}
             enableReinitialize={true}
@@ -158,7 +169,8 @@ class AdressRegisterScreen extends React.Component {
               handleSubmit,
               errors,
               setFieldTouched,
-              touched
+              touched,
+              setFieldValue
             }) => (
               <>
                 <CustomInput
@@ -184,7 +196,10 @@ class AdressRegisterScreen extends React.Component {
                 <CustomPicker
                   actualValue={values.country}
                   values={countries}
-                  onValueChange={value => this.setCountry(value)}
+                  onValueChange={value => {
+                    this.setCountryStates(value)
+                    setFieldValue('country', value)
+                  }}
                   label={translate('yourCountry')}
                   marginBottom={30}
                   // error={errors.country}
@@ -239,6 +254,6 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   {
-    ...ManageUserActions
+    ...AuthActions
   }
 )(AdressRegisterScreen)
