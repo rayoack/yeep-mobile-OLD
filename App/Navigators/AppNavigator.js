@@ -1,9 +1,8 @@
 import React from 'react';
 import { Image } from 'react-native'
-import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Images, Colors } from 'App/Theme'
 
 import TabBar from '../Components'
@@ -42,9 +41,9 @@ const OrganizerNavigator = createBottomTabNavigator(
           return (
             <>
               {focused ? (
-                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.my_event_active}/>
+                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.my_event_active}/>
               ) : (
-                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.my_event_inactive}/>
+                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.my_event_inactive}/>
               )}
             </>
           )
@@ -59,9 +58,9 @@ const OrganizerNavigator = createBottomTabNavigator(
           return (
             <>
               {focused ? (
-                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.negociation_active}/>
+                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.negociation_active}/>
               ) : (
-                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.negociation_inactive}/>
+                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.negociation_inactive}/>
               )}
             </>
           )
@@ -76,9 +75,9 @@ const OrganizerNavigator = createBottomTabNavigator(
           return (
             <>
               {focused ? (
-                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.place_active}/>
+                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.place_active}/>
               ) : (
-                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.place_inactive}/>
+                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.place_inactive}/>
               )}
             </>
           )
@@ -93,9 +92,9 @@ const OrganizerNavigator = createBottomTabNavigator(
           return (
             <>
               {focused ? (
-                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.dj_active}/>
+                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.dj_active}/>
               ) : (
-                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.dj_inactive}/>
+                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.dj_inactive}/>
               )}
             </>
           )

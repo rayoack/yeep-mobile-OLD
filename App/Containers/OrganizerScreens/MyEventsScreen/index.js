@@ -3,13 +3,8 @@ import { Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { parseISO, isBefore, isAfter } from 'date-fns';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import Svg, {
-  Circle,
-  Rect,
-  Path
-} from 'react-native-svg'
 
-import { ApplicationStyles, Helpers, Images, Colors } from 'App/Theme'
+import { Images, Colors } from 'App/Theme'
 import { translate } from '../../../Locales'
 import api from '../../../Services/api'
 
@@ -75,10 +70,9 @@ class MyEventsScreen extends React.Component {
   }
 
   navigateToEventDetails = (eventId) => {
-    console.log(this.props.navigation)
-    // this.props.navigation.push('EventDetailsScreen', {
-    //   event_id: eventId
-    // })
+    this.props.navigation.navigate('EventDetailsScreen', {
+      event_id: eventId
+    })
   }
 
   render() {

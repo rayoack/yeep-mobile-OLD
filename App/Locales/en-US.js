@@ -7,6 +7,8 @@ export default {
   notFoundFeedback: 'We didn\'t find what you were looking for.',
   comingSoonFeedback: 'Coming soon',
   errorFeedback: 'Oops, something went wrong.',
+  readMore: 'Read more',
+  readLess: 'Read less',
   // auth
   registerAction: 'Register',
   loginWithEmail: 'CONTINUE WITH EMAIL',

@@ -7,6 +7,8 @@ export default {
   notFoundFeedback: 'Não encontramos o que você estava procurando.',
   comingSoonFeedback: 'Em breve',
   errorFeedback: 'Oops, algo deu errado.',
+  readMore: 'Ler mais',
+  readLess: 'Ler menos',
   // auth
   registerAction: 'Registrar',
   hello: 'Olá Mundo',
