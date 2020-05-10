@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Images, Colors } from 'App/Theme'
 
 import Feedback from '../Feedback'
+import ListLoading from '../ListLoading'
 
 import {
   Container,
@@ -26,9 +27,7 @@ const CardsList = ({
   return (
     <>
       {loading ? (
-        <CardListLoadingContainer>
-          <CardListLoading color={Colors.primary} size={60}/>
-        </CardListLoadingContainer>
+        <ListLoading />
       ) : (
         <List
           data={data}

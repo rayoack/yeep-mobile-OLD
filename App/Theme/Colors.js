@@ -7,6 +7,8 @@
 
 export default {
   transparent: 'rgba(0,0,0,0)',
+  blackTransparent: 'rgba(0, 0, 0, 0.32)',
+  primaryTransparent: 'rgba(215, 198, 207, 0.5)',
   // Example colors:
   white: '#ffffff',
   lightRed: '#FC1055',
@@ -16,10 +18,10 @@ export default {
   mediumGray: '#999999',
   mediumGray2: '#979797',
   backgroundGray: '#F5F5F5',
-  labelBlack: '#373A42',
+  labelBlack: '#4D4F5C',
   textDefault: '#616368',
-  primary: '#8965A3',
-  secondary: '#FFDE59',
+  primary: '#D7C6CF',
+  secondary: '#8965A3',
   brightPink: '#B0649E',
   lightPink: '#AF6ABA',
   blueViolet: '#836ABA',

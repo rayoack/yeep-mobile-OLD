@@ -9,6 +9,7 @@ export default {
   errorFeedback: 'Oops, algo deu errado.',
   readMore: 'Ler mais',
   readLess: 'Ler menos',
+  loadingText: 'Carregando...',
   // auth
   registerAction: 'Registrar',
   hello: 'Olá Mundo',
@@ -61,4 +62,6 @@ export default {
   upcomingEventsLabel: 'Próximos',
   pastEventsLabel: 'Passados',
   noDateEventsLabel: 'Sem data',
+  startDay: 'Início',
+  endDay: 'Fim',
 }

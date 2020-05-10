@@ -9,6 +9,7 @@ export default {
   errorFeedback: 'Oops, something went wrong.',
   readMore: 'Read more',
   readLess: 'Read less',
+  loadingText: 'Loading...',
   // auth
   registerAction: 'Register',
   loginWithEmail: 'CONTINUE WITH EMAIL',
@@ -60,4 +61,6 @@ export default {
   upcomingEventsLabel: 'Upcoming',
   pastEventsLabel: 'Past',
   noDateEventsLabel: 'No date',
+  startDay: 'Start',
+  endDay: 'End',
 }
