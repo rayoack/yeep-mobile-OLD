@@ -12,22 +12,36 @@ import {
   Container
 } from './styles';
 
-const renderScene = (route, events, pastEvents, noDate, navigation, translate) => {
+const renderScene = ( route, events, pastEvents, noDate, loading, onPress ) => {
+
   switch (route.key) {
     case 'first':
       return (
         <CardsList
           data={events}
+          loading={loading}
+          emptyType={'emptyFeedback'}
+          onPress={onPress}
         />
       )
     case 'second':
       return (
         <CardsList
           data={pastEvents}
+          loading={loading}
+          emptyType={'emptyFeedback'}
+          onPress={onPress}
         />
       )
     default:
-      return <CardsList data={noDate}/>
+      return (
+        <CardsList
+          data={noDate}
+          loading={loading}
+          emptyType={'emptyFeedback'}
+          onPress={onPress}
+        />
+      )
   }
 }
 
@@ -59,9 +73,10 @@ const ViewComponent = ({
   events,
   pastEvents,
   noDate,
-  navigation
+  navigation,
+  loading,
+  navigateToEventDetails
 }) => {
-
   const [index, setIndex] = useState(0)
   const [routes] = useState([
     { key: 'first', title: translate('upcomingEventsLabel') },
@@ -78,7 +93,8 @@ const ViewComponent = ({
           events,
           pastEvents,
           noDate,
-          navigation
+          loading,
+          navigateToEventDetails
         )}
         renderTabBar={(props) => {
           return renderTabBar({...props, setIndex})

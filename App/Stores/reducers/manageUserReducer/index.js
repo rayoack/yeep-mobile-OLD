@@ -107,7 +107,6 @@ export default function manageUserReducer(state = INITIAL_STATE, action) {
       }
 
     case Types.SET_ROLE:
-      console.log('redux', action.payload)
       return {
         ...state,
           user: {

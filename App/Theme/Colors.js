@@ -18,6 +18,9 @@ export default {
   labelBlack: '#373A42',
   primary: '#8965A3',
   secondary: '#FFDE59',
+  brightPink: '#B0649E',
+  lightPink: '#AF6ABA',
+  blueViolet: '#836ABA',
   success: '#28a745',
   error: '#dc3545',
 }

@@ -8,10 +8,12 @@ import RegisterScreen from './Auth/RegisterScreen'
 import AdressRegisterScreen from './Auth/AdressRegisterScreen'
 import SuccessRegisterScreen from './Auth/SuccessRegisterScreen'
 
+// Organizer
 import MyEventsScreen from './OrganizerScreens/MyEventsScreen'
 import OrganizerNegociations from './OrganizerScreens/OrganizerNegociations'
 import PlacesScreen from './OrganizerScreens/PlacesScreen'
 import ProvidersScreen from './OrganizerScreens/ProvidersScreen'
+import EventDetailsScreen from './OrganizerScreens/EventDetailsScreen'
 
 export {
   ExampleScreen,
@@ -29,5 +31,6 @@ export {
   MyEventsScreen,
   OrganizerNegociations,
   PlacesScreen,
-  ProvidersScreen
+  ProvidersScreen,
+  EventDetailsScreen
 }

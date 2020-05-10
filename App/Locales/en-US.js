@@ -1,9 +1,14 @@
 // en-US.js
 export default {
-  // auth
   next: 'Next',
-  registerAction: 'Register',
   done: 'Done',
+  emptyFeedback: 'Nothing here yet.',
+  organizerEmptyFeedback: 'No events added yet.',
+  notFoundFeedback: 'We didn\'t find what you were looking for.',
+  comingSoonFeedback: 'Coming soon',
+  errorFeedback: 'Oops, something went wrong.',
+  // auth
+  registerAction: 'Register',
   loginWithEmail: 'CONTINUE WITH EMAIL',
   dontHaveAccount: 'Don’t have an account?',
   signupHere: 'Signup here',
@@ -39,6 +44,7 @@ export default {
   countryRequired: 'Country is required',
   backToRegister: 'Return to the registration screen?',
   adressRegisterScreenTitle: 'Set your location',
+  // Organizer
   organizerStepOnetitle: 'Welcome',
   organizerStepTwotitle: 'Ticket sales',
   organizerStepThreetitle: 'To hire',

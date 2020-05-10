@@ -1,8 +1,10 @@
 import React from 'react';
-import { createAppContainer, createStackNavigator, createSwitchNavigator } from 'react-navigation'
+import { Image } from 'react-native'
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { Colors } from 'App/Theme'
+import { Images, Colors } from 'App/Theme'
 
 import TabBar from '../Components'
 
@@ -18,7 +20,8 @@ import {
   OrganizerNegociations,
   PlacesScreen,
   ProvidersScreen,
-  SuccessRegisterScreen
+  SuccessRegisterScreen,
+  EventDetailsScreen
 } from '../Containers'
 
 const AuthNavigator = createSwitchNavigator({
@@ -35,28 +38,68 @@ const OrganizerNavigator = createBottomTabNavigator(
     MyEventsScreen: {
       screen: MyEventsScreen,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) => <Icon style={{ marginTop: 20 }} size={40} name="home-account" color={tintColor} />,
+        tabBarIcon: ({ focused }) => {
+          return (
+            <>
+              {focused ? (
+                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.my_event_active}/>
+              ) : (
+                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.my_event_inactive}/>
+              )}
+            </>
+          )
+        },
         title: ''
       }
     },
     OrganizerNegociations: {
       screen: OrganizerNegociations,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) => <Icon style={{ marginTop: 20 }} size={40} name="plus-circle-outline" color={tintColor} />,
+        tabBarIcon: ({ focused }) => {
+          return (
+            <>
+              {focused ? (
+                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.negociation_active}/>
+              ) : (
+                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.negociation_inactive}/>
+              )}
+            </>
+          )
+        },
         title: ''
       }
     },
     PlacesScreen: {
       screen: PlacesScreen,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) => <Icon style={{ marginTop: 20 }} size={40} name="heart-box-outline" color={tintColor} />,
+        tabBarIcon: ({ focused }) => {
+          return (
+            <>
+              {focused ? (
+                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.place_active}/>
+              ) : (
+                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.place_inactive}/>
+              )}
+            </>
+          )
+        },
         title: ''
       }
     },
     ProvidersScreen: {
       screen: ProvidersScreen,
       navigationOptions: {
-        tabBarIcon: ({ tintColor }) => <Icon style={{ marginTop: 20 }} size={40} name="account-star" color={tintColor} />,
+        tabBarIcon: ({ focused }) => {
+          return (
+            <>
+              {focused ? (
+                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.dj_active}/>
+              ) : (
+                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.dj_inactive}/>
+              )}
+            </>
+          )
+        },
         title: ''
       }
     },
@@ -73,7 +116,7 @@ const OrganizerNavigator = createBottomTabNavigator(
     tabBarComponent: TabBar,
     tabBarOptions: {
       activeTintColor: Colors.primary,
-      inactiveTintColor: "#2F2929",
+      inactiveTintColor: Colors.ligthGray,
       headerShown: false
     }
   }
@@ -93,8 +136,8 @@ const StackNavigator = createStackNavigator(
         headerShown: false
       }
     },
+    EventDetailsScreen: { screen: EventDetailsScreen },
     SplashScreen: SplashScreen,
-    MainScreen: ExampleScreen,
   },
   {
     initialRouteName: 'tabs',

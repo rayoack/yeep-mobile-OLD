@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { Dimensions, View } from 'react-native';
+import { Images, Colors } from 'App/Theme'
+
+import Feedback from '../Feedback'
 
 import {
   Container,
+  CardListLoadingContainer,
+  CardListLoading,
   List,
   CardContainer,
   CardImage,
@@ -15,36 +19,56 @@ import {
 
 const CardsList = ({
   data,
-  onPress
+  onPress,
+  loading,
+  emptyType
 }) => {
-
   return (
-    <List
-      data={data}
-      renderItem={({item}) => {
-        return (
-          <CardContainer
-            onPress={() => onPress(item.id)}
-            activeOpacity={0.7}
-          >
-            <CardImage source={{ uri: item.image }}/>
-
-            <CardTextContainer>
-              <CardTitle>{item.title}</CardTitle>
-              <CardSubTitle>{item.category}</CardSubTitle>
-              <CardDescription>{item.adress}</CardDescription>
-              <CardDescription>{item.final_adress}</CardDescription>
-            </CardTextContainer>
-          </CardContainer>
-        )
-      }}
-    />
+    <>
+      {loading ? (
+        <CardListLoadingContainer>
+          <CardListLoading color={Colors.primary} size={60}/>
+        </CardListLoadingContainer>
+      ) : (
+        <List
+          data={data}
+          renderItem={({item}) => {
+            return (
+              <CardContainer
+                onPress={() => onPress(item.id)}
+                activeOpacity={0.7}
+              >
+                {item.image.length ? (
+                  <CardImage source={{ uri: item.image }}/>
+                ) : (
+                  <CardImage source={Images.image_background}/>
+                )}
+  
+                <CardTextContainer>
+                  <CardTitle>{item.title}</CardTitle>
+                  <CardSubTitle>{item.category}</CardSubTitle>
+                  <CardDescription>{item.adress}</CardDescription>
+                  <CardDescription>{item.final_adress}</CardDescription>
+                </CardTextContainer>
+              </CardContainer>
+            )
+          }}
+          ListEmptyComponent={() => {
+            return (
+              <Feedback feedbackType={emptyType}/>
+            )
+          }}
+        />
+      )}
+    </>
   );
 }
 
 CardsList.defaultProps = {
   data: [],
-  onPress: () => {}
+  onPress: () => {},
+  loading: false,
+  emptyType: 'empty'
 }
 
 export default CardsList;

@@ -6,6 +6,18 @@ export const Container = styled.View`
   
 `;
 
+export const CardListLoadingContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`
+
+export const CardListLoading = styled.ActivityIndicator`
+  color: ${Colors.primary};
+  font-size: 30px;
+  align-self: center;
+`
+
 export const List = styled.FlatList`
   flex: 1;
 `

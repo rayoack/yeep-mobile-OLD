@@ -1,9 +1,14 @@
 // pt-BR.js
 export default {
-  // auth
   next: 'Próximo',
-  registerAction: 'Registrar',
   done: 'Feito',
+  emptyFeedback: 'Nada aqui ainda.',
+  organizerEmptyFeedback: 'Nenhum evento adicionado ainda.',
+  notFoundFeedback: 'Não encontramos o que você estava procurando.',
+  comingSoonFeedback: 'Em breve',
+  errorFeedback: 'Oops, algo deu errado.',
+  // auth
+  registerAction: 'Registrar',
   hello: 'Olá Mundo',
   loginWithEmail: 'ENTRAR COM EMAIL',
   dontHaveAccount: 'Não possui uma conta?',
@@ -40,6 +45,7 @@ export default {
   countryRequired: 'País é obrigatório',
   backToRegister: 'Voltar para a tela de registro?',
   adressRegisterScreenTitle: 'Defina sua localização',
+  // Organizer
   organizerStepOnetitle: 'Bem-vindo',
   organizerStepTwotitle: 'Venda de ingressos',
   organizerStepThreetitle: 'Contratar',
