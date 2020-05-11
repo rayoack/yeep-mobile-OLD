@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BackHandler, Modal, StatusBar } from 'react-native'
+import { BackHandler, Modal, StatusBar, Dimensions } from 'react-native'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { format, parseISO } from 'date-fns';
 import { enUS, ptBR } from 'date-fns/locale'
@@ -15,7 +15,8 @@ import api from '../../../Services/api'
 
 import {
   ReadMoreText,
-  BackButton
+  BackButton,
+  CarrouselFullScreen
 } from '../../../Components'
 
 
@@ -29,7 +30,11 @@ import {
   BackButtonContainer,
   EventText,
   EventRowContainer,
-  EventSubText
+  EventSubText,
+  EventDivider,
+  EventImagesContainer,
+  EventImageButtonContainer,
+  EventImages
 } from './styles'
 
 export class EventDetailsScreen extends Component {
@@ -38,6 +43,8 @@ export class EventDetailsScreen extends Component {
     this.state = {
       event: {},
       loading: false,
+      activeImageIndex: 0,
+      isModalOpen: false,
     }
   }
 
@@ -126,8 +133,16 @@ export class EventDetailsScreen extends Component {
     return eventCopy
   }
 
+  showModal = () => {
+    this.setState({isModalOpen: !this.state.isModalOpen})
+  }
+
+  onSnapToItem = (index) => {
+    this.setState({ activeImageIndex: index, isModalOpen: true })
+  }
+
   render() {
-    const { event, loading } = this.state
+    const { event, loading, isModalOpen, activeImageIndex } = this.state
 
     console.log(event)
     return (
@@ -223,9 +238,9 @@ export class EventDetailsScreen extends Component {
               {(event.dates &&
                 event.dates.length > 2 &&
                 event.dates[0].normalizedDate) ? (
-                  event.dates.map(date => (
+                  event.dates.map((date, index) => (
                     <>
-                      <EventRowContainer>
+                      <EventRowContainer key={index}>
                         <IconMCI
                           name={'clock-outline'}
                           size={20}
@@ -238,33 +253,31 @@ export class EventDetailsScreen extends Component {
                   ))
               ) : null}
 
-              {/* <Modal
-                visible={isModalOpen}
-                animationType={'fade'}
-              >
-                <ModalContainer>
-                  <ModalIconContainer>
-                    <CloseButton
-                      size={26}
-                      name={'close'}
-                      onPress={showModal}
-                      color={'#FFF'}
-                    />
-                  </ModalIconContainer>
-                  <CarouselImage
-                    intl={intl}
-                    data={data}
-                    carouselWidth={carouselWidth}
-                    firstItem={activeDotIndex}
-                    activeDotIndex={activeDotIndex}
-                    onSnapToItem={onSnapToItem}
-                    isModalOpen={isModalOpen}
-                    actualProduct={actualProduct}
-                    photosLengthDescription={photosLengthDescription}
-                    tagAnimationStart={tagAnimationStart}
-                  />
-                </ModalContainer>
-              </Modal> */}
+              <EventDivider />
+
+              {(event.event_images && event.event_images.length) ? (
+                <>
+                  <EventLabel>{translate('eventImagesLabel')}</EventLabel>
+                  <EventImagesContainer horizontal>
+                    {event.event_images.map((image, index) => (
+                      <EventImageButtonContainer
+                        key={index}
+                        onPress={() => this.onSnapToItem(index)}>
+                        <EventImages source={{ uri: image.url }} />
+                      </EventImageButtonContainer>
+                    ))}
+                  </EventImagesContainer>
+                </>
+              ) : null}
+
+              <CarrouselFullScreen
+                data={event.event_images}
+                onSnapToItem={this.onSnapToItem}
+                showModal={this.showModal}
+                isModalOpen={isModalOpen}
+                activeImageIndex={activeImageIndex}
+              />
+
             </EventContainer>
           </>
         )}

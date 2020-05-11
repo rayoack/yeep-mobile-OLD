@@ -8,6 +8,13 @@ export const Container = styled.ScrollView`
   background-color: ${Colors.backgroundGray};
 `;
 
+export const EventDivider = styled.View`
+  width: ${Dimensions.get('window').width};
+  border-bottom-width: 1px;
+  border-bottom-color: ${Colors.ligthGray};
+  margin: 5px 0;
+`
+
 export const EventCover = styled(FastImage)`
   height: 200px;
   width: ${Dimensions.get('window').width};
@@ -58,7 +65,8 @@ export const EventTitle = styled.Text`
 `
 
 export const EventLabel = styled.Text`
-  font-size: 18px;
+  font-size: 20px;
+  font-family: 'Nunito Semi Bold';
   width: 100px;
   color: ${Colors.labelBlack};
   background-color: ${props => props.loading ? Colors.ligthGray2 : Colors.backgroundGray};
@@ -74,4 +82,15 @@ export const EventSubText = styled.Text`
   width: 270px;
   margin: -8px 0 10px 30px;
   color: ${Colors.ligthGray2};
+`
+
+export const EventImagesContainer = styled.ScrollView``
+
+export const EventImageButtonContainer = styled.TouchableOpacity``
+
+export const EventImages = styled(FastImage)`
+  height: 120px;
+  width: 120px;
+  margin: 5px 10px 0 0;
+  border-radius: 2px;
 `

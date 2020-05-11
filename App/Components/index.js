@@ -6,6 +6,7 @@ import CardsList from './CardsList'
 import Feedback from './Feedback'
 import ReadMoreText from './ReadMoreText'
 import ListLoading from './ListLoading'
+import CarrouselFullScreen from './CarrouselFullScreen'
 
 export {
   ButtonWithBackground,
@@ -15,5 +16,6 @@ export {
   CardsList,
   Feedback,
   ReadMoreText,
-  ListLoading
+  ListLoading,
+  CarrouselFullScreen
 }

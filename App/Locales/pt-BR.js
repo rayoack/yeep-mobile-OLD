@@ -64,4 +64,5 @@ export default {
   noDateEventsLabel: 'Sem data',
   startDay: 'Início',
   endDay: 'Fim',
+  eventImagesLabel: 'Imagens',
 }
