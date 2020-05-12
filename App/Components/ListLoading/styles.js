@@ -9,7 +9,7 @@ export const ListLoadingContainer = styled.View`
 `
 
 export const ListLoadingIndicator = styled.ActivityIndicator`
-  color: ${Colors.primary};
+  color: ${Colors.secondary};
   font-size: 30px;
   align-self: center;
 `
@@ -17,5 +17,5 @@ export const ListLoadingIndicator = styled.ActivityIndicator`
 export const ListLoadingText = styled.Text`
   font-size: 15px;
   font-family: 'Nunito Semi Bold';
-  color: ${Colors.primary};
+  color: ${Colors.secondary};
 `

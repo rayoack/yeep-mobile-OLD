@@ -15,7 +15,7 @@ export const Container = styled.View`
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   background-color: ${Colors.ligthGray};
 `;
@@ -43,6 +43,8 @@ export const ProfileImage = styled(FastImage)`
   height: 40px;
   width: 40px;
   border-radius: 20px;
+  box-shadow: 3px 2px 10px rgba(0, 0, 0, 0.32);
+  elevation: 10;
 `
 
 export const ProfileName = styled.Text`

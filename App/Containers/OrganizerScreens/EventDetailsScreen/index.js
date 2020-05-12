@@ -46,7 +46,9 @@ export class EventDetailsScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      event: {},
+      event: {
+        users: []
+      },
       loading: false,
       activeImageIndex: 0,
       isModalOpen: false,
@@ -71,7 +73,7 @@ export class EventDetailsScreen extends Component {
       this.setState({ loading: true })
       
       const { data } = await api.get(`/events/${id}`, {}, {
-        authorization: `Bearer ${this.props.user.token}`
+        authorization: `Bearer ${this.props.current_user.token}`
       })
 
       const event = this.formatDates(data)
@@ -147,12 +149,13 @@ export class EventDetailsScreen extends Component {
   }
 
   render() {
+    const { current_user } = this.props
     const { event, loading, isModalOpen, activeImageIndex } = this.state
+    const isAdmin = event.users.filter(user => user.id == current_user.id)
 
-    console.log(event)
     return (
       <Container>
-        <StatusBar hidden/>
+        <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
 
         {loading ? (
           this._shimmerLoading(loading)
@@ -172,29 +175,37 @@ export class EventDetailsScreen extends Component {
                   event.event_logo.url : ''
               }}/>
             
-            <EventActionContainer>
-              <EventActionLabelContainer>
-                <EventActionIcon source={Images.negociations_icon}/>
-                <EventActionLabel>{translate('eventNegocationsLabel')}</EventActionLabel>
-              </EventActionLabelContainer>
+            {isAdmin.length >= 1 ? (
+              <>
+                <EventActionContainer>
+                  <EventActionLabelContainer>
+                    <EventActionIcon source={Images.negociations_icon}/>
+                    <EventActionLabel>{translate('eventNegocationsLabel')}</EventActionLabel>
+                  </EventActionLabelContainer>
 
-              <IconIO
-                name={'ios-arrow-forward'}
-                size={20}
-                color={Colors.textDefault}/>
-            </EventActionContainer>
-            
-            <EventActionContainer>
-              <EventActionLabelContainer>
-                <EventActionIcon source={Images.pencil}/>
-                <EventActionLabel>{translate('eventEditLabel')}</EventActionLabel>
-              </EventActionLabelContainer>
+                  <IconIO
+                    name={'ios-arrow-forward'}
+                    size={20}
+                    color={Colors.textDefault}/>
+                </EventActionContainer>
+                
+                <EventActionContainer onPress={
+                  () => this.props.navigation.push('EditEventScreen', {
+                    event
+                  })
+                }>
+                  <EventActionLabelContainer>
+                    <EventActionIcon source={Images.pencil}/>
+                    <EventActionLabel>{translate('eventEditLabel')}</EventActionLabel>
+                  </EventActionLabelContainer>
 
-              <IconIO
-                name={'ios-arrow-forward'}
-                size={20}
-                color={Colors.textDefault}/>
-            </EventActionContainer>
+                  <IconIO
+                    name={'ios-arrow-forward'}
+                    size={20}
+                    color={Colors.textDefault}/>
+                </EventActionContainer>
+              </>
+            ) : null}
 
             <EventContainer>
               <EventTitle>{event.title}</EventTitle>
@@ -287,6 +298,21 @@ export class EventDetailsScreen extends Component {
                 activeImageIndex={activeImageIndex}
               />
 
+              <EventDivider />
+
+              {/* DESCRIPTION */}
+              {event.description ? (
+                <>
+                  <EventLabel>{translate('eventDescriptionLabel')}</EventLabel>
+                  <ReadMoreText
+                    name={'eventDescription'}
+                    text={event.description}
+                  />
+                </>
+              ) : null}
+              
+              <EventDivider final={true}/>
+
             </EventContainer>
           </>
         )}
@@ -296,7 +322,7 @@ export class EventDetailsScreen extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user
+  current_user: state.auth.user
 })
 
 export default connect(

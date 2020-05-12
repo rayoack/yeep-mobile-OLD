@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { StyleSheet, Dimensions } from 'react-native'
+import { Platform, Dimensions } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Colors } from 'App/Theme'
 
@@ -13,6 +13,7 @@ export const EventDivider = styled.View`
   border-bottom-width: 1px;
   border-bottom-color: ${Colors.ligthGray};
   margin: 5px 0;
+  margin-bottom: ${props => props.final ? '100px' : "5px"};
 `
 
 export const EventIcon = styled(FastImage)`
@@ -73,15 +74,16 @@ export const EventHeader = styled.View`
   border-bottom-left-radius: 30px;
   /* background-color: ${Colors.white}; */
   width: ${Dimensions.get('window').width};
-  background-color: ${Colors.blackTransparent};
 `
 
 export const BackButtonContainer = styled.TouchableOpacity`
-  height: 30px;
-  width: 30px;
-  border-radius: 5px;
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
   align-items: center;
   justify-content: center;
+  margin-top: 50px;
+  background-color: ${Colors.blackTransparent};
 `
 
 export const EventContainer = styled.View`
@@ -101,7 +103,7 @@ export const EventTitle = styled.Text`
 
 export const EventLabel = styled.Text`
   font-size: 20px;
-  font-family: 'Nunito Semi Bold';
+  font-family: 'Nunito Bold';
   width: 100px;
   color: ${Colors.labelBlack};
   background-color: ${props => props.loading ? Colors.ligthGray2 : Colors.backgroundGray};
@@ -119,7 +121,9 @@ export const EventSubText = styled.Text`
   color: ${Colors.ligthGray2};
 `
 
-export const EventImagesContainer = styled.ScrollView``
+export const EventImagesContainer = styled.ScrollView`
+  margin-bottom: 20px;
+`
 
 export const EventImageButtonContainer = styled.TouchableOpacity``
 

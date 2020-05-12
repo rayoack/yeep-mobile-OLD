@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Images, Colors } from 'App/Theme'
+import { translate } from '../Locales'
 
 import TabBar from '../Components'
 
@@ -20,7 +21,8 @@ import {
   PlacesScreen,
   ProvidersScreen,
   SuccessRegisterScreen,
-  EventDetailsScreen
+  EventDetailsScreen,
+  EditEventScreen
 } from '../Containers'
 
 const AuthNavigator = createSwitchNavigator({
@@ -41,14 +43,14 @@ const OrganizerNavigator = createBottomTabNavigator(
           return (
             <>
               {focused ? (
-                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.my_event_active}/>
+                <Image style={{ height: 30, width: 30 }} source={Images.my_event_active}/>
               ) : (
-                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.my_event_inactive}/>
+                <Image style={{ height: 30, width: 30 }} source={Images.my_event_inactive}/>
               )}
             </>
           )
         },
-        title: ''
+        title: translate('myEventsTabLabel')
       }
     },
     PlacesScreen: {
@@ -58,14 +60,14 @@ const OrganizerNavigator = createBottomTabNavigator(
           return (
             <>
               {focused ? (
-                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.place_active}/>
+                <Image style={{ height: 30, width: 30 }} source={Images.place_active}/>
               ) : (
-                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.place_inactive}/>
+                <Image style={{ height: 30, width: 30 }} source={Images.place_inactive}/>
               )}
             </>
           )
         },
-        title: ''
+        title: translate('spacesTabLabel')
       }
     },
     ProvidersScreen: {
@@ -75,29 +77,22 @@ const OrganizerNavigator = createBottomTabNavigator(
           return (
             <>
               {focused ? (
-                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.dj_active}/>
+                <Image style={{ height: 30, width: 30 }} source={Images.dj_active}/>
               ) : (
-                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.dj_inactive}/>
+                <Image style={{ height: 30, width: 30 }} source={Images.dj_inactive}/>
               )}
             </>
           )
         },
-        title: ''
+        title: translate('servicesTabLabel')
       }
     },
-    // MoreScreen: {
-    //   screen: MoreScreen,
-    //   navigationOptions: {
-    //     tabBarIcon: ({ tintColor }) => <IoniCons style={{ marginTop: 20 }} size={40} name="md-more" color={tintColor} />,
-    //     title: ''
-    //   }
-    // },
   },
   {
     initialRouteName: 'MyEventsScreen',
     tabBarComponent: TabBar,
     tabBarOptions: {
-      activeTintColor: Colors.primary,
+      activeTintColor: Colors.labelBlack,
       inactiveTintColor: Colors.ligthGray,
       headerShown: false
     }
@@ -118,8 +113,9 @@ const StackNavigator = createStackNavigator(
         headerShown: false
       }
     },
-    EventDetailsScreen: { screen: EventDetailsScreen },
     SplashScreen: SplashScreen,
+    EventDetailsScreen: { screen: EventDetailsScreen },
+    EditEventScreen: { screen: EditEventScreen },
   },
   {
     initialRouteName: 'tabs',

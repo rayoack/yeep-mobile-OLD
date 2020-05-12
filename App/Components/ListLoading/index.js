@@ -8,7 +8,7 @@ import { ListLoadingContainer, ListLoadingIndicator, ListLoadingText } from './s
 const ListLoading = () => {
   return (
     <ListLoadingContainer>
-      <ListLoadingIndicator color={Colors.primary} size={60}/>
+      <ListLoadingIndicator color={Colors.secondary} size={60}/>
       <ListLoadingText>{translate('loadingText')}</ListLoadingText>
     </ListLoadingContainer>
   );

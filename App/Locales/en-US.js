@@ -48,6 +48,9 @@ export default {
   backToRegister: 'Return to the registration screen?',
   adressRegisterScreenTitle: 'Set your location',
   // Organizer
+  myEventsTabLabel: 'My events',
+  spacesTabLabel: 'Spaces',
+  servicesTabLabel: 'Services',
   organizerStepOnetitle: 'Welcome',
   organizerStepTwotitle: 'Ticket sales',
   organizerStepThreetitle: 'To hire',
@@ -66,4 +69,5 @@ export default {
   eventImagesLabel: 'Images',
   eventNegocationsLabel: 'Event negotiations',
   eventEditLabel: 'Edit event',
+  eventDescriptionLabel: 'Description',
 }

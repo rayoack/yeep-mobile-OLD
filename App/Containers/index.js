@@ -14,6 +14,7 @@ import OrganizerNegociations from './OrganizerScreens/OrganizerNegociations'
 import PlacesScreen from './OrganizerScreens/PlacesScreen'
 import ProvidersScreen from './OrganizerScreens/ProvidersScreen'
 import EventDetailsScreen from './OrganizerScreens/EventDetailsScreen'
+import EditEventScreen from './OrganizerScreens/EditEventScreen'
 
 export {
   ExampleScreen,
@@ -32,5 +33,6 @@ export {
   OrganizerNegociations,
   PlacesScreen,
   ProvidersScreen,
-  EventDetailsScreen
+  EventDetailsScreen,
+  EditEventScreen
 }

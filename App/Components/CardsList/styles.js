@@ -13,7 +13,7 @@ export const CardListLoadingContainer = styled.View`
 `
 
 export const CardListLoading = styled.ActivityIndicator`
-  color: ${Colors.primary};
+  color: ${Colors.secondary};
   font-size: 30px;
   align-self: center;
 `
@@ -26,7 +26,7 @@ export const CardContainer = styled.TouchableOpacity`
   height: 140px;
   padding: 40px 18px;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
   border-bottom-width: 1px;
   border-bottom-color: ${Colors.ligthGray};
 `
