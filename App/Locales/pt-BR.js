@@ -65,4 +65,6 @@ export default {
   startDay: 'Início',
   endDay: 'Fim',
   eventImagesLabel: 'Imagens',
+  eventNegocationsLabel: 'Negociações do evento',
+  eventEditLabel: 'Editar evento',
 }

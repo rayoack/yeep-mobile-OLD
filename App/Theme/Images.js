@@ -12,6 +12,11 @@ export default {
   empty: require('App/Assets/Images/empty.jpg'),
   not_found: require('App/Assets/Images/not-found.jpg'),
   // ICONS
+  profile_boy: require('App/Assets/Images/profile-boy.png'),
+  located: require('App/Assets/Images/located.png'),
+  square_clock: require('App/Assets/Images/square-clock.png'),
+  negociations_icon: require('App/Assets/Images/negociations.png'),
+  pencil: require('App/Assets/Images/pencil.png'),
   dj_active: require('App/Assets/Images/dj-active.png'),
   dj_inactive: require('App/Assets/Images/dj-inactive.png'),
   my_event_active: require('App/Assets/Images/my-event-active.png'),

@@ -33,7 +33,7 @@ export const CardContainer = styled.TouchableOpacity`
 
 export const CardImage = styled(FastImage)`
   width: 105px;
-  height: 93px;
+  height: 70px;
   border-radius: 5px;
   margin-right: 17px;
 `

@@ -15,11 +15,45 @@ export const EventDivider = styled.View`
   margin: 5px 0;
 `
 
+export const EventIcon = styled(FastImage)`
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+`
+
 export const EventCover = styled(FastImage)`
   height: 200px;
   width: ${Dimensions.get('window').width};
   background-color: ${Colors.ligthGray2};
   margin-bottom: 15px;
+`
+
+export const EventActionContainer = styled.TouchableOpacity`
+  height: 60px;
+  padding: 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: ${Dimensions.get('window').width};
+  border-bottom-width: 1px;
+  border-bottom-color: ${Colors.ligthGray};
+`
+
+export const EventActionLabelContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+`
+
+export const EventActionLabel = styled.Text`
+  font-size: 16px;
+  font-family: 'Nunito Semi Bold';
+  color: ${Colors.labelBlack};
+`
+
+export const EventActionIcon = styled(FastImage)`
+  height: 30px;
+  width: 30px;
+  margin-right: 20px;
 `
 
 export const EventRowContainer = styled.View`
@@ -52,6 +86,7 @@ export const BackButtonContainer = styled.TouchableOpacity`
 
 export const EventContainer = styled.View`
   padding: 0 20px;
+  margin-top: 20px;
   margin-bottom: ${props => props.loading ? '20px' : 0};
 `
 

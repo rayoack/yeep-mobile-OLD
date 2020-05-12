@@ -3,7 +3,7 @@ import { BackHandler, Modal, StatusBar, Dimensions } from 'react-native'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { format, parseISO } from 'date-fns';
 import { enUS, ptBR } from 'date-fns/locale'
-import IconMI from 'react-native-vector-icons/MaterialIcons'
+import IconIO from 'react-native-vector-icons/Ionicons'
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons'
 import { connect } from 'react-redux'
 import Shimmer from 'react-native-shimmer';
@@ -34,7 +34,12 @@ import {
   EventDivider,
   EventImagesContainer,
   EventImageButtonContainer,
-  EventImages
+  EventImages,
+  EventIcon,
+  EventActionContainer,
+  EventActionLabelContainer,
+  EventActionLabel,
+  EventActionIcon
 } from './styles'
 
 export class EventDetailsScreen extends Component {
@@ -167,6 +172,30 @@ export class EventDetailsScreen extends Component {
                   event.event_logo.url : ''
               }}/>
             
+            <EventActionContainer>
+              <EventActionLabelContainer>
+                <EventActionIcon source={Images.negociations_icon}/>
+                <EventActionLabel>{translate('eventNegocationsLabel')}</EventActionLabel>
+              </EventActionLabelContainer>
+
+              <IconIO
+                name={'ios-arrow-forward'}
+                size={20}
+                color={Colors.textDefault}/>
+            </EventActionContainer>
+            
+            <EventActionContainer>
+              <EventActionLabelContainer>
+                <EventActionIcon source={Images.pencil}/>
+                <EventActionLabel>{translate('eventEditLabel')}</EventActionLabel>
+              </EventActionLabelContainer>
+
+              <IconIO
+                name={'ios-arrow-forward'}
+                size={20}
+                color={Colors.textDefault}/>
+            </EventActionContainer>
+
             <EventContainer>
               <EventTitle>{event.title}</EventTitle>
 
@@ -174,11 +203,7 @@ export class EventDetailsScreen extends Component {
               {event.online ? (
                 <>
                   <EventRowContainer>
-                    <IconMI
-                      name={'place'}
-                      size={20}
-                      color={Colors.textDefault}
-                      style={{ marginRight: 10 }}/>
+                    <EventIcon source={Images.located}/>
                     <EventText>Online</EventText>
                   </EventRowContainer>
 
@@ -191,11 +216,7 @@ export class EventDetailsScreen extends Component {
               {(event.adress && !event.online) ? (
                 <>
                   <EventRowContainer>
-                    <IconMI
-                      name={'place'}
-                      size={20}
-                      color={Colors.textDefault}
-                      style={{ marginRight: 10 }}/>
+                    <EventIcon source={Images.located}/>
                     <EventText>{event.location_name}</EventText>
                   </EventRowContainer>
 
@@ -209,11 +230,7 @@ export class EventDetailsScreen extends Component {
                 event.dates[0].normalizedDate) ? (
                 <>
                   <EventRowContainer>
-                    <IconMCI
-                      name={'clock-outline'}
-                      size={20}
-                      color={Colors.textDefault}
-                      style={{ marginRight: 10 }}/>
+                    <EventIcon source={Images.square_clock}/>
                     <EventText>{`${translate('startDay')}: ${event.dates[0].normalizedDate}`}</EventText>
                   </EventRowContainer>
                   <EventSubText>{`${event.dates[0].start_hour} - ${event.dates[0].end_hour}`}</EventSubText>
@@ -221,11 +238,7 @@ export class EventDetailsScreen extends Component {
                   {event.dates.length > 1 ? (
                     <>
                       <EventRowContainer>
-                        <IconMCI
-                          name={'clock-outline'}
-                          size={20}
-                          color={Colors.textDefault}
-                          style={{ marginRight: 10 }}/>
+                        <EventIcon source={Images.square_clock}/>
                         <EventText>{`${translate('endDay')}: ${event.dates[1].normalizedDate}`}</EventText>
                       </EventRowContainer>
                       <EventSubText>{`${event.dates[1].start_hour} - ${event.dates[1].end_hour}`}</EventSubText>
@@ -241,11 +254,7 @@ export class EventDetailsScreen extends Component {
                   event.dates.map((date, index) => (
                     <>
                       <EventRowContainer key={index}>
-                        <IconMCI
-                          name={'clock-outline'}
-                          size={20}
-                          color={Colors.textDefault}
-                          style={{ marginRight: 10 }}/>
+                        <EventIcon source={Images.square_clock}/>
                         <EventText>{date.normalizedDate}</EventText>
                       </EventRowContainer>
                       <EventSubText>{`${date.start_hour} - ${date.end_hour}`}</EventSubText>
@@ -286,15 +295,10 @@ export class EventDetailsScreen extends Component {
   }
 }
 
-
 const mapStateToProps = (state) => ({
   user: state.auth.user
 })
 
-const mapDispatchToProps = (dispatch) => ({
-})
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(EventDetailsScreen)

@@ -9,7 +9,7 @@ import {
   TabBar,
   Tab,
   TabText,
-  Container
+  Container,
 } from './styles';
 
 const renderScene = ( route, events, pastEvents, noDate, loading, onPress ) => {
@@ -99,6 +99,7 @@ const ViewComponent = ({
         renderTabBar={(props) => {
           return renderTabBar({...props, setIndex})
         }}
+        // sceneContainerStyle={{ marginTop: 30 }}
         // indicatorStyle={{ backgroundColor: 'green' }}
         onIndexChange={index => setIndex(index)}
         initialLayout={initialLayout}

@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Images, Colors } from 'App/Theme'
 import { translate } from '../../../Locales'
 import api from '../../../Services/api'
+import { Header } from '../../../Components'
 
 import { CreateEventButton } from './styles'
 import ViewComponent from './ViewComponents'
@@ -80,6 +81,8 @@ class MyEventsScreen extends React.Component {
     
     return (
       <>
+        <Header />
+
         <CreateEventButton>
           <Icon size={40} name="plus" color={Colors.white} />
         </CreateEventButton>

@@ -41,26 +41,9 @@ const OrganizerNavigator = createBottomTabNavigator(
           return (
             <>
               {focused ? (
-                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.my_event_active}/>
+                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.my_event_active}/>
               ) : (
-                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.my_event_inactive}/>
-              )}
-            </>
-          )
-        },
-        title: ''
-      }
-    },
-    OrganizerNegociations: {
-      screen: OrganizerNegociations,
-      navigationOptions: {
-        tabBarIcon: ({ focused }) => {
-          return (
-            <>
-              {focused ? (
-                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.negociation_active}/>
-              ) : (
-                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.negociation_inactive}/>
+                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.my_event_inactive}/>
               )}
             </>
           )
@@ -75,9 +58,9 @@ const OrganizerNavigator = createBottomTabNavigator(
           return (
             <>
               {focused ? (
-                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.place_active}/>
+                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.place_active}/>
               ) : (
-                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.place_inactive}/>
+                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.place_inactive}/>
               )}
             </>
           )
@@ -92,9 +75,9 @@ const OrganizerNavigator = createBottomTabNavigator(
           return (
             <>
               {focused ? (
-                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.dj_active}/>
+                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.dj_active}/>
               ) : (
-                <Image style={{ marginTop: 20, height: 30, width: 30 }} source={Images.dj_inactive}/>
+                <Image style={{ marginTop: 20, height: 40, width: 40 }} source={Images.dj_inactive}/>
               )}
             </>
           )

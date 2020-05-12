@@ -7,6 +7,7 @@ import Feedback from './Feedback'
 import ReadMoreText from './ReadMoreText'
 import ListLoading from './ListLoading'
 import CarrouselFullScreen from './CarrouselFullScreen'
+import Header from './Header'
 
 export {
   ButtonWithBackground,
@@ -17,5 +18,6 @@ export {
   Feedback,
   ReadMoreText,
   ListLoading,
-  CarrouselFullScreen
+  CarrouselFullScreen,
+  Header
 }

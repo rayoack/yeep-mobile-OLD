@@ -19,7 +19,6 @@ const CarrouselFullScreen = ({
   showModal,
   isModalOpen,
 }) => {
-  console.log('data', data)
   return (
     <Modal
       visible={isModalOpen}
