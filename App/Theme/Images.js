@@ -13,6 +13,11 @@ export default {
   not_found: require('App/Assets/Images/not-found.jpg'),
   // ICONS
   profile_boy: require('App/Assets/Images/profile-boy.png'),
+  button_remove: require('App/Assets/Images/button-remove.png'),
+  cancel: require('App/Assets/Images/cancel.png'),
+  check_mark: require('App/Assets/Images/check-mark.png'),
+  heart_fill: require('App/Assets/Images/heart-fill.png'),
+  heart_not_fill: require('App/Assets/Images/heart-not-fill.png'),
   located: require('App/Assets/Images/located.png'),
   square_clock: require('App/Assets/Images/square-clock.png'),
   negociations_icon: require('App/Assets/Images/negociations.png'),

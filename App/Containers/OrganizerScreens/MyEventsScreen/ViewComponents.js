@@ -12,7 +12,16 @@ import {
   Container,
 } from './styles';
 
-const renderScene = ( route, events, pastEvents, noDate, loading, onPress ) => {
+const renderScene = (
+  route,
+  events,
+  pastEvents,
+  noDate,
+  loading,
+  onPress,
+  refreshMyEvents,
+  refreshing
+) => {
 
   switch (route.key) {
     case 'first':
@@ -22,6 +31,8 @@ const renderScene = ( route, events, pastEvents, noDate, loading, onPress ) => {
           loading={loading}
           emptyType={'emptyFeedback'}
           onPress={onPress}
+          onRefresh={refreshMyEvents}
+          refreshing={refreshing}
         />
       )
     case 'second':
@@ -31,6 +42,8 @@ const renderScene = ( route, events, pastEvents, noDate, loading, onPress ) => {
           loading={loading}
           emptyType={'emptyFeedback'}
           onPress={onPress}
+          onRefresh={refreshMyEvents}
+          refreshing={refreshing}
         />
       )
     default:
@@ -40,6 +53,8 @@ const renderScene = ( route, events, pastEvents, noDate, loading, onPress ) => {
           loading={loading}
           emptyType={'emptyFeedback'}
           onPress={onPress}
+          onRefresh={refreshMyEvents}
+          refreshing={refreshing}
         />
       )
   }
@@ -75,7 +90,9 @@ const ViewComponent = ({
   noDate,
   navigation,
   loading,
-  navigateToEventDetails
+  navigateToEventDetails,
+  refreshMyEvents,
+  refreshing
 }) => {
   const [index, setIndex] = useState(0)
   const [routes] = useState([
@@ -94,7 +111,8 @@ const ViewComponent = ({
           pastEvents,
           noDate,
           loading,
-          navigateToEventDetails
+          navigateToEventDetails,
+          refreshMyEvents
         )}
         renderTabBar={(props) => {
           return renderTabBar({...props, setIndex})

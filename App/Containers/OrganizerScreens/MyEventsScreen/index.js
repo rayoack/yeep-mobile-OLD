@@ -21,6 +21,7 @@ class MyEventsScreen extends React.Component {
       pastEvents: [],
       noDate: [],
       page: 1,
+      refreshing: false
     }
   }
 
@@ -54,9 +55,9 @@ class MyEventsScreen extends React.Component {
       }
       
       this.setState({
-        noDate: [...noDate, ...noDateList],
-        events: [...events, ...eventsList],
-        pastEvents: [...pastEvents, ...pastEventsList],
+        noDate: [...noDateList],
+        events: [...eventsList],
+        pastEvents: [...pastEventsList],
         loading: false
       })
 
@@ -76,8 +77,12 @@ class MyEventsScreen extends React.Component {
     })
   }
 
+  // refreshMyEvents = () => {
+  //   this.setState({ refreshing: true })
+  // }
+
   render() {
-    const { loading, events, pastEvents, noDate } = this.state
+    const { loading, events, pastEvents, noDate, refreshing } = this.state
     
     return (
       <>
@@ -94,6 +99,8 @@ class MyEventsScreen extends React.Component {
           loading={loading}
           translate={translate}
           navigateToEventDetails={this.navigateToEventDetails}
+          refreshMyEvents={this.loadMyEvents}
+          refreshing={refreshing}
         />
       </>
     )

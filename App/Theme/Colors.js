@@ -8,6 +8,7 @@
 export default {
   transparent: 'rgba(0,0,0,0)',
   blackTransparent: 'rgba(0, 0, 0, 0.32)',
+  grayTransparent: 'rgba(97, 99, 104, 0.1)',
   primaryTransparent: 'rgba(215, 198, 207, 0.5)',
   // Example colors:
   white: '#ffffff',

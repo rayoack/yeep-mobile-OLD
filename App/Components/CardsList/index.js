@@ -22,7 +22,9 @@ const CardsList = ({
   data,
   onPress,
   loading,
-  emptyType
+  emptyType,
+  onRefresh,
+  refreshing
 }) => {
   return (
     <>
@@ -31,6 +33,8 @@ const CardsList = ({
       ) : (
         <List
           data={data}
+          onRefresh={() => onRefresh()} 
+          refreshing={refreshing}
           renderItem={({item}) => {
             return (
               <CardContainer
@@ -65,9 +69,11 @@ const CardsList = ({
 
 CardsList.defaultProps = {
   data: [],
-  onPress: () => {},
+  onPress: () => null,
   loading: false,
-  emptyType: 'empty'
+  emptyType: 'empty',
+  onRefresh: () => null,
+  refreshing: false
 }
 
 export default CardsList;

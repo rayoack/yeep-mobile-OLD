@@ -8,6 +8,7 @@ import ReadMoreText from './ReadMoreText'
 import ListLoading from './ListLoading'
 import CarrouselFullScreen from './CarrouselFullScreen'
 import Header from './Header'
+import CardRegisterStep from './CardRegisterStep'
 
 export {
   ButtonWithBackground,
@@ -19,5 +20,6 @@ export {
   ReadMoreText,
   ListLoading,
   CarrouselFullScreen,
-  Header
+  Header,
+  CardRegisterStep
 }

@@ -1,20 +1,12 @@
 
 export const Types = {
-  SET_EVENT: 'manageUserReducer/SET_EVENT',
+  SET_EVENT_FORM_DATA: 'manageUserReducer/SET_EVENT_FORM_DATA',
   SET_TITLE: 'manageUserReducer/SET_TITLE',
-  SET_EMAIL: 'manageUserReducer/SET_EMAIL',
-  SET_PASSWORD: 'manageUserReducer/SET_PASSWORD',
-  SET_ROLE: 'manageUserReducer/SET_ROLE',
-  SET_ADRESS: 'manageUserReducer/SET_ADRESS',
-  SET_CITY: 'manageUserReducer/SET_CITY',
-  SET_STATE: 'manageUserReducer/SET_STATE',
-  SET_COUNTRY: 'manageUserReducer/SET_COUNTRY',
-  SET_MONETARY_UNIT: 'manageUserReducer/SET_MONETARY_UNIT',
 }
 
 export const Creators = {
-  setEvent: (payload) => ({
-    type: Types.SET_EVENT,
+  setEventFormData: (payload) => ({
+    type: Types.SET_EVENT_FORM_DATA,
     payload
   }),
   setTitle: (payload) => ({
@@ -32,24 +24,27 @@ const INITIAL_STATE = {
     description: '',
     dates: [],
     online: false,
+    location_name: '',
     adress: '',
     city: '',
     state: '',
     country: '',
+    nomenclature: '',
     visible: false,
     Tickets: [],
     event_images: [],
     event_logo: {},
-    reserves: []
+    Reserves: [],
+    register_step: 0
     // CONTINUE HERE
   }
 }
 
-export default function manageUserReducer(state = INITIAL_STATE, action) {
+export default function manageEventReducer(state = INITIAL_STATE, action) {
   const { event } = state
 
   switch (action.type) {
-    case Types.SET_EVENT:
+    case Types.SET_EVENT_FORM_DATA:
       return {
         ...state,
           event: action.payload
@@ -60,7 +55,7 @@ export default function manageUserReducer(state = INITIAL_STATE, action) {
         ...state,
           event: {
             ...event,
-            name: action.payload
+            title: action.payload
           }
       }
 
