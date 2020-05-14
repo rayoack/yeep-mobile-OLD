@@ -1,9 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { InputContainer, ErrorText } from './styles';
+import { InputLabel, InputContainer, ErrorText, InputText } from './styles';
 
 const CustomInput = ({
+  label,
+  text,
   value,
   onChangeText,
   placeholder,
@@ -20,8 +22,14 @@ const CustomInput = ({
 }) => {
   return (
     <>
+      {label ? (
+        <InputLabel>{label}</InputLabel>
+      ) : null}
+      {text ?
+        <InputText>{text}</InputText>
+      : null}
       <InputContainer
-        value={value}
+        // value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
         onBlur={onBlur}
@@ -33,7 +41,7 @@ const CustomInput = ({
         multiline={multiline}
         error={error}
         autoCapitalize={autoCapitalize }
-      />
+      >{value}</InputContainer>
 
       {error ?
         <ErrorText
@@ -47,6 +55,7 @@ const CustomInput = ({
 
 CustomInput.defaultProps = {
   value: '',
+  text: '',
   onChangeText: () => {},
   placeholder: '',
   onBlur: () => {},

@@ -9,6 +9,9 @@ import ListLoading from './ListLoading'
 import CarrouselFullScreen from './CarrouselFullScreen'
 import Header from './Header'
 import CardRegisterStep from './CardRegisterStep'
+import {
+  InitialStep
+} from './EventSteps'
 
 export {
   ButtonWithBackground,
@@ -21,5 +24,6 @@ export {
   ListLoading,
   CarrouselFullScreen,
   Header,
-  CardRegisterStep
+  CardRegisterStep,
+  InitialStep
 }

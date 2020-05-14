@@ -3,6 +3,7 @@ import { Images, Colors } from 'App/Theme'
 
 import Feedback from '../Feedback'
 import ListLoading from '../ListLoading'
+import { translate } from '../../Locales'
 
 import {
   Container,
@@ -49,7 +50,7 @@ const CardsList = ({
   
                 <CardTextContainer>
                   <CardTitle>{item.title}</CardTitle>
-                  <CardSubTitle>{item.category}</CardSubTitle>
+                  <CardSubTitle>{translate(item.category)}</CardSubTitle>
                   <CardDescription>{item.adress}</CardDescription>
                   <CardDescription>{item.final_adress}</CardDescription>
                 </CardTextContainer>

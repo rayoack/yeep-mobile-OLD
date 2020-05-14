@@ -57,10 +57,16 @@ class EditEventScreen extends Component {
     return null
   }
 
+  navigateToStep = (activeStep) => {
+    this.props.navigation.push('CreationEventSteps', {
+      activeStep
+    })
+  }
+
   render() {
     const { steps } = this.state
     const { event } = this.props
-
+    console.log(event)
     return (
       <Container>
         <StatusBar translucent={false} backgroundColor="#000" hidden={false}/>
@@ -80,6 +86,7 @@ class EditEventScreen extends Component {
             text={step.text}
             completed={(event.register_step >= index && event.register_step != 0) ? true : false}
             final={(steps.length - 1) == index}
+            onPress={() => this.navigateToStep(index)}
           />
         ))}
 

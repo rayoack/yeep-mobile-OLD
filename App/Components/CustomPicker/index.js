@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container, SelectPicker, PickerLabel, ErrorText } from './styles'
+import { Container, SelectPicker, PickerLabel, ErrorText, PickerText } from './styles'
 
 const CustomPicker = ({
   actualValue,
@@ -12,11 +12,15 @@ const CustomPicker = ({
   marginBottom,
   error,
   errorText,
+  text
 }) => {
   return (
     <Container>
       {label ?
         <PickerLabel>{label}</PickerLabel>
+      : null}
+      {text ?
+        <PickerText>{text}</PickerText>
       : null}
       <SelectPicker
         selectedValue={actualValue}
@@ -44,6 +48,7 @@ const CustomPicker = ({
 CustomPicker.defaultProps = {
   actualValue: '',
   label: '',
+  text: '',
   values: [],
   error: false,
   errorText: '',
