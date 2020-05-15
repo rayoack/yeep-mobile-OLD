@@ -123,5 +123,8 @@ export default {
   audienceLabel: 'Público',
   audiencePlaceholder: 'Seu público estimado para este evento.',
   addCoverLabel: 'Adicione uma capa',
-  addCoverPlaceholder: 'Adicione uma capa ao seu evento. Esta capa aparecerá nas listagens e na tela de detalhes do evento.',
+  addCoverPlaceholder: 'Esta capa aparecerá nas listagens e na tela de detalhes do evento.',
+  pickerImageTitle: 'Adicione uma capa ao evento',
+  takePhotoTitle: 'Tirar uma foto...',
+  chooseFromLibraryTitle: 'Escolher da biblioteca...',
 }

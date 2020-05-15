@@ -122,5 +122,8 @@ export default {
   audienceLabel: 'Audience',
   audiencePlaceholder: 'Your estimated audience for this event.',
   addCoverLabel: 'Add a cover',
-  addCoverPlaceholder: 'Add a cover to you event. This cover will appear in the listings and on the event details screen.',
+  addCoverPlaceholder: 'This cover will appear in the listings and on the event details screen.',
+  pickerImageTitle: 'Add a cover to event',
+  takePhotoTitle: 'Take a photo...',
+  chooseFromLibraryTitle: 'Choose from library...',
 }

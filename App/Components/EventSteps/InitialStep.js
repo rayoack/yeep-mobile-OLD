@@ -11,7 +11,13 @@ import { translate } from '../../Locales'
 import { Images, Colors } from 'App/Theme'
 import eventCategories from '../../Services/events-categories.json'
 
-import { Container, ViewContainer, EventCover, EventCoverContainer } from './styles'
+import {
+  Container,
+  ViewContainer,
+  EventCover,
+  EventCoverContainer,
+  EventCoverLabel,
+  EventCoverText } from './styles'
 
 export const InitialStep = ({
   event,
@@ -30,7 +36,7 @@ export const InitialStep = ({
     }
   })
 
-  const coverUri = event_logo ? event_logo.url : ''
+  const coverUri = event_logo ? event_logo.url : null
 
   return (
     <Container>
@@ -99,9 +105,16 @@ export const InitialStep = ({
             )
           }}
         </Formik>
-        
-        <EventCoverContainer onPress={() => setCoverImage()} >
-          <EventCover source={{ uri: coverUri }}/>
+
+        <EventCoverLabel>{translate('addCoverLabel')}</EventCoverLabel>
+        <EventCoverText>{translate('addCoverPlaceholder')}</EventCoverText>
+
+        <EventCoverContainer onPress={() => setCoverImage('pickerImageTitle', 'single')} >
+          {coverUri ? (
+            <EventCover source={{ uri: coverUri }}/>
+          ) : (
+            <EventCover source={Images.image_background}/>
+          )}
         </EventCoverContainer>
       </ViewContainer>
     </Container>

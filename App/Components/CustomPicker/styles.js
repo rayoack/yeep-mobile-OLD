@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 import { Colors } from 'App/Theme'
 
 export const Container = styled.View`
-  align-self: flex-start;
 `;
 
 export const SelectPicker = styled.Picker`
@@ -13,7 +12,6 @@ export const SelectPicker = styled.Picker`
   margin-top: ${props => props.marginTop};
   margin-bottom: ${props => !props.error ? props.marginBottom : 0};
   background-color: ${Colors.ligthGray};
-  align-self: flex-start;
 `
 
 export const PickerLabel = styled.Text`
@@ -21,7 +19,6 @@ export const PickerLabel = styled.Text`
   font-size: 20px;
   color: #373A42;
   margin-bottom: 4px;
-  align-self: flex-start;
 `
 
 export const PickerText = styled.Text`
@@ -29,7 +26,6 @@ export const PickerText = styled.Text`
   font-size: 16px;
   color: #373A42;
   margin-bottom: 10px;
-  align-self: flex-start;
 `
 
 export const ErrorText = styled.Text`
@@ -39,5 +35,4 @@ export const ErrorText = styled.Text`
   font-size: 12px;
   font-family: 'Nunito Regular';
   color: ${Colors.error};
-  align-self: flex-start;
 `

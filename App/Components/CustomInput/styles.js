@@ -4,7 +4,6 @@ import { Colors } from 'App/Theme'
 export const InputLabel = styled.Text`
   font-size: 20px;
   text-align: left;
-  align-self: flex-start;
   font-family: 'Nunito Bold';
   color: ${Colors.labelBlack};
 `
@@ -15,14 +14,12 @@ export const InputText = styled.Text`
   font-size: 16px;
   color: #373A42;
   margin-bottom: 10px;
-  align-self: flex-start;
 `
 
 export const InputContainer = styled.TextInput`
   width: 290px;
   height: 50px;
   border-radius: 10px;
-  align-self: flex-start;
   padding: 14px;
   margin-top: ${props => props.marginTop};
   margin-bottom: ${props => !props.error ? props.marginBottom : 0};
