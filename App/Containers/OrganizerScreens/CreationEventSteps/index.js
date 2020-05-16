@@ -11,7 +11,8 @@ import { Colors } from 'App/Theme'
 import api from '../../../Services/api'
 import { translate } from '../../../Locales'
 import {
-    InitialStep
+    InitialStep,
+    SavingLoading
 } from '../../../Components'
 
 import { Container } from './styles'
@@ -23,13 +24,17 @@ export class CreationEventSteps extends Component {
       loading: false,
       onNextFunc: () => null,
       stepError: false,
-      avatarSource: ''
+      avatarSource: '',
+      activeStep: 0,
     }
   }
 
   componentDidMount() {
       this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
       this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+
+      const activeStep = this.props.navigation.getParam('activeStep', 0)
+      this.setState({ activeStep })
   }
 
   componentWillUnmount () {
@@ -98,28 +103,91 @@ export class CreationEventSteps extends Component {
     }
   }
 
-  // uploadCover = (imageUri, id) => {
+  setFirstStepFormdata = (newData) => {
+    this.props.setFirstStep(newData)
 
-  //   let headers = {
-  //     'Content-Type': 'multipart/form-data',
-  //     'Access-Control-Allow-Origin': '*'
-  //   }
+    this.saveOrUpdateEvent(0)
+  }
 
-  //   let formData = new FormData()
+  // SAVE EVENT CHANGES
+  saveOrUpdateEvent = async (step) => {
+    const { event } = this.props
+    this.setState({ loading: true })
 
-  //   formData.append('file', {
-  //     uri: imageUri,
-  //     name: imageUri,
-  //     type: 'image/jpg',
-  //   })
+    let isLocalImageUri = uri => !uri.includes('http')
 
-  //   try {
-  //     const { data } = await API.post(`/events/${id}/logo`, formData, headers)
+    try {
+      let updateEvent
+
+      if(event.id) {
+        let formData = { ...event }
+        formData.register_step = formData.register_step < step ?
+          step
+          : formData.register_step
+
+        const { data } = await api.put(`/events/${event.id}`, formData, {
+          authorization: `Bearer ${this.props.user.token}`
+        })
+        
+        updateEvent = data
+
+      } else {
+        const { data } = await api.post('/events', event, {
+          authorization: `Bearer ${this.props.user.token}`
+        })
+
+        updateEvent = data
+      }
       
-  //   } catch (error) {
-  //     console.log({error})
-  //   }
-  // }
+      if(step == 0 &&
+        event.event_logo &&
+        isLocalImageUri(event.event_logo.url)
+      ) {
+        this.uploadCover(event.event_logo.url, updateEvent.id)
+      }
+
+      this.props.setEventFormData(updateEvent)
+      this.setState({ loading: false })
+
+      this.goToNextStep()
+
+    } catch (error) {
+      console.log({error})
+      this.setState({ loading: false, stepError: true })
+    }
+  }
+
+  uploadCover = async (imageUri, id) => {
+    let headers = {
+      'Content-Type': 'multipart/form-data',
+      'Access-Control-Allow-Origin': '*',
+      authorization: `Bearer ${this.props.user.token}`
+    }
+
+    let formData = new FormData()
+
+    formData.append('file', {
+      uri: imageUri,
+      name: imageUri,
+      type: 'image/jpg',
+    })
+
+    try {
+      const { data } = await api.post(`/events/${id}/logo`, formData, headers)
+
+      const event_logo = {
+        id: data.id,
+        name: data.name,
+        url: data.url,
+      }
+      
+      this.props.setCover(event_logo)
+    } catch (error) {
+      console.log({error})
+      this.setState({ loading: false, stepError: true })
+
+    }
+  }
 
   // uploadImage = (imagesUris, id) => {
   //   const { event } = this.props
@@ -139,41 +207,31 @@ export class CreationEventSteps extends Component {
   //       type: 'image/jpg',
   //     })
 
-  //     const { data } = await API.post(`/images/${id}/events`, formData, headers)
+  //     const { data } = await api.post(`/images/${id}/events`, formData, headers)
 
   //   } catch (error) {
   //     console.log({error})
+      // this.setState({ loading: false })
+
   //   }
   // }
 
-  // saveOrUpdateEvent = (newData) => {
-  //   const { event } = this.props
+  deleteCover = () => {
+    this.props.setCover(null)
+    this.props.setCoverId(null)
+  }
 
-  //   try {
-  //     let updateEvent
+  goToNextStep = () => {
+    this.setState(prevState => ({ activeStep: prevState.activeStep + 1 }))
+  }
 
-  //     if(event.id) {
-  //       const { data } = await API.put(`/events/${event.id}`, event, {
-  //         authorization: `Bearer ${this.props.user.token}`
-  //       })
-        
-  //     } else {
-  //       const { data } = await API.post('/events', newData, {
-  //         authorization: `Bearer ${this.props.user.token}`
-  //       })
-
-  //     }
-
-  //     isLocalImageUri = uri => !uri.includes('http')
-
-  //   } catch (error) {
-  //     console.log({error})
-  //   }
-  // }
+  goBackStep = () => {
+    this.setState(prevState => ({ activeStep: prevState.activeStep - 1 }))
+  }
 
   nextButtonStyle = {
     backgroundColor: Colors.secondary,
-    borderRadius: 10,
+    borderRadius: 5,
     width: 100,
     alignItems: 'center',
     justifyContent: 'center'
@@ -185,85 +243,94 @@ export class CreationEventSteps extends Component {
   };
 
   render() {
-    const activeStep = this.props.navigation.getParam('activeStep', 0)
-    const { onNextFunc, stepError, avatarSource } = this.state
+    const { onNextFunc, stepError, avatarSource, loading, activeStep } = this.state
 
     return (
-      <Container style={{flex: 1}}>
-          <ProgressSteps
-            labelColor={Colors.primary}
-            disabledStepIconColor={Colors.primary}
-            labelFontFamily={'Nunito Regular'}
-            progressBarColor={Colors.primary}
-            activeStepIconBorderColor={Colors.secondary}
-            activeLabelColor={Colors.secondary}
-            activeStepNumColor={Colors.secondary}
-            completedStepIconColor={Colors.secondary}
-            completedProgressBarColor={Colors.secondary}
-        >
-              <ProgressStep
-                onNext={onNextFunc}
-                label={translate('firstEditEventStepTitle')}
-                errors={stepError}
-                nextBtnStyle={this.nextButtonStyle}
-                nextBtnTextStyle={this.nextButtonTextStyle}
-              >
-                  <InitialStep
-                    setSaveNextStepForm={this.setSaveNextStepForm}
-                    setStepErrors={this.setStepErrors}
-                    setCoverImage={this.showImagePicker}
-                />
-              </ProgressStep>
+      <>
+        <SavingLoading loading={loading} />
 
-              <ProgressStep
-                label="Second Step"
-                nextBtnStyle={this.nextButtonStyle}
-                nextBtnTextStyle={this.nextButtonTextStyle}
-                previousBtnStyle={this.nextButtonStyle}
-                previousBtnTextStyle={this.nextButtonTextStyle}
-              >
-                  <View style={{ alignItems: 'center' }}>
-                      <Text>This is the content within step 2!</Text>
-                  </View>
-              </ProgressStep>
+        <Container style={{flex: 1}}>
+            <ProgressSteps
+              activeStep={activeStep}
+              labelColor={Colors.primary}
+              disabledStepIconColor={Colors.primary}
+              labelFontFamily={'Nunito Regular'}
+              progressBarColor={Colors.primary}
+              activeStepIconBorderColor={Colors.secondary}
+              activeLabelColor={Colors.secondary}
+              activeStepNumColor={Colors.secondary}
+              completedStepIconColor={Colors.secondary}
+              completedProgressBarColor={Colors.secondary}
+          >
+                <ProgressStep
+                  onNext={onNextFunc}
+                  onPrevious={this.goBackStep}
+                  label={translate('firstEditEventStepTitle')}
+                  errors={stepError}
+                  nextBtnText={translate('nextBtnText')}
+                  nextBtnStyle={this.nextButtonStyle}
+                  nextBtnTextStyle={this.nextButtonTextStyle}
+                >
+                    <InitialStep
+                      setSaveNextStepForm={this.setSaveNextStepForm}
+                      setStepErrors={this.setStepErrors}
+                      setCoverImage={this.showImagePicker}
+                      setFirstStepFormdata={this.setFirstStepFormdata}
+                      deleteCover={this.deleteCover}
+                  />
+                </ProgressStep>
 
-              <ProgressStep label="Third Step">
-                  <View style={{ alignItems: 'center' }}>
-                      <Text>This is the content within step 3!</Text>
-                  </View>
-              </ProgressStep>
+                <ProgressStep
+                  label="Second Step"
+                  nextBtnStyle={this.nextButtonStyle}
+                  nextBtnTextStyle={this.nextButtonTextStyle}
+                  previousBtnStyle={this.nextButtonStyle}
+                  previousBtnTextStyle={this.nextButtonTextStyle}
+                  onPrevious={this.goBackStep}
+                >
+                    <View style={{ alignItems: 'center' }}>
+                        <Text>This is the content within step 2!</Text>
+                    </View>
+                </ProgressStep>
 
-              <ProgressStep label="Third Step">
-                  <View style={{ alignItems: 'center' }}>
-                      <Text>This is the content within step 3!</Text>
-                  </View>
-              </ProgressStep>
+                <ProgressStep label="Third Step">
+                    <View style={{ alignItems: 'center' }}>
+                        <Text>This is the content within step 3!</Text>
+                    </View>
+                </ProgressStep>
 
-              <ProgressStep label="Third Step">
-                  <View style={{ alignItems: 'center' }}>
-                      <Text>This is the content within step 3!</Text>
-                  </View>
-              </ProgressStep>
+                <ProgressStep label="Third Step">
+                    <View style={{ alignItems: 'center' }}>
+                        <Text>This is the content within step 3!</Text>
+                    </View>
+                </ProgressStep>
 
-              <ProgressStep label="Third Step">
-                  <View style={{ alignItems: 'center' }}>
-                      <Text>This is the content within step 3!</Text>
-                  </View>
-              </ProgressStep>
+                <ProgressStep label="Third Step">
+                    <View style={{ alignItems: 'center' }}>
+                        <Text>This is the content within step 3!</Text>
+                    </View>
+                </ProgressStep>
 
-              <ProgressStep label="Third Step">
-                  <View style={{ alignItems: 'center' }}>
-                      <Text>This is the content within step 3!</Text>
-                  </View>
-              </ProgressStep>
+                <ProgressStep label="Third Step">
+                    <View style={{ alignItems: 'center' }}>
+                        <Text>This is the content within step 3!</Text>
+                    </View>
+                </ProgressStep>
 
-              <ProgressStep label="Third Step">
-                  <View style={{ alignItems: 'center' }}>
-                      <Text>This is the content within step 3!</Text>
-                  </View>
-              </ProgressStep>
-          </ProgressSteps>
-      </Container>
+                <ProgressStep label="Third Step">
+                    <View style={{ alignItems: 'center' }}>
+                        <Text>This is the content within step 3!</Text>
+                    </View>
+                </ProgressStep>
+
+                <ProgressStep label="Third Step">
+                    <View style={{ alignItems: 'center' }}>
+                        <Text>This is the content within step 3!</Text>
+                    </View>
+                </ProgressStep>
+            </ProgressSteps>
+        </Container>
+      </>
     )
   }
 }

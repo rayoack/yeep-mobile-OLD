@@ -9,6 +9,7 @@ import ListLoading from './ListLoading'
 import CarrouselFullScreen from './CarrouselFullScreen'
 import Header from './Header'
 import CardRegisterStep from './CardRegisterStep'
+import SavingLoading from './SavingLoading'
 import {
   InitialStep
 } from './EventSteps'
@@ -25,5 +26,6 @@ export {
   CarrouselFullScreen,
   Header,
   CardRegisterStep,
+  SavingLoading,
   InitialStep
 }

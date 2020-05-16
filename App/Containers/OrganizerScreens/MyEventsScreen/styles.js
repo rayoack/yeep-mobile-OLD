@@ -10,12 +10,13 @@ export const Container = styled.View`
   border-top-right-radius: 40px; */
 `;
 
-export const TabBar = styled.ScrollView`
-  /* position: absolute;
-  z-index: 99;
-  top: -40; */
-  /* border-top-left-radius: 40px;
-  border-top-right-radius: 40px; */
+export const TabBar = styled.View`
+  margin-top: -30px;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
   width: ${Dimensions.get('window').width};
   background-color: ${Colors.backgroundGray};
   max-height: 70px;
@@ -23,7 +24,7 @@ export const TabBar = styled.ScrollView`
 
 export const Tab = styled.TouchableOpacity`
   padding: 11px 0 4px;
-  margin: 20px 10px;
+  margin: 20px 20px;
   height: 50px;
   flex-direction: row;
   align-items: center;
@@ -41,7 +42,7 @@ export const TabText = styled.Text`
 
 export const CreateEventButton = styled.TouchableOpacity`
   position: absolute;
-  z-index: 99;
+  z-index: 9999;
   bottom: 0;
   right: 0;
   margin-bottom: 20px;

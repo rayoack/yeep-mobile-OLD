@@ -12,11 +12,29 @@ export const ViewContainer = styled.View`
 
 export const EventCoverContainer = styled.TouchableOpacity`
   margin-bottom: 40px;
+  border-radius: 5px;
 `
 
 export const EventCover = styled(FastImage)`
   height: 150px;
   width: 300px;
+  border-radius: 5px;
+`
+
+export const DeleteEventCoverContainer = styled.TouchableOpacity`
+  /* margin-bottom: 40px; */
+  position: absolute;
+  right: 20;
+  z-index: 99;
+  align-self: flex-end;
+  padding: 10px;
+  flex-direction: row;
+  align-items: center;
+`
+
+export const DeleteEventCoverIcon = styled(FastImage)`
+  height: 30px;
+  width: 30px;
 `
 
 export const EventCoverLabel = styled.Text`
@@ -30,5 +48,5 @@ export const EventCoverText = styled.Text`
   font-family: 'Nunito Regular';
   font-size: 16px;
   color: #373A42;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 `

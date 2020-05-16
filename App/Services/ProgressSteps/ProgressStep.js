@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
 import PropTypes from 'prop-types';
+import { translate } from '../../Locales'
 
 import ProgressButtons from './ProgressButtons';
 
@@ -13,13 +14,13 @@ class ProgressStep extends Component {
       return;
     }
 
-    this.props.setActiveStep(this.props.activeStep + 1);
+    // this.props.setActiveStep(this.props.activeStep + 1);
   };
 
   onPreviousStep = () => {
     // Changes active index and calls previous function passed by parent
     this.props.onPrevious && this.props.onPrevious();
-    this.props.setActiveStep(this.props.activeStep - 1);
+    // this.props.setActiveStep(this.props.activeStep - 1);
   };
 
   onSubmit = () => {
@@ -80,7 +81,10 @@ class ProgressStep extends Component {
     if (this.props.previousBtnDisabled) textStyle.push(disabledBtnText);
 
     return (
-      <TouchableOpacity style={btnStyle} onPress={this.onPreviousStep} disabled={this.props.previousBtnDisabled}>
+      <TouchableOpacity
+        style={btnStyle}
+        onPress={this.onPreviousStep}
+        disabled={this.props.previousBtnDisabled}>
         <Text style={textStyle}>{this.props.activeStep === 0 ? '' : this.props.previousBtnText}</Text>
       </TouchableOpacity>
     );
@@ -127,9 +131,9 @@ ProgressStep.propTypes = {
 };
 
 ProgressStep.defaultProps = {
-  nextBtnText: 'Next',
-  previousBtnText: 'Previous',
-  finishBtnText: 'Submit',
+  nextBtnText: translate('nextBtnText'),
+  previousBtnText: translate('previousBtnText'),
+  finishBtnText: translate('finishBtnText'),
   nextBtnDisabled: false,
   previousBtnDisabled: false,
   errors: false,

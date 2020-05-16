@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
-import { translate } from '../../../Locales'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { translate } from '../../../Locales'
 import { CardsList } from '../../../Components'
+import { Images, Colors } from 'App/Theme'
 
 import {
   TabBar,
   Tab,
   TabText,
   Container,
+  CreateEventButton
 } from './styles';
 
 const renderScene = (
@@ -92,7 +95,8 @@ const ViewComponent = ({
   loading,
   navigateToEventDetails,
   refreshMyEvents,
-  refreshing
+  refreshing,
+  navigateToCreateEvent
 }) => {
   const [index, setIndex] = useState(0)
   const [routes] = useState([
@@ -103,6 +107,14 @@ const ViewComponent = ({
 
   return (
     <Container>
+      
+      <CreateEventButton
+        activeOpacity={0.8}
+        onPress={() => navigateToCreateEvent()}
+      >
+        <Icon size={40} name="plus" color={Colors.white} />
+      </CreateEventButton>
+
       <TabView
         navigationState={{ index, routes }}
         renderScene={({route}) => renderScene(

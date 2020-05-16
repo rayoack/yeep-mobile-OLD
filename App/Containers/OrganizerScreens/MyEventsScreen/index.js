@@ -2,14 +2,13 @@ import React from 'react'
 import { Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { parseISO, isBefore, isAfter } from 'date-fns';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import { Images, Colors } from 'App/Theme'
+import { Creators as ManagerEventActions } from '../../../Stores/reducers/manageEventReducer'
+
 import { translate } from '../../../Locales'
 import api from '../../../Services/api'
 import { Header } from '../../../Components'
 
-import { CreateEventButton } from './styles'
 import ViewComponent from './ViewComponents'
 
 class MyEventsScreen extends React.Component {
@@ -81,16 +80,17 @@ class MyEventsScreen extends React.Component {
   //   this.setState({ refreshing: true })
   // }
 
+  navigateToCreateEvent = () => {
+    this.props.clearEventForm()
+    this.props.navigation.navigate('CreationEventSteps')
+  }
+
   render() {
     const { loading, events, pastEvents, noDate, refreshing } = this.state
     
     return (
       <>
         <Header />
-
-        <CreateEventButton>
-          <Icon size={40} name="plus" color={Colors.white} />
-        </CreateEventButton>
 
         <ViewComponent
           events={events}
@@ -101,6 +101,7 @@ class MyEventsScreen extends React.Component {
           navigateToEventDetails={this.navigateToEventDetails}
           refreshMyEvents={this.loadMyEvents}
           refreshing={refreshing}
+          navigateToCreateEvent={this.navigateToCreateEvent}
         />
       </>
     )
@@ -115,10 +116,9 @@ const mapStateToProps = (state) => ({
   user: state.auth.user
 })
 
-const mapDispatchToProps = (dispatch) => ({
-})
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    ...ManagerEventActions
+  }
 )(MyEventsScreen)

@@ -11,6 +11,10 @@ export default {
   coming_soon: require('App/Assets/Images/coming-soon.jpg'),
   empty: require('App/Assets/Images/empty.jpg'),
   not_found: require('App/Assets/Images/not-found.jpg'),
+
+  // ANIMATIONS
+  editing_animation: require('App/Assets/Images/editing-animation.json'),
+  
   // ICONS
   profile_boy: require('App/Assets/Images/profile-boy.png'),
   button_remove: require('App/Assets/Images/button-remove.png'),
@@ -32,6 +36,7 @@ export default {
   notification_inactive: require('App/Assets/Images/notification-inactive.png'),
   place_active: require('App/Assets/Images/place-active.png'),
   place_inactive: require('App/Assets/Images/place-inactive.png'),
+  
   // ORGANIZER STEPs
   organizerStepOne: require('App/Assets/Images/organizer-step-1.png'),
   organizerStepTwo: require('App/Assets/Images/organizer-step-2.png'),

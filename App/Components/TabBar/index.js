@@ -24,7 +24,7 @@ const TabBar = props => {
   } = props;
 
   const { routes, index: activeRouteIndex } = navigation.state;
-  console.log(routes)
+
   return (
     <Container style={styles.container}>
       {routes.map((route, routeIndex) => {

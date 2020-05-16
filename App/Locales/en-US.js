@@ -10,6 +10,11 @@ export default {
   readMore: 'Read more',
   readLess: 'Read less',
   loadingText: 'Loading...',
+  savingLoadingText: 'One moment, we\'re saving your changes...',
+  nextBtnText: 'Save',
+  previousBtnText: 'Back',
+  finishBtnText: 'Complete',
+
   // auth
   registerAction: 'Register',
   loginWithEmail: 'CONTINUE WITH EMAIL',
@@ -47,6 +52,7 @@ export default {
   countryRequired: 'Country is required',
   backToRegister: 'Return to the registration screen?',
   adressRegisterScreenTitle: 'Set your location',
+
   // Organizer
   myEventsTabLabel: 'My events',
   spacesTabLabel: 'Spaces',
@@ -86,6 +92,7 @@ export default {
   seventhEditEventStepText: 'Find service providers for your event such as singers, waiters, securities and much more.',
   eighthEditEventStepTitle: 'Final settings',
   eighthEditEventStepText: 'Set up a visibility of your event, a nomenclature of ticket and registration or organizer.',
+
   // EVENT CATEGORIES
   musicFestival: 'Music festival',
   photoShoot: "Photo shoot",
@@ -113,6 +120,7 @@ export default {
   privateParty: "Private party",
   sportEvent: "Sports event",
   other: "Other",
+
   // EVENT FORM
   titleRequired: 'Title is required',
   categoryRequired: 'Category is required',
@@ -126,4 +134,5 @@ export default {
   pickerImageTitle: 'Add a cover to event',
   takePhotoTitle: 'Take a photo...',
   chooseFromLibraryTitle: 'Choose from library...',
+  deleteCover: 'delete',
 }

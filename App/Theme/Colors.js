@@ -8,6 +8,7 @@
 export default {
   transparent: 'rgba(0,0,0,0)',
   blackTransparent: 'rgba(0, 0, 0, 0.32)',
+  whiteTransparent: 'rgba(255, 255, 255, 0.3)',
   grayTransparent: 'rgba(97, 99, 104, 0.1)',
   primaryTransparent: 'rgba(215, 198, 207, 0.5)',
   // Example colors:
@@ -26,6 +27,8 @@ export default {
   brightPink: '#B0649E',
   lightPink: '#AF6ABA',
   blueViolet: '#836ABA',
+  lightBlue: '#D4E2F3',
+  saintBlue: '#97B8E1',
   success: '#28a745',
   error: '#dc3545',
 }

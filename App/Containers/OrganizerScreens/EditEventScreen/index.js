@@ -66,7 +66,7 @@ class EditEventScreen extends Component {
   render() {
     const { steps } = this.state
     const { event } = this.props
-    console.log(event)
+
     return (
       <Container>
         <StatusBar translucent={false} backgroundColor="#000" hidden={false}/>
@@ -84,7 +84,7 @@ class EditEventScreen extends Component {
           <CardRegisterStep
             title={step.title}
             text={step.text}
-            completed={(event.register_step >= index && event.register_step != 0) ? true : false}
+            completed={(event.register_step >= index) ? true : false}
             final={(steps.length - 1) == index}
             onPress={() => this.navigateToStep(index)}
           />

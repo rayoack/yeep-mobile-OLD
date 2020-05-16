@@ -2,8 +2,11 @@
 export const Types = {
   SET_EVENT_FORM_DATA: 'manageUserReducer/SET_EVENT_FORM_DATA',
   SET_TITLE: 'manageUserReducer/SET_TITLE',
+  SET_COVER_ID: 'manageUserReducer/SET_COVER_ID',
   SET_COVER: 'manageUserReducer/SET_COVER',
   SET_IMAGES: 'manageUserReducer/SET_IMAGES',
+  SET_FIRST_STEP: 'manageUserReducer/SET_FIRST_STEP',
+  CLEAR_EVENT_FORM: 'manageUserReducer/CLEAR_EVENT_FORM',
 }
 
 export const Creators = {
@@ -15,12 +18,24 @@ export const Creators = {
     type: Types.SET_TITLE,
     payload
   }),
+  setCoverId: (payload) => ({
+    type: Types.SET_COVER_ID,
+    payload
+  }),
   setCover: (payload) => ({
     type: Types.SET_COVER,
     payload
   }),
   setImages: (payload) => ({
     type: Types.SET_IMAGES,
+    payload
+  }),
+  setFirstStep: (payload) => ({
+    type: Types.SET_FIRST_STEP,
+    payload
+  }),
+  clearEventForm: (payload) => ({
+    type: Types.CLEAR_EVENT_FORM,
     payload
   }),
 }
@@ -30,7 +45,7 @@ const INITIAL_STATE = {
     title: '',
     category: '',
     estimated_audience: 0,
-    logo: '',
+    logo: null,
     description: '',
     dates: [],
     online: false,
@@ -69,6 +84,15 @@ export default function manageEventReducer(state = INITIAL_STATE, action) {
           }
       }
 
+    case Types.SET_COVER_ID:
+      return {
+        ...state,
+          event: {
+            ...event,
+            logo: action.payload
+          }
+      }
+
     case Types.SET_COVER:
       return {
         ...state,
@@ -86,6 +110,20 @@ export default function manageEventReducer(state = INITIAL_STATE, action) {
             event_images: action.payload
           }
       }
+
+    case Types.SET_FIRST_STEP:
+      return {
+        ...state,
+          event: {
+            ...event,
+            title: action.payload.title,
+            category: action.payload.category,
+            estimated_audience: action.payload.estimated_audience,
+          }
+      }
+
+    case Types.CLEAR_EVENT_FORM:
+      return INITIAL_STATE
 
     default:
       return state

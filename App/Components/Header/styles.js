@@ -9,15 +9,15 @@ export const HeaderView = styled.View`
 `
 
 export const Container = styled.View`
-  height: 80px;
+  height: 120px;
   width: ${Dimensions.get('window').width};
   padding: 20px;
-  border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 40px;
+  /* border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px; */
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  background-color: ${Colors.ligthGray};
+  background-color: ${Colors.primary};
 `;
 
 export const ProfileContainer = styled.View`

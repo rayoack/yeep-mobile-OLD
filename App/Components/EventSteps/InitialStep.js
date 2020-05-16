@@ -17,13 +17,17 @@ import {
   EventCover,
   EventCoverContainer,
   EventCoverLabel,
-  EventCoverText } from './styles'
+  EventCoverText,
+  DeleteEventCoverContainer,
+  DeleteEventCoverIcon } from './styles'
 
 export const InitialStep = ({
   event,
   setSaveNextStepForm,
   setStepErrors,
-  setCoverImage
+  setCoverImage,
+  setFirstStepFormdata,
+  deleteCover
 }) => {
   const { title, estimated_audience, category, event_logo } = event
   eventCategories.sort()
@@ -46,7 +50,7 @@ export const InitialStep = ({
             title: title,
             category: category,
             estimated_audience: estimated_audience }}
-          onSubmit={values => this.SignIn(values)}
+          onSubmit={values => setFirstStepFormdata(values)}
           validationSchema={
             Yup.object().shape({
               title: Yup
@@ -109,7 +113,20 @@ export const InitialStep = ({
         <EventCoverLabel>{translate('addCoverLabel')}</EventCoverLabel>
         <EventCoverText>{translate('addCoverPlaceholder')}</EventCoverText>
 
-        <EventCoverContainer onPress={() => setCoverImage('pickerImageTitle', 'single')} >
+        <EventCoverContainer
+          activeOpacity={0.8}
+          onPress={() => setCoverImage('pickerImageTitle', 'single')}
+        >          
+
+          {coverUri ? (
+            <DeleteEventCoverContainer
+              onPress={() => deleteCover()}
+              activeOpacity={0.8}
+            >
+              <DeleteEventCoverIcon source={Images.cancel}/>
+            </DeleteEventCoverContainer>
+          ) : null}
+
           {coverUri ? (
             <EventCover source={{ uri: coverUri }}/>
           ) : (
