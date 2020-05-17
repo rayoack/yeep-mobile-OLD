@@ -28,6 +28,7 @@ export default {
   brightPink: '#B0649E',
   lightPink: '#AF6ABA',
   blueViolet: '#836ABA',
+  nigthPurple: '#503F75',
   lightBlue: '#D4E2F3',
   saintBlue: '#97B8E1',
   success: '#28a745',

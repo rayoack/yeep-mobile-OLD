@@ -85,3 +85,9 @@ export const EventImages = styled(FastImage)`
   margin: 5px 10px 0 0;
   border-radius: 2px;
 `
+
+export const DateContainer = styled.View``
+
+export const HoursContainer = styled.View`
+  flex-direction: row;
+`

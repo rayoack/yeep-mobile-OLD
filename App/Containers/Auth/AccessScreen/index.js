@@ -58,7 +58,7 @@ class AccessScreen extends React.Component {
           <ButtonWithBackground
             onPress={this.navigateToLogin}
             text={translate('loginWithEmail')}
-            backgroundColor={Colors.primary}
+            backgroundColor={Colors.secondary}
             textColor={Colors.white}
           />
         </LoginButtonContainer>

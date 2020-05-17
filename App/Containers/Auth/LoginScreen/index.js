@@ -171,7 +171,7 @@ class LoginScreen extends React.Component {
                 <ButtonWithBackground
                   onPress={handleSubmit}
                   text={translate('signIn')}
-                  backgroundColor={Colors.primary}
+                  backgroundColor={Colors.secondary}
                   textColor={Colors.white}
                   disabled={loading}
                   loading={loading}

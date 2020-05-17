@@ -16,10 +16,12 @@ import ProvidersScreen from './OrganizerScreens/ProvidersScreen'
 import EventDetailsScreen from './OrganizerScreens/EventDetailsScreen'
 import EditEventScreen from './OrganizerScreens/EditEventScreen'
 import CreationEventSteps from './OrganizerScreens/CreationEventSteps'
+import Calendar from './Calendar'
 
 export {
   ExampleScreen,
   SplashScreen,
+  Calendar,
 
   // Auth
   AccessScreen,

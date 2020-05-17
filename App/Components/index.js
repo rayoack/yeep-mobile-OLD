@@ -10,11 +10,13 @@ import CarrouselFullScreen from './CarrouselFullScreen'
 import Header from './Header'
 import CardRegisterStep from './CardRegisterStep'
 import SavingLoading from './SavingLoading'
+import InputButton from './InputButton'
 
 import {
   InitialStep,
   AddImagesToEvent,
-  EventDescription
+  EventDescription,
+  EventDates,
 } from './EventSteps'
 
 export {
@@ -30,7 +32,9 @@ export {
   Header,
   CardRegisterStep,
   SavingLoading,
+  InputButton,
   InitialStep,
   AddImagesToEvent,
-  EventDescription
+  EventDescription,
+  EventDates,
 }

@@ -15,6 +15,7 @@ import {
   InitialStep,
   AddImagesToEvent,
   EventDescription,
+  EventDates,
 } from '../../../Components'
 
 import { Container } from './styles'
@@ -298,6 +299,22 @@ export class CreationEventSteps extends Component {
     this.saveOrUpdateEvent(2)
   }
 
+  // EVENT DATES
+  navigateToCalendar = () => {
+    const { dates } = this.props.event
+    let markedDates = {}
+
+    if(dates && dates.length) {
+      let eventDates = dates.map(date => {
+        markedDates[date.day] = {selected: true}
+      })
+    }
+
+    this.props.navigation.push('Calendar', {
+      markedDates
+    })
+  }
+
   // STEPS FUNCTIONS
   goToNextStep = () => {
     this.setState(prevState => ({ activeStep: prevState.activeStep + 1 }))
@@ -395,6 +412,7 @@ export class CreationEventSteps extends Component {
                 />
               </ProgressStep>
 
+              {/* EVENT DESCRIPTION */}
               <ProgressStep
                 label={translate('thirdEditEventStepTitle')}
                 nextBtnStyle={this.nextButtonStyle}
@@ -409,10 +427,11 @@ export class CreationEventSteps extends Component {
                   />
               </ProgressStep>
 
+              {/* EVENT DATES */}
               <ProgressStep label="Third Step">
-                  <View style={{ alignItems: 'center' }}>
-                      <Text>This is the content within step 3!</Text>
-                  </View>
+                  <EventDates
+                    navigateToCalendar={this.navigateToCalendar}
+                  />
               </ProgressStep>
 
               <ProgressStep label="Third Step">
