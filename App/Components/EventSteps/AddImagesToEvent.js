@@ -26,13 +26,17 @@ const AddImagesToEvent = ({
   showCarrousel,
   onSnapToImage,
   deleteImage,
+  showImagePicker,
 }) => {
   return (
     <ViewContainer>
       <TopCotainer>
         <EventStepLabel>{translate('secondEditEventStepTitle')}</EventStepLabel>
         <EventStepText>{translate('secondEditEventStepText')}</EventStepText>
-        <ButtonWithBackground width={'150px'} text={translate('secondEditEventStepTitle')}/>
+        <ButtonWithBackground
+          onPress={() => showImagePicker('', 'multiple')}
+          width={'150px'}
+          text={translate('secondEditEventStepTitle')}/>
       </TopCotainer>
 
       {event.event_images ? (
@@ -74,7 +78,8 @@ AddImagesToEvent.defaultProps = {
   isCarrouselOpen: false,
   onSnapToImage: () => null,
   showCarrousel: () => null,
-  deleteImage: () => null
+  deleteImage: () => null,
+  showImagePicker: () => null
 }
 
 const mapStateToProps = (state) => ({

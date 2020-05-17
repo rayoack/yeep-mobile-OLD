@@ -67,7 +67,7 @@ const renderTabBar = (props) => {
   const currentTabIndex = props.navigationState.index
   return (
     <TabBar 
-      // contentContainerStyle={styles.tabBarContentContainerStyle}
+      contentContainerStyle={{ backgroundColor: 'red' }}
       horizontal={true} 
       showsHorizontalScrollIndicator={false}>
       {props.navigationState.routes.map((route, i) => {
@@ -130,7 +130,7 @@ const ViewComponent = ({
         renderTabBar={(props) => {
           return renderTabBar({...props, setIndex})
         }}
-        // sceneContainerStyle={{ marginTop: 30 }}
+        // sceneContainerStyle={{ backgroundColor: 'red' }}
         // indicatorStyle={{ backgroundColor: 'green' }}
         onIndexChange={index => setIndex(index)}
         initialLayout={initialLayout}

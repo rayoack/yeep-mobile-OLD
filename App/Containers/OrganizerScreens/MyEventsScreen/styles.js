@@ -11,7 +11,7 @@ export const Container = styled.View`
 `;
 
 export const TabBar = styled.View`
-  margin-top: -30px;
+  /* margin-top: -30px; */
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
   align-items: center;

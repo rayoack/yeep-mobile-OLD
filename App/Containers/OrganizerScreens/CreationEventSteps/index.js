@@ -56,6 +56,8 @@ export class CreationEventSteps extends Component {
 
   // OPEN CAMERA AND GALLERY
   showImagePicker = (title, type) => {
+    const { event } = this.props
+
     const options = {
         title: translate(title),
         takePhotoButtonTitle: translate('takePhotoTitle'),
@@ -89,12 +91,21 @@ export class CreationEventSteps extends Component {
     
     } else {
       ImagePker.openPicker({
+        enableRotationGesture: true,
+        mediaType: 'photo',
         multiple: true
       }).then(images => {
-        const imagesPath = images.map(image => image.path)
+        const newImages = images.map(image => {
+          return {
+            name: image.modificationDate,
+            url: image.path
+          }
+        })
 
-        console.log(imagesPath);
-        // this.props.setImages(imagesPath)
+        const eventImages = [ ...event.event_images, ...newImages ]
+
+        console.log(images);
+        this.props.setImages(eventImages)
       }); 
     }
   }
@@ -171,6 +182,7 @@ export class CreationEventSteps extends Component {
     formData.append('file', {
       uri: imageUri,
       name: imageUri,
+      type: 'image/jpg',
     })
 
     try {
@@ -201,7 +213,6 @@ export class CreationEventSteps extends Component {
 
     let localImages = event.event_images.filter((image, index) => !image.url.includes('http'))
     let eventImages = event.event_images.filter((image, index) => image.url.includes('http'))
-
     let headers = {
       'Content-Type': 'multipart/form-data',
       'Access-Control-Allow-Origin': '*',
@@ -209,25 +220,25 @@ export class CreationEventSteps extends Component {
     }
 
     if(localImages) {
-      localImages.map(image => {
+      localImages.map(async image => {
         try {
           let formData = new FormData()
 
           formData.append('file', {
             uri: image.url,
             name: image.url,
+            type: 'image/jpg',
           })
 
-          api.post(`/images/${id}/events`, formData, headers).then(response => {
-            const event_image = {
-              id: response.data.id,
-              name: response.data.name,
-              url: response.data.url,
-            }
-  
-            eventImages.push(event_image)
+          const { data } = await api.post(`/images/${id}/events`, formData, headers)
+          
+          const event_image = {
+            id: data.id,
+            name: data.name,
+            url: data.url,
+          }
 
-          })
+          eventImages.push(event_image)
 
         } catch (error) {
           console.log({error})
@@ -373,6 +384,7 @@ export class CreationEventSteps extends Component {
                   showCarrousel={this.showCarrousel}
                   onSnapToImage={this.onSnapToImage}
                   deleteImage={this.deleteImage}
+                  showImagePicker={this.showImagePicker}
                 />
               </ProgressStep>
 
