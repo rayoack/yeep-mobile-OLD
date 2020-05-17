@@ -39,7 +39,6 @@ class Calendar extends Component {
     const maxDate = this.props.navigation.getParam('maxDate', null)
     const onDayPress = this.props.navigation.getParam('onDayPress', () => null)
 
-    console.log('markedDates', markedDates)
     return (
       <>
         <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>

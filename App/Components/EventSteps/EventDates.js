@@ -11,6 +11,7 @@ import Calendar from '../Calendar'
 
 import { translate } from '../../Locales'
 import { Images, Colors } from 'App/Theme'
+import { normalizedDates } from '../../Services/datesHelpers'
 
 import {
   Container,
@@ -26,27 +27,28 @@ export const EventDates = ({
   setSaveNextStepForm,
   setDescription,
 }) => {
-  const { dates } = event
-  console.log(dates)
+
+  const eventsWithFormatedDates = normalizedDates(event)
+
   return (
     <Container>
       <ViewContainer>
         <EventStepLabel>{translate('fourthEditEventStepTitle')}</EventStepLabel>
         <EventStepText>{translate('fourthEditEventStepText')}</EventStepText>
         
-        {!dates.length ? (
+        {!eventsWithFormatedDates.dates.length ? (
           <ButtonWithBackground
             onPress={() => showImagePicker('', 'multiple')}
             width={'150px'}
             text={translate('secondEditEventStepTitle')}/>
         ) : (
           <>
-            {dates.map((date, index) => (
+            {eventsWithFormatedDates.dates.map((date, index) => (
               <DateContainer>
                 <InputButton
                   iconSize={24}
-                  value={date.day}
-                  navigateTolist={() => navigateToCalendar()}
+                  value={date.normalizedDate}
+                  navigateTolist={() => navigateToCalendar(index)}
                 />
 
                 {/* <HoursContainer>

@@ -8,6 +8,7 @@ export const Types = {
   SET_COVER: 'manageUserReducer/SET_COVER',
   SET_IMAGES: 'manageUserReducer/SET_IMAGES',
   SET_FIRST_STEP: 'manageUserReducer/SET_FIRST_STEP',
+  SET_EVENT_DATES: 'manageUserReducer/SET_EVENT_DATES',
   CLEAR_EVENT_FORM: 'manageUserReducer/CLEAR_EVENT_FORM',
 }
 
@@ -42,6 +43,10 @@ export const Creators = {
   }),
   setFirstStep: (payload) => ({
     type: Types.SET_FIRST_STEP,
+    payload
+  }),
+  setEventDates: (payload) => ({
+    type: Types.SET_EVENT_DATES,
     payload
   }),
   clearEventForm: (payload) => ({
@@ -148,6 +153,15 @@ export default function manageEventReducer(state = INITIAL_STATE, action) {
             title: action.payload.title,
             category: action.payload.category,
             estimated_audience: action.payload.estimated_audience,
+          }
+      }
+
+    case Types.SET_EVENT_DATES:
+      return {
+        ...state,
+          event: {
+            ...event,
+            dates: action.payload,
           }
       }
 

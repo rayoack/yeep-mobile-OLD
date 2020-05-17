@@ -4,6 +4,7 @@ import { ProgressSteps, ProgressStep } from '../../../Services/ProgressSteps';
 import ImagePicker from 'react-native-image-picker';
 import ImagePker from 'react-native-image-crop-picker';
 import { connect } from 'react-redux'
+import _ from 'lodash'
 
 import { Creators as ManagerEventActions } from '../../../Stores/reducers/manageEventReducer'
 
@@ -31,7 +32,8 @@ export class CreationEventSteps extends Component {
       activeImageIndex: 0,
       isCarrouselOpen: false,
       isCarrouselOpen: false,
-      imagesToDelete: []
+      imagesToDelete: [],
+      selectedDayIndex: 0,
     }
   }
 
@@ -300,8 +302,10 @@ export class CreationEventSteps extends Component {
   }
 
   // EVENT DATES
-  navigateToCalendar = () => {
+  navigateToCalendar = (index) => {
     const { dates } = this.props.event
+    this.setState({ selectedDayIndex: index })
+
     let markedDates = {}
 
     if(dates && dates.length) {
@@ -311,8 +315,26 @@ export class CreationEventSteps extends Component {
     }
 
     this.props.navigation.push('Calendar', {
-      markedDates
+      markedDates,
+      onDayPress: this.setEventDay
     })
+  }
+
+  setEventDay = (selectedDay) => {
+    const { dates } = this.props.event
+    const { selectedDayIndex } = this.state
+    let eventDates = [ ...dates ]
+
+    eventDates.map((date, index) => {
+      if(index == selectedDayIndex) {
+        date.day = selectedDay.dateString
+      }
+      return date
+    })
+  
+    const orderDates = _.orderBy(eventDates, ['day'], ['asc'])
+    this.props.setEventDates(orderDates)
+    this.props.navigation.goBack(null)
   }
 
   // STEPS FUNCTIONS
