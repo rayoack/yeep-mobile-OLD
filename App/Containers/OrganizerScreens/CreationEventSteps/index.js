@@ -5,6 +5,12 @@ import ImagePicker from 'react-native-image-picker';
 import ImagePker from 'react-native-image-crop-picker';
 import { connect } from 'react-redux'
 import _ from 'lodash'
+import { parseISO, isBefore, isAfter } from 'date-fns';
+import getHours from 'date-fns/getHours'
+import getMinutes from 'date-fns/getMinutes'
+import setHours from 'date-fns/setHours'
+import setMinutes from 'date-fns/setMinutes'
+import setSeconds from 'date-fns/setSeconds'
 
 import { Creators as ManagerEventActions } from '../../../Stores/reducers/manageEventReducer'
 
@@ -34,6 +40,8 @@ export class CreationEventSteps extends Component {
       isCarrouselOpen: false,
       imagesToDelete: [],
       selectedDayIndex: 0,
+      isTimePickerVisible: false,
+      hourType: 'start_hour',
     }
   }
 
@@ -329,12 +337,67 @@ export class CreationEventSteps extends Component {
       if(index == selectedDayIndex) {
         date.day = selectedDay.dateString
       }
+
       return date
     })
   
     const orderDates = _.orderBy(eventDates, ['day'], ['asc'])
     this.props.setEventDates(orderDates)
     this.props.navigation.goBack(null)
+  }
+
+  openTimePicker = (index, hourType) => {
+    this.setState({
+      isTimePickerVisible: true,
+      selectedDayIndex: index,
+      hourType
+    })
+  }
+
+  closeTimePicker = () => {
+    this.setState({ isTimePickerVisible: false })
+  }
+
+  startHourAvailable = (startTimestamp, day, endHourTime) => {
+    const time = `${getHours(startTimestamp)}:${getMinutes(startTimestamp)}`
+
+    const [startHour, startMinute] = time.split(':');
+    const [endHour, endMinute] = endHourTime.split(':');
+
+    const fullStart = setSeconds(setMinutes(setHours(day, startHour), startMinute), 0)
+    const fullEnd = setSeconds(setMinutes(setHours(day, endHour), endMinute), 0)
+    const available = isAfter(fullStart, fullEnd)
+    
+    console.log('-----')
+    console.log('fullStart', fullStart)
+    console.log('fullEnd', fullEnd)
+    console.log('available', available)
+    // return {
+    //   time,
+    //   value: format(value, "yyyy-MM-dd'T'HH:mm:ssxxx"),
+    // };
+  }
+
+
+  setDayTime = (time) => {
+    const { dates } = this.props.event
+    const { selectedDayIndex, hourType } = this.state
+
+    let eventDates = [ ...dates ]
+
+    eventDates.map((date, index) => {
+      if(index == selectedDayIndex) {
+
+        if(hourType == 'start_hour') {
+          this.startHourAvailable(time, parseISO(date.day), date.end_hour)
+        }
+        // date[hourType] = hour
+      }
+
+      return date
+    })
+
+    this.setState({ isTimePickerVisible: false })
   }
 
   // STEPS FUNCTIONS
@@ -376,7 +439,8 @@ export class CreationEventSteps extends Component {
       loading,
       activeStep,
       activeImageIndex,
-      isCarrouselOpen } = this.state
+      isCarrouselOpen,
+      isTimePickerVisible } = this.state
 
     return (
       <>
@@ -453,6 +517,10 @@ export class CreationEventSteps extends Component {
               <ProgressStep label="Third Step">
                   <EventDates
                     navigateToCalendar={this.navigateToCalendar}
+                    openTimePicker={this.openTimePicker}
+                    closeTimePicker={this.closeTimePicker}
+                    setDayTime={this.setDayTime}
+                    isTimePickerVisible={isTimePickerVisible}
                   />
               </ProgressStep>
 

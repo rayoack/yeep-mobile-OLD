@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Keyboard, View } from 'react-native'
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { parseISO, isBefore, isAfter } from 'date-fns';
 
 import CustomInput from '../CustomInput'
 import CustomPicker from '../CustomPicker'
@@ -24,8 +26,10 @@ import {
 export const EventDates = ({
   event,
   navigateToCalendar,
-  setSaveNextStepForm,
-  setDescription,
+  isTimePickerVisible,
+  openTimePicker,
+  closeTimePicker,
+  setDayTime,
 }) => {
 
   const eventsWithFormatedDates = normalizedDates(event)
@@ -51,32 +55,27 @@ export const EventDates = ({
                   navigateTolist={() => navigateToCalendar(index)}
                 />
 
-                {/* <HoursContainer>
-                  <CustomPicker
-                    actualValue={values.country}
-                    values={countries}
-                    onValueChange={value => {
-                      this.setCountryStates(value)
-                      setFieldValue('country', value)
-                    }}
-                    label={translate('yourCountry')}
-                    marginBottom={30}
-                    // error={errors.country}
-                    // errorText={errors.country}
+                <HoursContainer>
+                  <InputButton
+                    iconSize={24}
+                    value={date.start_hour}
+                    navigateTolist={() => openTimePicker(index, 'start_hour')}
                   />
-                  <CustomPicker
-                    actualValue={values.country}
-                    values={countries}
-                    onValueChange={value => {
-                      this.setCountryStates(value)
-                      setFieldValue('country', value)
-                    }}
-                    label={translate('yourCountry')}
-                    marginBottom={30}
-                    // error={errors.country}
-                    // errorText={errors.country}
+
+                  <InputButton
+                    iconSize={24}
+                    value={date.end_hour}
+                    navigateTolist={() => openTimePicker(index, 'end_hour')}
                   />
-                </HoursContainer> */}
+                </HoursContainer>
+
+                <DateTimePickerModal
+                  isVisible={isTimePickerVisible}
+                  mode="time"
+                  date={parseISO(date.full_date)}
+                  onConfirm={setDayTime}
+                  onCancel={closeTimePicker}
+                />
               </DateContainer>
             ))}
           </>
@@ -88,8 +87,11 @@ export const EventDates = ({
 
 EventDates.defaultProps = {
   event: { dates: [] },
+  isTimePickerVisible: false,
   setSaveNextStepForm: () => null,
-  setDescription: () => null,
+  openTimePicker: () => null,
+  closeTimePicker: () => null,
+  setDayTime: () => null,
 }
 
 const mapStateToProps = (state) => ({
