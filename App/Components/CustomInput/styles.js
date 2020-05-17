@@ -18,13 +18,14 @@ export const InputText = styled.Text`
 
 export const InputContainer = styled.TextInput`
   width: 290px;
-  height: 50px;
+  height: ${props => props.height ? props.height : '50px'};
   border-radius: 10px;
   padding: 14px;
   margin-top: ${props => props.marginTop};
   margin-bottom: ${props => !props.error ? props.marginBottom : 0};
   background-color: #ECECEC;
   color: #999999;
+  text-align-vertical: ${props => props.multiline ? 'top' : 'center'};
   font-size: 16px;
   font-family: 'Nunito Regualr';
 `;

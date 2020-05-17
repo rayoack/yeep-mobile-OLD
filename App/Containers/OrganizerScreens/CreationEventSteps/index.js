@@ -11,9 +11,10 @@ import { Colors } from 'App/Theme'
 import api from '../../../Services/api'
 import { translate } from '../../../Locales'
 import {
-    InitialStep,
-    AddImagesToEvent,
-    SavingLoading
+  SavingLoading,
+  InitialStep,
+  AddImagesToEvent,
+  EventDescription,
 } from '../../../Components'
 
 import { Container } from './styles'
@@ -291,6 +292,12 @@ export class CreationEventSteps extends Component {
     this.setState({ activeImageIndex: index, isCarrouselOpen: true })
   }
 
+  // EVENT DESCRIPTION
+  setDescription = (values) => {
+    this.props.setDescription(values.description)
+    this.saveOrUpdateEvent(2)
+  }
+
   // STEPS FUNCTIONS
   goToNextStep = () => {
     this.setState(prevState => ({ activeStep: prevState.activeStep + 1 }))
@@ -315,13 +322,13 @@ export class CreationEventSteps extends Component {
     width: 100,
     alignItems: 'center',
     justifyContent: 'center'
-  };
+  }
 
   nextButtonTextStyle = {
     color: Colors.white,
     fontSize: 15,
     fontFamily: 'Nunito Regular'
-  };
+  }
 
   render() {
     const {
@@ -370,7 +377,7 @@ export class CreationEventSteps extends Component {
 
               {/* STEP 2: ADD PHOTOS */}
               <ProgressStep
-                label="Second Step"
+                label={translate('secondEditEventStepTitle')}
                 nextBtnStyle={this.nextButtonStyle}
                 nextBtnTextStyle={this.nextButtonTextStyle}
                 previousBtnStyle={this.nextButtonStyle}
@@ -388,10 +395,18 @@ export class CreationEventSteps extends Component {
                 />
               </ProgressStep>
 
-              <ProgressStep label="Third Step">
-                  <View style={{ alignItems: 'center' }}>
-                      <Text>This is the content within step 3!</Text>
-                  </View>
+              <ProgressStep
+                label={translate('thirdEditEventStepTitle')}
+                nextBtnStyle={this.nextButtonStyle}
+                nextBtnTextStyle={this.nextButtonTextStyle}
+                previousBtnStyle={this.nextButtonStyle}
+                previousBtnTextStyle={this.nextButtonTextStyle}
+                onPrevious={this.goBackStep}
+                onNext={onNextFunc}>
+                  <EventDescription
+                    setSaveNextStepForm={this.setSaveNextStepForm}
+                    setDescription={this.setDescription}
+                  />
               </ProgressStep>
 
               <ProgressStep label="Third Step">

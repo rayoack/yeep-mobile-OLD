@@ -18,7 +18,8 @@ const CustomInput = ({
   multiline,
   error,
   errorText,
-  autoCapitalize
+  autoCapitalize,
+  height
 }) => {
   return (
     <>
@@ -30,6 +31,7 @@ const CustomInput = ({
       : null}
       <InputContainer
         // value={value}
+        height={height}
         onChangeText={onChangeText}
         placeholder={placeholder}
         onBlur={onBlur}
@@ -67,7 +69,8 @@ CustomInput.defaultProps = {
   multiline: false,
   error: false,
   errorText: '',
-  autoCapitalize: 'sentences'
+  autoCapitalize: 'sentences',
+  height: ''
 }
 
 export default CustomInput;

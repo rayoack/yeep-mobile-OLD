@@ -10,9 +10,11 @@ import CarrouselFullScreen from './CarrouselFullScreen'
 import Header from './Header'
 import CardRegisterStep from './CardRegisterStep'
 import SavingLoading from './SavingLoading'
+
 import {
   InitialStep,
-  AddImagesToEvent
+  AddImagesToEvent,
+  EventDescription
 } from './EventSteps'
 
 export {
@@ -29,5 +31,6 @@ export {
   CardRegisterStep,
   SavingLoading,
   InitialStep,
-  AddImagesToEvent
+  AddImagesToEvent,
+  EventDescription
 }

@@ -135,4 +135,5 @@ export default {
   takePhotoTitle: 'Take a photo...',
   chooseFromLibraryTitle: 'Choose from library...',
   deleteCover: 'delete',
+  eventDescriptionPlaceholder: 'Tell me details about your event.',
 }

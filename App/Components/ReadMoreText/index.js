@@ -26,13 +26,13 @@ const ReadMoreText = ({
         numberOfLines={textShow === name ? undefined : 3}>
         {text}
       </Text>
-      {name.length > 110 ? (
+      {/* {name.length > 100 ? ( */}
         <Text
           onPress={() => toggleNumberOfLines(name)}
           style={{ color: readMoreColor, fontSize: readMoreSize }}>
           {textShow === name ? translate('readLess') : translate('readMore')}
         </Text>
-      ) : null}
+      {/* ) : null} */}
     </>
   );
 }
