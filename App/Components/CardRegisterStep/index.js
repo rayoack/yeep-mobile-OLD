@@ -18,7 +18,10 @@ const CardRegisterStep = ({
   final
 }) => {
   return (
-    <CardContainer final={final} onPress={() => onPress()} >
+    <CardContainer
+      activeOpacity={0.8}
+      final={final}
+      onPress={() => onPress()} >
       <CardInfoContainer completed={completed}>
         <CardInfoTitle>{title}</CardInfoTitle>
         <CardInfoText>{text}</CardInfoText>

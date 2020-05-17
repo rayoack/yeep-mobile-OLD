@@ -7,7 +7,6 @@ import { Creators as ManagerEventActions } from '../../../Stores/reducers/manage
 
 import { translate } from '../../../Locales'
 import api from '../../../Services/api'
-import { Header } from '../../../Components'
 
 import ViewComponent from './ViewComponents'
 
@@ -90,8 +89,6 @@ class MyEventsScreen extends React.Component {
     
     return (
       <>
-        <Header />
-
         <ViewComponent
           events={events}
           pastEvents={pastEvents}

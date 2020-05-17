@@ -4,7 +4,7 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { translate } from '../../../Locales'
-import { CardsList } from '../../../Components'
+import { CardsList, Header } from '../../../Components'
 import { Images, Colors } from 'App/Theme'
 
 import {
@@ -107,6 +107,7 @@ const ViewComponent = ({
 
   return (
     <Container>
+      <Header />
       
       <CreateEventButton
         activeOpacity={0.8}

@@ -58,9 +58,17 @@ class EditEventScreen extends Component {
   }
 
   navigateToStep = (activeStep) => {
-    this.props.navigation.push('CreationEventSteps', {
-      activeStep
-    })
+    const { event } = this.props
+
+    if(event.register_step >= activeStep ||
+      event.register_step + 1 == activeStep) {
+        return this.props.navigation.push('CreationEventSteps', {
+          activeStep
+        })
+
+      } else {
+        return
+      }
   }
 
   render() {
@@ -84,7 +92,7 @@ class EditEventScreen extends Component {
           <CardRegisterStep
             title={step.title}
             text={step.text}
-            completed={(event.register_step >= index) ? true : false}
+            completed={event.register_step >= index ? true : false}
             final={(steps.length - 1) == index}
             onPress={() => this.navigateToStep(index)}
           />

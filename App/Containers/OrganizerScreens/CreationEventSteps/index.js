@@ -12,6 +12,7 @@ import api from '../../../Services/api'
 import { translate } from '../../../Locales'
 import {
     InitialStep,
+    AddImagesToEvent,
     SavingLoading
 } from '../../../Components'
 
@@ -24,8 +25,11 @@ export class CreationEventSteps extends Component {
       loading: false,
       onNextFunc: () => null,
       stepError: false,
-      avatarSource: '',
       activeStep: 0,
+      activeImageIndex: 0,
+      isCarrouselOpen: false,
+      isCarrouselOpen: false,
+      imagesToDelete: []
     }
   }
 
@@ -50,15 +54,7 @@ export class CreationEventSteps extends Component {
       return this.setState({ keyboardIsOpen: false })
   }
 
-  setSaveNextStepForm = (func) => {
-      this.setState({ onNextFunc: func })
-  }
-
-  setStepErrors = (errors) => {
-      const hasError = Object.entries(errors).length > 0
-      this.setState({ stepError: hasError })
-  }
-
+  // OPEN CAMERA AND GALLERY
   showImagePicker = (title, type) => {
     const options = {
         title: translate(title),
@@ -103,6 +99,7 @@ export class CreationEventSteps extends Component {
     }
   }
 
+  // SAVE FIRST STEP
   setFirstStepFormdata = (newData) => {
     this.props.setFirstStep(newData)
 
@@ -137,16 +134,20 @@ export class CreationEventSteps extends Component {
         })
 
         updateEvent = data
+        this.props.setEventId(data.id)
       }
-      
+
       if(step == 0 &&
         event.event_logo &&
-        isLocalImageUri(event.event_logo.url)
-      ) {
+        isLocalImageUri(event.event_logo.url)) {
         this.uploadCover(event.event_logo.url, updateEvent.id)
       }
 
-      this.props.setEventFormData(updateEvent)
+      if(step == 1) {
+        this.deleteImagesAfterSave()
+        this.uploadImage(updateEvent.id)
+      }
+
       this.setState({ loading: false })
 
       this.goToNextStep()
@@ -157,6 +158,7 @@ export class CreationEventSteps extends Component {
     }
   }
 
+  // COVER
   uploadCover = async (imageUri, id) => {
     let headers = {
       'Content-Type': 'multipart/form-data',
@@ -169,7 +171,6 @@ export class CreationEventSteps extends Component {
     formData.append('file', {
       uri: imageUri,
       name: imageUri,
-      type: 'image/jpg',
     })
 
     try {
@@ -189,44 +190,112 @@ export class CreationEventSteps extends Component {
     }
   }
 
-  // uploadImage = (imagesUris, id) => {
-  //   const { event } = this.props
-
-  //   let headers = {
-  //     'Content-Type': 'multipart/form-data',
-  //     'Access-Control-Allow-Origin': '*'
-  //   }
-
-  //   try {
-          
-  //     let formData = new FormData()
-
-  //     formData.append('file', {
-  //       uri: imageUri,
-  //       name: imageUri,
-  //       type: 'image/jpg',
-  //     })
-
-  //     const { data } = await api.post(`/images/${id}/events`, formData, headers)
-
-  //   } catch (error) {
-  //     console.log({error})
-      // this.setState({ loading: false })
-
-  //   }
-  // }
-
   deleteCover = () => {
     this.props.setCover(null)
     this.props.setCoverId(null)
   }
 
+  // IMAGES
+  uploadImage = (id) => {
+    const { event } = this.props
+
+    let localImages = event.event_images.filter((image, index) => !image.url.includes('http'))
+    let eventImages = event.event_images.filter((image, index) => image.url.includes('http'))
+
+    let headers = {
+      'Content-Type': 'multipart/form-data',
+      'Access-Control-Allow-Origin': '*',
+      authorization: `Bearer ${this.props.user.token}`
+    }
+
+    if(localImages) {
+      localImages.map(image => {
+        try {
+          let formData = new FormData()
+
+          formData.append('file', {
+            uri: image.url,
+            name: image.url,
+          })
+
+          api.post(`/images/${id}/events`, formData, headers).then(response => {
+            const event_image = {
+              id: response.data.id,
+              name: response.data.name,
+              url: response.data.url,
+            }
+  
+            eventImages.push(event_image)
+
+          })
+
+        } catch (error) {
+          console.log({error})
+          this.setState({ loading: false, stepError: true })
+    
+        }
+      })
+
+      return this.props.setImages(eventImages)
+    }
+  }
+
+  deleteImagesAfterSave = () => {
+    const { imagesToDelete } = this.state
+    let externalImages = imagesToDelete.filter((image, index) => image.url.includes('http'))
+    
+    if(externalImages.length) {
+
+      try {  
+        externalImages.map(async image => {
+          const { data } = await api.delete(`/images/${image.id}`, null, {
+            authorization: `Bearer ${this.props.user.token}`
+          })
+        })
+
+      } catch (error) {
+        console.log({error})
+        this.setState({ loading: false })
+
+      }
+    } else {
+      return
+    }
+  }
+
+  deleteImage = (indexToDelete) => {
+    const { event } = this.props
+    const imagesToDelete = event.event_images.filter((image, index) => index == indexToDelete)
+    const images = event.event_images.filter((image, index) => index != indexToDelete)
+
+    this.setState({ imagesToDelete })
+    this.props.setImages(images)
+  }
+
+  showCarrousel = () => {
+    this.setState({isCarrouselOpen: !this.state.isCarrouselOpen})
+  }
+
+  onSnapToImage = (index) => {
+    this.setState({ activeImageIndex: index, isCarrouselOpen: true })
+  }
+
+  // STEPS FUNCTIONS
   goToNextStep = () => {
     this.setState(prevState => ({ activeStep: prevState.activeStep + 1 }))
   }
 
   goBackStep = () => {
     this.setState(prevState => ({ activeStep: prevState.activeStep - 1 }))
+  }
+
+  setSaveNextStepForm = (func) => {
+    this.setState({ onNextFunc: func })
+  }
+
+  setStepErrors = (errors) => {
+      const hasError = Object.entries(errors).length > 0
+      this.setState({ stepError: hasError })
   }
 
   nextButtonStyle = {
@@ -239,11 +308,18 @@ export class CreationEventSteps extends Component {
 
   nextButtonTextStyle = {
     color: Colors.white,
-    fontFamily: 'Nunito Bold'
+    fontSize: 15,
+    fontFamily: 'Nunito Regular'
   };
 
   render() {
-    const { onNextFunc, stepError, avatarSource, loading, activeStep } = this.state
+    const {
+      onNextFunc,
+      stepError,
+      loading,
+      activeStep,
+      activeImageIndex,
+      isCarrouselOpen } = this.state
 
     return (
       <>
@@ -262,72 +338,79 @@ export class CreationEventSteps extends Component {
               completedStepIconColor={Colors.secondary}
               completedProgressBarColor={Colors.secondary}
           >
-                <ProgressStep
-                  onNext={onNextFunc}
-                  onPrevious={this.goBackStep}
-                  label={translate('firstEditEventStepTitle')}
-                  errors={stepError}
-                  nextBtnText={translate('nextBtnText')}
-                  nextBtnStyle={this.nextButtonStyle}
-                  nextBtnTextStyle={this.nextButtonTextStyle}
-                >
-                    <InitialStep
-                      setSaveNextStepForm={this.setSaveNextStepForm}
-                      setStepErrors={this.setStepErrors}
-                      setCoverImage={this.showImagePicker}
-                      setFirstStepFormdata={this.setFirstStepFormdata}
-                      deleteCover={this.deleteCover}
-                  />
-                </ProgressStep>
+              {/* STEP 1: INITIAL SETTINGS */}
+              <ProgressStep
+                onNext={onNextFunc}
+                onPrevious={this.goBackStep}
+                label={translate('firstEditEventStepTitle')}
+                errors={stepError}
+                nextBtnText={translate('nextBtnText')}
+                nextBtnStyle={this.nextButtonStyle}
+                nextBtnTextStyle={this.nextButtonTextStyle}
+              >
+                <InitialStep
+                  setSaveNextStepForm={this.setSaveNextStepForm}
+                  setStepErrors={this.setStepErrors}
+                  setCoverImage={this.showImagePicker}
+                  setFirstStepFormdata={this.setFirstStepFormdata}
+                  deleteCover={this.deleteCover}
+                />
+              </ProgressStep>
 
-                <ProgressStep
-                  label="Second Step"
-                  nextBtnStyle={this.nextButtonStyle}
-                  nextBtnTextStyle={this.nextButtonTextStyle}
-                  previousBtnStyle={this.nextButtonStyle}
-                  previousBtnTextStyle={this.nextButtonTextStyle}
-                  onPrevious={this.goBackStep}
-                >
-                    <View style={{ alignItems: 'center' }}>
-                        <Text>This is the content within step 2!</Text>
-                    </View>
-                </ProgressStep>
+              {/* STEP 2: ADD PHOTOS */}
+              <ProgressStep
+                label="Second Step"
+                nextBtnStyle={this.nextButtonStyle}
+                nextBtnTextStyle={this.nextButtonTextStyle}
+                previousBtnStyle={this.nextButtonStyle}
+                previousBtnTextStyle={this.nextButtonTextStyle}
+                onPrevious={this.goBackStep}
+                onNext={() => this.saveOrUpdateEvent(1)}
+              >
+                <AddImagesToEvent
+                  activeImageIndex={activeImageIndex}
+                  isCarrouselOpen={isCarrouselOpen}
+                  showCarrousel={this.showCarrousel}
+                  onSnapToImage={this.onSnapToImage}
+                  deleteImage={this.deleteImage}
+                />
+              </ProgressStep>
 
-                <ProgressStep label="Third Step">
-                    <View style={{ alignItems: 'center' }}>
-                        <Text>This is the content within step 3!</Text>
-                    </View>
-                </ProgressStep>
+              <ProgressStep label="Third Step">
+                  <View style={{ alignItems: 'center' }}>
+                      <Text>This is the content within step 3!</Text>
+                  </View>
+              </ProgressStep>
 
-                <ProgressStep label="Third Step">
-                    <View style={{ alignItems: 'center' }}>
-                        <Text>This is the content within step 3!</Text>
-                    </View>
-                </ProgressStep>
+              <ProgressStep label="Third Step">
+                  <View style={{ alignItems: 'center' }}>
+                      <Text>This is the content within step 3!</Text>
+                  </View>
+              </ProgressStep>
 
-                <ProgressStep label="Third Step">
-                    <View style={{ alignItems: 'center' }}>
-                        <Text>This is the content within step 3!</Text>
-                    </View>
-                </ProgressStep>
+              <ProgressStep label="Third Step">
+                  <View style={{ alignItems: 'center' }}>
+                      <Text>This is the content within step 3!</Text>
+                  </View>
+              </ProgressStep>
 
-                <ProgressStep label="Third Step">
-                    <View style={{ alignItems: 'center' }}>
-                        <Text>This is the content within step 3!</Text>
-                    </View>
-                </ProgressStep>
+              <ProgressStep label="Third Step">
+                  <View style={{ alignItems: 'center' }}>
+                      <Text>This is the content within step 3!</Text>
+                  </View>
+              </ProgressStep>
 
-                <ProgressStep label="Third Step">
-                    <View style={{ alignItems: 'center' }}>
-                        <Text>This is the content within step 3!</Text>
-                    </View>
-                </ProgressStep>
+              <ProgressStep label="Third Step">
+                  <View style={{ alignItems: 'center' }}>
+                      <Text>This is the content within step 3!</Text>
+                  </View>
+              </ProgressStep>
 
-                <ProgressStep label="Third Step">
-                    <View style={{ alignItems: 'center' }}>
-                        <Text>This is the content within step 3!</Text>
-                    </View>
-                </ProgressStep>
+              <ProgressStep label="Third Step">
+                  <View style={{ alignItems: 'center' }}>
+                      <Text>This is the content within step 3!</Text>
+                  </View>
+              </ProgressStep>
             </ProgressSteps>
         </Container>
       </>

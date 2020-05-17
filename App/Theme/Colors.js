@@ -21,6 +21,7 @@ export default {
   mediumGray2: '#979797',
   backgroundGray: '#F5F5F5',
   labelBlack: '#4D4F5C',
+  labelGray: '#373A42',
   textDefault: '#616368',
   primary: '#D7C6CF',
   secondary: '#8965A3',

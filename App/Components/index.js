@@ -11,7 +11,8 @@ import Header from './Header'
 import CardRegisterStep from './CardRegisterStep'
 import SavingLoading from './SavingLoading'
 import {
-  InitialStep
+  InitialStep,
+  AddImagesToEvent
 } from './EventSteps'
 
 export {
@@ -27,5 +28,6 @@ export {
   Header,
   CardRegisterStep,
   SavingLoading,
-  InitialStep
+  InitialStep,
+  AddImagesToEvent
 }

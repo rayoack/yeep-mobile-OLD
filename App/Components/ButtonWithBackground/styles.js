@@ -1,9 +1,9 @@
 import styled from 'styled-components/native';
 
 export const ButtonContainer = styled.TouchableOpacity`
-  width: 290px;
+  width: ${props => props.width ? props.width : '290px'};
   height: 45px;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: ${props => props.backgroundColor};
   align-items: center;
   justify-content: center;

@@ -1,6 +1,7 @@
 
 export const Types = {
   SET_EVENT_FORM_DATA: 'manageUserReducer/SET_EVENT_FORM_DATA',
+  SET_EVENT_ID: 'manageUserReducer/SET_EVENT_ID',
   SET_TITLE: 'manageUserReducer/SET_TITLE',
   SET_COVER_ID: 'manageUserReducer/SET_COVER_ID',
   SET_COVER: 'manageUserReducer/SET_COVER',
@@ -12,6 +13,10 @@ export const Types = {
 export const Creators = {
   setEventFormData: (payload) => ({
     type: Types.SET_EVENT_FORM_DATA,
+    payload
+  }),
+  setEventId: (payload) => ({
+    type: Types.SET_EVENT_ID,
     payload
   }),
   setTitle: (payload) => ({
@@ -42,6 +47,7 @@ export const Creators = {
 
 const INITIAL_STATE = {
   event: {
+    id: null,
     title: '',
     category: '',
     estimated_audience: 0,
@@ -73,6 +79,15 @@ export default function manageEventReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
           event: action.payload
+      }
+
+    case Types.SET_EVENT_ID:
+      return {
+        ...state,
+          event: {
+            ...event,
+            id: action.payload
+          }
       }
 
     case Types.SET_TITLE:

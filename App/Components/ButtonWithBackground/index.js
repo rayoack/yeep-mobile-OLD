@@ -12,6 +12,7 @@ const ButtonWithBackground = ({
   loading,
   loadingSize,
   loadingColor,
+  width,
 }) => {
   return (
     <ButtonContainer
@@ -19,6 +20,7 @@ const ButtonWithBackground = ({
       backgroundColor={backgroundColor}
       disabled={disabled}
       activeOpacity={0.7}
+      width={width}
     >
       {!loading ?(
         <ButtonText textColor={textColor}>{text}</ButtonText>
@@ -39,6 +41,7 @@ ButtonWithBackground.defaultProps = {
   loading: false,
   loadingSize: 'large',
   loadingColor: '#fff',
+  width: ''
 }
 
 export default ButtonWithBackground;

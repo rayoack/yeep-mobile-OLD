@@ -16,8 +16,8 @@ import {
   ViewContainer,
   EventCover,
   EventCoverContainer,
-  EventCoverLabel,
-  EventCoverText,
+  EventStepLabel,
+  EventStepText,
   DeleteEventCoverContainer,
   DeleteEventCoverIcon } from './styles'
 
@@ -110,8 +110,8 @@ export const InitialStep = ({
           }}
         </Formik>
 
-        <EventCoverLabel>{translate('addCoverLabel')}</EventCoverLabel>
-        <EventCoverText>{translate('addCoverPlaceholder')}</EventCoverText>
+        <EventStepLabel>{translate('addCoverLabel')}</EventStepLabel>
+        <EventStepText>{translate('addCoverPlaceholder')}</EventStepText>
 
         <EventCoverContainer
           activeOpacity={0.8}
