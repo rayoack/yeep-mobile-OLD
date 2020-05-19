@@ -19,7 +19,10 @@ import {
   DateContainer,
   HoursContainer,
   InsertDateButton,
-  InsertDateButtonText } from './styles'
+  InsertDateButtonText,
+  InsertDayContainer,
+  DeleteDateContainer,
+  DeleteDateIcon} from './styles'
 
 export const EventDates = ({
   event,
@@ -29,8 +32,8 @@ export const EventDates = ({
   closeTimePicker,
   setDayTime,
   insertNewDate,
+  removeDate,
 }) => {
-  console.log(event)
   const eventsWithFormatedDates = normalizedDates(event)
 
   return (
@@ -39,7 +42,7 @@ export const EventDates = ({
         <EventStepLabel>{translate('fourthEditEventStepTitle')}</EventStepLabel>
         <EventStepText>{translate('fourthEditEventStepText')}</EventStepText>
         
-        {!eventsWithFormatedDates.dates ? (
+        {!eventsWithFormatedDates.dates || !eventsWithFormatedDates.dates.length ? (
           <>
             <ButtonWithBackground
               onPress={() => insertNewDate()}
@@ -52,12 +55,21 @@ export const EventDates = ({
           <>
             {eventsWithFormatedDates.dates.map((date, index) => (
               <DateContainer>
-                <InputButton
-                  label={translate('dayLabel')}
-                  iconSize={24}
-                  value={date.normalizedDate}
-                  navigateTolist={() => navigateToCalendar(index)}
-                />
+                <InsertDayContainer>
+                  <InputButton
+                    label={translate('dayLabel')}
+                    iconSize={24}
+                    value={date.normalizedDate}
+                    navigateTolist={() => navigateToCalendar(index)}
+                  />
+
+                  <DeleteDateContainer
+                    activeOpacity={0.8}
+                    onPress={() => removeDate(index)}
+                  >
+                    <DeleteDateIcon source={Images.cancel}/>
+                  </DeleteDateContainer>
+                </InsertDayContainer>
 
                 <HoursContainer>
                   <InputButton

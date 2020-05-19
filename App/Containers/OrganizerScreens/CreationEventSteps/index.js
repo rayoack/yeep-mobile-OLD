@@ -5,10 +5,13 @@ import ImagePker from 'react-native-image-crop-picker';
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
-import { format, parseISO, isBefore, isAfter } from 'date-fns';
+import { format, parseISO, isBefore, isAfter, parse } from 'date-fns';
 import setHours from 'date-fns/setHours'
 import setMinutes from 'date-fns/setMinutes'
 import setSeconds from 'date-fns/setSeconds'
+import setDate from 'date-fns/setDate'
+import setMonth from 'date-fns/setMonth'
+import setYear from 'date-fns/setYear'
 import getTime from 'date-fns/getTime'
 import addDays from 'date-fns/addDays'
 import addHours from 'date-fns/addHours'
@@ -183,7 +186,7 @@ export class CreationEventSteps extends Component {
         this.uploadCover(event.event_logo.url, updateEvent.id)
       }
 
-      if(step == 1) {
+      if(step == 1 && event.event_images.length) {
         this.deleteImagesAfterSave()
         this.uploadImage(updateEvent.id)
       }
@@ -334,7 +337,6 @@ export class CreationEventSteps extends Component {
 
     if(datesCopy.length) {
       let newDate = {...datesCopy[datesCopy.length - 1]}
-
       let newFullDate = formatISO(addDays(parseISO(newDate.full_date), 1))
       let newDay = format(parseISO(newFullDate), 'yyyy-MM-dd')
 
@@ -389,6 +391,14 @@ export class CreationEventSteps extends Component {
     this.props.setEventDates(datesCopy)
   }
 
+  removeDate = (indexToRemove) => {
+    const { dates } = this.props.event
+
+    let datesCopy = dates.filter((date, index) => index != indexToRemove)
+
+    this.props.setEventDates(datesCopy)
+  }
+
   navigateToCalendar = (index) => {
     const { dates } = this.props.event
     this.setState({ selectedDayIndex: index })
@@ -414,6 +424,9 @@ export class CreationEventSteps extends Component {
 
     eventDates.map((date, index) => {
       if(index == selectedDayIndex) {
+        const [year, month, day] = selectedDay.dateString.split('-')
+        const newFullDate = formatISO(setDate(setMonth(setYear(parseISO(date.full_date), year), month - 1), day))
+        date.full_date = newFullDate
         date.day = selectedDay.dateString
       }
 
@@ -456,7 +469,6 @@ export class CreationEventSteps extends Component {
 
     const fullStart = setSeconds(setMinutes(setHours(day, startHour), startMinute), 0)
     const fullEnd = setSeconds(setMinutes(setHours(day, endHour), endMinute), 0)
-
     const available = isAfter(fullEnd, fullStart)
     
     return available
@@ -479,8 +491,11 @@ export class CreationEventSteps extends Component {
             parseISO(date.day),
             date.end_hour)
 
-            // TOASTIFY
+            // TOAST
             if(!available) return this.setShowToast(translate('startHourError'))
+
+            const [startHour, startMinute] = selectedHour.split(':')
+            date.full_date = formatISO(setSeconds(setMinutes(setHours(parseISO(date.full_date), startHour), startMinute), 0))
 
         } else {
           const available = this.endHourAvailable(
@@ -488,11 +503,12 @@ export class CreationEventSteps extends Component {
             parseISO(date.day),
             date.start_hour)
 
-            // TOASTIFY
+            // TOAST
             if(!available) return this.setShowToast(translate('endHourError'))
         }
 
         date[hourType] = selectedHour
+        console.log(date)
       }
 
       return date
@@ -642,6 +658,7 @@ export class CreationEventSteps extends Component {
                     setDayTime={this.setDayTime}
                     isTimePickerVisible={isTimePickerVisible}
                     insertNewDate={this.insertNewDate}
+                    removeDate={this.removeDate}
                   />
               </ProgressStep>
 

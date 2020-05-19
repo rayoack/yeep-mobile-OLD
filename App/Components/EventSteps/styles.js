@@ -97,6 +97,25 @@ export const HoursContainer = styled.View`
   flex-direction: row;
 `
 
+export const InsertDayContainer = styled.View`
+  flex-direction: row;
+`
+
+export const DeleteDateContainer = styled.TouchableOpacity`
+  /* margin-bottom: 40px; */
+  position: relative;
+  top: 5;
+  justify-content: center;
+  padding: 10px;
+  align-items: center;
+
+`
+
+export const DeleteDateIcon = styled(FastImage)`
+  height: 25px;
+  width: 25px;
+`
+
 export const InsertDateButton = styled.TouchableOpacity``
 
 export const InsertDateButtonText = styled.Text`
