@@ -137,4 +137,11 @@ export default {
   chooseFromLibraryTitle: 'Escolher da biblioteca...',
   deleteCover: 'deletar',
   eventDescriptionPlaceholder: 'Tell me details about your event.',
+  dayLabel: 'Dia',
+  startHourLabel: 'Hora de início',
+  endHourLabel: 'Hora de término',
+  startHourError: 'Desculpe você não pode selecionar um horário de inicio que vem depois que o horário de término.',
+  endHourError: 'Desculpe, você não pode selecionar um horário de término que seja antes do horário de início.',
+  inserDateButton: 'Inserir uma nova data',
+  dateRequired: 'Você deve adicionar pelo menos uma data para o evento.',
 }

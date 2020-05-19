@@ -1,20 +1,24 @@
 import React, { Component } from 'react'
 import { View, Text, Keyboard } from 'react-native'
-import { ProgressSteps, ProgressStep } from '../../../Services/ProgressSteps';
 import ImagePicker from 'react-native-image-picker';
 import ImagePker from 'react-native-image-crop-picker';
 import { connect } from 'react-redux'
 import _ from 'lodash'
-import { parseISO, isBefore, isAfter } from 'date-fns';
-import getHours from 'date-fns/getHours'
-import getMinutes from 'date-fns/getMinutes'
+
+import { format, parseISO, isBefore, isAfter } from 'date-fns';
 import setHours from 'date-fns/setHours'
 import setMinutes from 'date-fns/setMinutes'
 import setSeconds from 'date-fns/setSeconds'
+import getTime from 'date-fns/getTime'
+import addDays from 'date-fns/addDays'
+import addHours from 'date-fns/addHours'
+import formatISO from 'date-fns/formatISO'
+import isSameDay from 'date-fns/isSameDay'
 
 import { Creators as ManagerEventActions } from '../../../Stores/reducers/manageEventReducer'
 
 import { Colors } from 'App/Theme'
+import { ProgressSteps, ProgressStep } from '../../../Services/ProgressSteps';
 import api from '../../../Services/api'
 import { translate } from '../../../Locales'
 import {
@@ -23,9 +27,11 @@ import {
   AddImagesToEvent,
   EventDescription,
   EventDates,
+  CustomToast,
 } from '../../../Components'
 
 import { Container } from './styles'
+import { date } from 'yup';
 export class CreationEventSteps extends Component {
   constructor(props) {
     super(props)
@@ -42,6 +48,8 @@ export class CreationEventSteps extends Component {
       selectedDayIndex: 0,
       isTimePickerVisible: false,
       hourType: 'start_hour',
+      toastText: '',
+      showToast: false,
     }
   }
 
@@ -64,6 +72,15 @@ export class CreationEventSteps extends Component {
 
   _keyboardDidHide = () => {
       return this.setState({ keyboardIsOpen: false })
+  }
+
+  setShowToast = (text) => {
+    this.setState({ toastText: text, showToast: true })
+
+    this.interval = setInterval(() => {
+      this.setState({ showToast: false })
+      clearInterval(this.interval)
+    }, 3000);
   }
 
   // OPEN CAMERA AND GALLERY
@@ -310,6 +327,68 @@ export class CreationEventSteps extends Component {
   }
 
   // EVENT DATES
+  insertNewDate = () => {
+    const { dates } = this.props.event
+
+    let datesCopy = dates ? dates.map(date => date) : []
+
+    if(datesCopy.length) {
+      let newDate = {...datesCopy[datesCopy.length - 1]}
+
+      let newFullDate = formatISO(addDays(parseISO(newDate.full_date), 1))
+      let newDay = format(parseISO(newFullDate), 'yyyy-MM-dd')
+
+      newDate = {
+        ...newDate,
+        day: newDay,
+        full_date: newFullDate
+      }
+      
+      datesCopy = [...datesCopy, newDate]
+
+    } else {
+      
+      let firstNewFullDate = formatISO(new Date())
+      let firstNewDay = format(parseISO(firstNewFullDate), 'yyyy-MM-dd')
+      let firstStartHour = format(parseISO(firstNewFullDate), 'HH:mm')
+
+      let endDay = addHours(parseISO(firstNewFullDate), 1)
+
+      if(isSameDay(endDay, parseISO(firstNewFullDate))) {
+        let firstEndHour = format(addHours(parseISO(firstNewFullDate), 1), 'HH:mm')
+        
+        const newDate = {
+          full_date: firstNewFullDate,
+          day: firstNewDay,
+          start_hour: firstStartHour,
+          end_hour: firstEndHour,
+        }
+
+        datesCopy = [ newDate ]
+      } else {
+
+        const firstNewDate = {
+          full_date: firstNewFullDate,
+          day: firstNewDay,
+          start_hour: firstStartHour,
+          end_hour: firstStartHour,
+        }
+
+        const secondNewDate = {
+          start_hour: format(parseISO(formatISO(endDay)), 'HH:mm'),
+          end_hour: addHours(parseISO(formatISO(endDay)), 1),
+          day: format(parseISO(formatISO(endDay)), 'yyyy-MM-dd'),
+          full_date: formatISO(endDay)
+        }
+
+        datesCopy = [ firstNewDate, secondNewDate ]
+      }
+      
+    }
+
+    this.props.setEventDates(datesCopy)
+  }
+
   navigateToCalendar = (index) => {
     const { dates } = this.props.event
     this.setState({ selectedDayIndex: index })
@@ -358,30 +437,36 @@ export class CreationEventSteps extends Component {
     this.setState({ isTimePickerVisible: false })
   }
 
-  startHourAvailable = (startTimestamp, day, endHourTime) => {
-    const time = `${getHours(startTimestamp)}:${getMinutes(startTimestamp)}`
+  startHourAvailable = (startTime, day, endHourTime) => {
 
-    const [startHour, startMinute] = time.split(':');
+    const [startHour, startMinute] = startTime.split(':');
     const [endHour, endMinute] = endHourTime.split(':');
 
     const fullStart = setSeconds(setMinutes(setHours(day, startHour), startMinute), 0)
     const fullEnd = setSeconds(setMinutes(setHours(day, endHour), endMinute), 0)
-    const available = isAfter(fullStart, fullEnd)
+    const available = isBefore(fullStart, fullEnd)
     
-    console.log('-----')
-    console.log('fullStart', fullStart)
-    console.log('fullEnd', fullEnd)
-    console.log('available', available)
-    // return {
-    //   time,
-    //   value: format(value, "yyyy-MM-dd'T'HH:mm:ssxxx"),
-    // };
+    return available
   }
 
+  endHourAvailable = (endTime, day, startHourTime) => {
+
+    const [endHour, endMinute] = endTime.split(':');
+    const [startHour, startMinute] = startHourTime.split(':');
+
+    const fullStart = setSeconds(setMinutes(setHours(day, startHour), startMinute), 0)
+    const fullEnd = setSeconds(setMinutes(setHours(day, endHour), endMinute), 0)
+
+    const available = isAfter(fullEnd, fullStart)
+    
+    return available
+  }
 
   setDayTime = (time) => {
     const { dates } = this.props.event
     const { selectedDayIndex, hourType } = this.state
+
+    const selectedHour = format(getTime(time), 'HH:mm')
 
     let eventDates = [ ...dates ]
 
@@ -389,14 +474,31 @@ export class CreationEventSteps extends Component {
       if(index == selectedDayIndex) {
 
         if(hourType == 'start_hour') {
-          this.startHourAvailable(time, parseISO(date.day), date.end_hour)
+          const available = this.startHourAvailable(
+            selectedHour,
+            parseISO(date.day),
+            date.end_hour)
+
+            // TOASTIFY
+            if(!available) return this.setShowToast(translate('startHourError'))
+
+        } else {
+          const available = this.endHourAvailable(
+            selectedHour,
+            parseISO(date.day),
+            date.start_hour)
+
+            // TOASTIFY
+            if(!available) return this.setShowToast(translate('endHourError'))
         }
-        // date[hourType] = hour
+
+        date[hourType] = selectedHour
       }
 
       return date
     })
 
+    this.props.setEventDates(eventDates)
     this.setState({ isTimePickerVisible: false })
   }
 
@@ -440,11 +542,22 @@ export class CreationEventSteps extends Component {
       activeStep,
       activeImageIndex,
       isCarrouselOpen,
-      isTimePickerVisible } = this.state
+      isTimePickerVisible,
+      toastText,
+      showToast } = this.state
+
+    const { event } = this.props
 
     return (
       <>
         <SavingLoading loading={loading} />
+
+        <CustomToast
+          show={showToast} 
+          text={toastText} 
+          duration={2000}
+          positionValue={50}
+        />
 
         <Container style={{flex: 1}}>
             <ProgressSteps
@@ -498,7 +611,7 @@ export class CreationEventSteps extends Component {
                 />
               </ProgressStep>
 
-              {/* EVENT DESCRIPTION */}
+              {/* STEP 3: EVENT DESCRIPTION */}
               <ProgressStep
                 label={translate('thirdEditEventStepTitle')}
                 nextBtnStyle={this.nextButtonStyle}
@@ -513,14 +626,22 @@ export class CreationEventSteps extends Component {
                   />
               </ProgressStep>
 
-              {/* EVENT DATES */}
-              <ProgressStep label="Third Step">
+              {/* STEP 4: EVENT DATES */}
+              <ProgressStep
+                nextBtnStyle={this.nextButtonStyle}
+                nextBtnTextStyle={this.nextButtonTextStyle}
+                previousBtnStyle={this.nextButtonStyle}
+                previousBtnTextStyle={this.nextButtonTextStyle}
+                onPrevious={this.goBackStep}
+                onNext={event.dates ? onNextFunc : () => this.setShowToast(translate('dateRequired'))}
+                label="Third Step">
                   <EventDates
                     navigateToCalendar={this.navigateToCalendar}
                     openTimePicker={this.openTimePicker}
                     closeTimePicker={this.closeTimePicker}
                     setDayTime={this.setDayTime}
                     isTimePickerVisible={isTimePickerVisible}
+                    insertNewDate={this.insertNewDate}
                   />
               </ProgressStep>
 

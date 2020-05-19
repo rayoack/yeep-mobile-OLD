@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
+import { View } from 'react-native'
 import { connect } from 'react-redux'
-import { Keyboard, View } from 'react-native'
-import { Formik } from 'formik';
-import * as Yup from 'yup';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { parseISO, isBefore, isAfter } from 'date-fns';
+import { parseISO } from 'date-fns';
 
-import CustomInput from '../CustomInput'
-import CustomPicker from '../CustomPicker'
 import InputButton from '../InputButton'
-import Calendar from '../Calendar'
+import ButtonWithBackground from '../ButtonWithBackground'
 
 import { translate } from '../../Locales'
 import { Images, Colors } from 'App/Theme'
@@ -21,7 +17,9 @@ import {
   EventStepLabel,
   EventStepText,
   DateContainer,
-  HoursContainer } from './styles'
+  HoursContainer,
+  InsertDateButton,
+  InsertDateButtonText } from './styles'
 
 export const EventDates = ({
   event,
@@ -30,8 +28,9 @@ export const EventDates = ({
   openTimePicker,
   closeTimePicker,
   setDayTime,
+  insertNewDate,
 }) => {
-
+  console.log(event)
   const eventsWithFormatedDates = normalizedDates(event)
 
   return (
@@ -40,16 +39,21 @@ export const EventDates = ({
         <EventStepLabel>{translate('fourthEditEventStepTitle')}</EventStepLabel>
         <EventStepText>{translate('fourthEditEventStepText')}</EventStepText>
         
-        {!eventsWithFormatedDates.dates.length ? (
-          <ButtonWithBackground
-            onPress={() => showImagePicker('', 'multiple')}
-            width={'150px'}
-            text={translate('secondEditEventStepTitle')}/>
+        {!eventsWithFormatedDates.dates ? (
+          <>
+            <ButtonWithBackground
+              onPress={() => insertNewDate()}
+              width={'200px'}
+              text={translate('inserDateButton')}/>
+
+            <View style={{ marginBottom: 100 }} />
+          </>
         ) : (
           <>
             {eventsWithFormatedDates.dates.map((date, index) => (
               <DateContainer>
                 <InputButton
+                  label={translate('dayLabel')}
                   iconSize={24}
                   value={date.normalizedDate}
                   navigateTolist={() => navigateToCalendar(index)}
@@ -57,15 +61,19 @@ export const EventDates = ({
 
                 <HoursContainer>
                   <InputButton
+                    label={translate('startHourLabel')}
                     iconSize={24}
                     value={date.start_hour}
                     navigateTolist={() => openTimePicker(index, 'start_hour')}
+                    marginRigth={'5px'}
                   />
 
                   <InputButton
+                    label={translate('endHourLabel')}
                     iconSize={24}
                     value={date.end_hour}
                     navigateTolist={() => openTimePicker(index, 'end_hour')}
+                    marginLeft={'5px'}
                   />
                 </HoursContainer>
 
@@ -76,8 +84,13 @@ export const EventDates = ({
                   onConfirm={setDayTime}
                   onCancel={closeTimePicker}
                 />
+
               </DateContainer>
             ))}
+
+            <InsertDateButton onPress={() => insertNewDate()}>
+              <InsertDateButtonText>{translate('inserDateButton')}</InsertDateButtonText>
+            </InsertDateButton>
           </>
         )}
       </ViewContainer>
@@ -92,6 +105,7 @@ EventDates.defaultProps = {
   openTimePicker: () => null,
   closeTimePicker: () => null,
   setDayTime: () => null,
+  insertNewDate: () => null,
 }
 
 const mapStateToProps = (state) => ({

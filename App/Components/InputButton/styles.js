@@ -6,6 +6,8 @@ export const ContainerButton = styled.TouchableOpacity`
 
 export const SelectionInputContainer = styled.View`
   flex: 1;
+  margin-right: ${props => props.marginRigth ? props.marginRigth : 0};
+  margin-left: ${props => props.marginLeft ? props.marginLeft : 0};
   margin-bottom: 16px;
   opacity: ${props => props.editable ? 1 : 0.4};
 `

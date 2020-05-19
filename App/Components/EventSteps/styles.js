@@ -86,8 +86,22 @@ export const EventImages = styled(FastImage)`
   border-radius: 2px;
 `
 
-export const DateContainer = styled.View``
+export const DateContainer = styled.View`
+  border-bottom-width: 1px;
+  border-bottom-color: ${Colors.ligthGray};
+  height: 160px;
+  margin: 10px 0;
+`
 
 export const HoursContainer = styled.View`
   flex-direction: row;
+`
+
+export const InsertDateButton = styled.TouchableOpacity``
+
+export const InsertDateButtonText = styled.Text`
+  font-family: 'Nunito Regular';
+  font-size: 16px;
+  color: ${Colors.secondary};
+  margin-bottom: 30px;
 `

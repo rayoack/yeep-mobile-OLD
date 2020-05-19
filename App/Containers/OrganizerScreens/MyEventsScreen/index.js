@@ -2,6 +2,8 @@ import React from 'react'
 import { Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { parseISO, isBefore, isAfter } from 'date-fns';
+import isFuture from 'date-fns/isFuture'
+import isPast from 'date-fns/isPast'
 
 import { Creators as ManagerEventActions } from '../../../Stores/reducers/manageEventReducer'
 
@@ -48,8 +50,8 @@ class MyEventsScreen extends React.Component {
       const eventsWithDate = data.filter(event => event.dates.length)
 
       if(eventsWithDate.length) {
-        eventsList = eventsWithDate.filter(event => isBefore(new Date(), parseISO(event.dates[0].full_date)))
-        pastEventsList = eventsWithDate.filter(event => isAfter(new Date(), parseISO(event.dates[0].full_date)))
+        eventsList = eventsWithDate.filter(event => isFuture(parseISO(event.dates[0].full_date)))
+        pastEventsList = eventsWithDate.filter(event => isPast(parseISO(event.dates[0].full_date)))
       }
       
       this.setState({

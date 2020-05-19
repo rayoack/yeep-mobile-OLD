@@ -11,6 +11,7 @@ import Header from './Header'
 import CardRegisterStep from './CardRegisterStep'
 import SavingLoading from './SavingLoading'
 import InputButton from './InputButton'
+import CustomToast from './CustomToast'
 
 import {
   InitialStep,
@@ -37,4 +38,5 @@ export {
   AddImagesToEvent,
   EventDescription,
   EventDates,
+  CustomToast,
 }

@@ -27,16 +27,22 @@ const InputButton = ({
   iconSize,
   editable,
   error,
-  errorMessage
+  errorMessage,
+  marginRigth,
+  marginLeft
 }) => {
   const valueAsLabel = formatValue(value)
   return (
     <SelectionInputContainer
+      marginLeft={marginLeft}
+      marginRigth={marginRigth}
       error={error}
       editable={editable}>
-      {/* {label && <InputLabel>
-        {label}
-      </InputLabel>} */}
+      {label ? (
+        <InputLabel>
+          {label}
+        </InputLabel>
+      ) : null}
       <ContainerButton 
         onPress={editable ? navigateTolist : () => {}}>
         <Container>
@@ -63,13 +69,15 @@ const InputButton = ({
 InputButton.defaultProps = {
   value: '',
   placeholder: '',
-  label: '',
+  label: null,
   errorMessage: '',
   editable: true,
   error: false,
   iconSize: 20,
   onChangeText: () => null,
   navigateTolist: () => null,
+  marginRigth: null,
+  marginLeft: null,
 }
 
 export default InputButton
