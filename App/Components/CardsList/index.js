@@ -6,6 +6,10 @@ import ListLoading from '../ListLoading'
 import { translate } from '../../Locales'
 
 import {
+  AnimationLoading
+} from '../index'
+
+import {
   Container,
   CardListLoadingContainer,
   CardListLoading,
@@ -30,7 +34,8 @@ const CardsList = ({
   return (
     <>
       {loading ? (
-        <ListLoading />
+        <AnimationLoading
+          loading={loading}/>
       ) : (
         <List
           data={data}

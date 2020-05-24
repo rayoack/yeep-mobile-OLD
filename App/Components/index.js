@@ -15,6 +15,7 @@ import CustomToast from './CustomToast'
 import ScreensHeader from './ScreensHeader'
 import CardSelect from './CardSelect'
 import CardWithImage from './CardWithImage'
+import AnimationLoading from './AnimationLoading'
 
 import {
   InitialStep,
@@ -41,6 +42,7 @@ export {
   ScreensHeader,
   CardSelect,
   CardWithImage,
+  AnimationLoading,
   InitialStep,
   AddImagesToEvent,
   EventDescription,

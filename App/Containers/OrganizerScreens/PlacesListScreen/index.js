@@ -11,6 +11,7 @@ import {
   CardWithImage,
   CustomToast,
   ScreensHeader,
+  AnimationLoading,
 } from '../../../Components'
 
 import {
@@ -29,7 +30,7 @@ export class PlacesListScreen extends Component {
       page: 1,
       refreshing: false,
       spaces: [],
-      feedbackType: 'emptyFeedback',
+      feedbackType: '',
       activeImageIndex: 0,
     }
   }
@@ -59,7 +60,7 @@ export class PlacesListScreen extends Component {
     this.setState({ loading: true })
 
     try {
-      const { data } = await api.get(`/spaces/${this.state.page}`, { queries }, {
+      const { data } = await api.get(`/spaces/${this.state.page}`, { ...queries }, {
         authorization: `Bearer ${this.props.user.token}`
       })
 
@@ -78,6 +79,8 @@ export class PlacesListScreen extends Component {
   }
 
   mapSpaces = (data) => {
+    if(!data.length) return []
+
     const mappedSpaces = data.map(space => {
       return {
         id: space.id,
@@ -118,35 +121,49 @@ export class PlacesListScreen extends Component {
     const { queries } = this.props
 
     return (
-      <Container>
-        <ScreensHeader
-          onPress={() => this.goBack()}
-          title={translate('spacesTabLabel')}
-        />
-
-        <CardList
-          data={this.state.spaces}
-          onRefresh={() => this.loadMyEvents()} 
-          refreshing={false}
-          renderItem={({item}) => (
-            <CardWithImage
-              item={item}
-              activeImageIndex={this.state.activeImageIndex}
-              onSnapToItem={this.onSnapToItem}
+      <>
+        {this.state.loading ? (
+          <AnimationLoading
+            fullscreen={true}
+            loading={this.state.loading}
+          />
+        ) : (
+          <Container>
+            <ScreensHeader
+              onPress={() => this.goBack()}
+              title={translate('spacesTabLabel')}
             />
-          )}
-          ListHeaderComponent={() => (
-            <HeaderContainer>
-              <ListTitle>{`${translate('spacesInTitle')} ${queries.state}`}</ListTitle>
-            </HeaderContainer>
-          )}
-          ListEmptyComponent={() => {
-            return (
-              <Feedback feedbackType={this.state.feedbackType}/>
-            )
-          }}
-        />
-      </Container>
+
+            <CardList
+              data={this.state.spaces}
+              onRefresh={() => this.loadMyEvents()} 
+              refreshing={false}
+              renderItem={({item}) => (
+                <CardWithImage
+                  item={item}
+                  activeImageIndex={this.state.activeImageIndex}
+                  onSnapToItem={this.onSnapToItem}
+                />
+              )}
+              ListHeaderComponent={() => (
+                <HeaderContainer>
+                  <ListTitle>
+                    {this.state.feedbackType != 'error' ?
+                      `${translate('spacesInTitle')} ${queries.state}`
+                      : ''
+                    }
+                  </ListTitle>
+                </HeaderContainer>
+              )}
+              ListEmptyComponent={() => {
+                return (
+                  <Feedback feedbackType={this.state.feedbackType}/>
+                )
+              }}
+            />
+          </Container>
+        )}
+      </>
     )
   }
 }

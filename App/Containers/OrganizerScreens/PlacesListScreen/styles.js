@@ -3,6 +3,7 @@ import { Colors } from 'App/Theme'
 
 export const Container = styled.View`
   flex: 1;
+  background-color: ${Colors.backgroundGray};
 `;
 
 export const CardList = styled.FlatList`
