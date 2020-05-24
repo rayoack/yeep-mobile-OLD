@@ -20,7 +20,6 @@ const CardSelect = ({
   error,
   errorMessage,
 }) => {
-  console.log(selectedCards)
   return (
     <CardContainer 
       editable={editable}

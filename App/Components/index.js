@@ -14,6 +14,7 @@ import InputButton from './InputButton'
 import CustomToast from './CustomToast'
 import ScreensHeader from './ScreensHeader'
 import CardSelect from './CardSelect'
+import CardWithImage from './CardWithImage'
 
 import {
   InitialStep,
@@ -39,6 +40,7 @@ export {
   CustomToast,
   ScreensHeader,
   CardSelect,
+  CardWithImage,
   InitialStep,
   AddImagesToEvent,
   EventDescription,

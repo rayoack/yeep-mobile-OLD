@@ -55,7 +55,7 @@ export const ProfileName = styled.Text`
 
 export const NotificationContainer = styled.TouchableOpacity``
 
-export const NotificationBell = styled(FastImage)`
+export const NotificationBell = styled.Image`
   height: 25px;
   width: 25px;
 `

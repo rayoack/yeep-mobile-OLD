@@ -490,7 +490,6 @@ export class CreationEventSteps extends Component {
         }
 
         date[hourType] = selectedHour
-        console.log(date)
       }
 
       return date

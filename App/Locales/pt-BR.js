@@ -11,12 +11,29 @@ export default {
   readLess: 'Ler menos',
   loadingText: 'Carregando...',
   savingLoadingText: 'Um momento, estamos salvando suas alterações...',
+  searchText: 'Buscar',
   nextBtnText: 'Salvar',
   previousBtnText: 'Voltar',
   finishBtnText: 'Concluir',
   chargeType: 'Tipo de cobrança',
   perHour: 'Por hora',
   perDay: 'Por dia',
+  monetaryUnit: 'Moeda',
+
+  // CURRENCIES
+  argentinePeso: 'ARS: Peso argentino',
+  australianDollar: 'AUD: Dolar australiano',
+  brazilianReal: 'BRL: Real brasileiro',
+  canadianDollar: 'CAD: Dolar canadense',
+  chileanPeso: 'CLP: Peso chileno',
+  colombianPeso: 'COP: Peso colombiano',
+  euro: 'EUR: Euro',
+  peruvianNuevoSol: 'PEN: Novo Sol',
+  poundSterling: 'GBP: Libra esterlina',
+  mexicanPeso: 'MXN: Peso mexicano',
+  paraguayanGuarani: 'PYG: Guarani paraguaio',
+  unitedStatesDollar: 'USD: Dolar americano',
+  uruguayanPeso: 'UYU: Peso uruguaio',
 
   // auth
   registerAction: 'Registrar',
@@ -148,7 +165,14 @@ export default {
   inserDateButton: 'Inserir uma nova data',
   dateRequired: 'Você deve adicionar pelo menos uma data para o evento.',
 
-  // SPACES FILTERS
+  // SPACES FORM AND FILTERS
+  spacesInTitle: 'Espaços em',
+  spacePriceLabel: 'Preço do espaço',
+  priceMinQuery: 'Preço mínimo',
+  priceMaxQuery: 'Preço máximo',
+  capacityLabel: 'Capacidade do espaço',
+  capacityMinQuery: 'Capacidade mínima',
+  capacityMaxQuery: 'Capacidade máxima',
   parkingQuery: 'Exibir apenas espaços',
   whereQuery: 'Onde?',
   spaceCountry: 'País',

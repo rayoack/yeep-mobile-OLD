@@ -16,7 +16,6 @@ export const HeaderContainer = styled.View`
   justify-content: space-between;
   padding: 20px;
   height: 60px;
-  margin-bottom: 20px;
   border-bottom-width: 1px;
   border-bottom-color: ${Colors.ligthGray};
 `

@@ -1,12 +1,15 @@
 import styled from 'styled-components/native';
+import { Picker } from '@react-native-community/picker';
 import { Colors } from 'App/Theme'
 
 export const Container = styled.View`
 `;
 
-export const SelectPicker = styled.Picker`
+export const SelectPicker = styled(Picker)`
   height: 50px;
   border-radius: 10px;
+  font-family: 'Nunito Bold';
+  color: ${Colors.labelBlack};
   padding: 14px;
   width: ${props => props.fullWidth ? '100%' : '290'};
   margin-top: ${props => props.marginTop};

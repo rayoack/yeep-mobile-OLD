@@ -1,24 +1,31 @@
 import React, { Component } from 'react'
-import { View, Text, BackHandler } from 'react-native'
+import { View, Dimensions, BackHandler } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Images } from 'App/Theme'
+import * as RNLocalize from "react-native-localize";
+import LinearGradient from 'react-native-linear-gradient';
 
 import { Creators as spaceQueriesActions } from '../../../Stores/reducers/spaceQueriesReducer'
 import { translate } from '../../../Locales'
 import countriesList from '../../../Services/countries.json'
+import currenciesList from '../../../Services/currencies.json'
 import spaceCategories from '../../../Services/spaces-categories.json'
 
 import {
   ScreensHeader,
   CustomPicker,
-  CardSelect
+  CustomInput,
+  CardSelect,
+  ButtonWithBackground
 } from '../../../Components'
 
 import {
   Container,
   LocationContainer,
-  LocationLabel
+  QueryLabel,
+  RowContainer,
+  SearchButtonContainer
 } from './styles'
 
 export class PlacesFilterScreen extends Component {
@@ -67,7 +74,8 @@ export class PlacesFilterScreen extends Component {
   }
 
   componentDidMount() {
-    this.setCountryStates('Argentina')
+    this.setSpaceCountryQuery('Argentina')
+    this.setUserCurrency()
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
 
@@ -76,8 +84,17 @@ export class PlacesFilterScreen extends Component {
     return true;
   }
 
+  setUserCurrency = () => {
+    const userCurrencies = RNLocalize.getCurrencies()
+    console.log(userCurrencies)
+    userCurrencies.length ?
+      this.setSpaceMonetaryUnitQuery(userCurrencies[0])
+      : this.setSpaceMonetaryUnitQuery('BRL')
+  }
+
   setSpaceCountryQuery = (country) => {
     this.props.setSpaceCountryQuery(country)
+    this.setCountryStates(country)
   }
 
   setSpaceStateQuery = (state) => {
@@ -90,13 +107,12 @@ export class PlacesFilterScreen extends Component {
   }
 
   setSpaceHasParkingQuery = (hasParking) => {
-    console.log('hasParking', hasParking)
     this.props.setSpaceHasParkingQuery(hasParking.value)
     this.setState({ selectedParkingOption: hasParking })
   }
 
   setSpaceChargeTypeQuery = (chargeType) => {
-    this.props.setSpaceChargeTypeQuery(chargeType)
+    this.props.setSpaceChargeTypeQuery(chargeType.value)
     this.setState({ selectedChargeType: chargeType })
   }
 
@@ -106,6 +122,10 @@ export class PlacesFilterScreen extends Component {
 
   setSpaceCapacityMaxQuery = (capacityMax) => {
     this.props.setSpaceCapacityMaxQuery(capacityMax)
+  }
+
+  setSpaceMonetaryUnitQuery = (monetaryUnit) => {
+    this.props.setSpaceMonetaryUnitQuery(monetaryUnit)
   }
 
   setSpacePriceMinQuery = (priceMin) => {
@@ -133,6 +153,7 @@ export class PlacesFilterScreen extends Component {
       }
     })
 
+    this.setSpaceStateQuery(countryStates[0].value)
     this.setState({ countryStates })
   }
 
@@ -145,6 +166,10 @@ export class PlacesFilterScreen extends Component {
     })
 
     return countries
+  }
+
+  navigateToPlacesListScreen = () => {
+    this.props.navigation.push('PlacesListScreen')
   }
 
   render() {
@@ -161,62 +186,137 @@ export class PlacesFilterScreen extends Component {
       }
     })
 
-    return (
-      <Container>
-        <ScreensHeader
-          onPress={() => goBack()}
-          title={translate('spacesTabLabel')}
-        />
+    const currenciesMapped = currenciesList.map(currency => {
+      const currencyTranslate = translate(currency.title)
+      return {
+        title: currencyTranslate,
+        value: currency.value
+      }
+    })
 
-        <LocationLabel>{translate('whereQuery')}</LocationLabel>
-        <LocationContainer>
-          <CustomPicker
-            actualValue={spaceQueries.country}
-            values={countries}
-            labelSize={16}
-            onValueChange={value => {
-              this.setCountryStates(value)
-              this.setSpaceCountryQuery(value)
-            }}
-            label={translate('spaceCountry')}
-            marginBottom={10}
-            // error={errors.country}
-            // errorText={errors.country}
+    console.log(spaceQueries)
+    return (
+      <>
+        <Container>
+          <ScreensHeader
+            onPress={() => this.goBack()}
+            title={translate('spacesTabLabel')}
+          />
+
+          <QueryLabel>{translate('whereQuery')}</QueryLabel>
+          <LocationContainer>
+            <CustomPicker
+              actualValue={spaceQueries.country}
+              values={countries}
+              labelSize={16}
+              onValueChange={value => this.setSpaceCountryQuery(value)}
+              label={translate('spaceCountry')}
+              marginBottom={10}
+              // error={errors.country}
+              // errorText={errors.country}
+            />
+
+            <CustomPicker
+              actualValue={spaceQueries.state}
+              values={this.state.countryStates}
+              labelSize={16}
+              onValueChange={this.setSpaceStateQuery}
+              label={translate('spaceState')}
+              marginBottom={10}
+              // error={errors.state}
+              // errorText={errors.state}
+            />
+          </LocationContainer>
+
+          <CardSelect
+            title={translate('parkingQuery')}
+            cards={this.state.parkingOptions}
+            selectedCards={this.state.selectedParkingOption}
+            onCardPress={this.setSpaceHasParkingQuery}
+          />
+
+          <CardSelect
+            title={translate('chargeType')}
+            cards={this.state.chargingTypes}
+            selectedCards={this.state.selectedChargeType}
+            onCardPress={this.setSpaceChargeTypeQuery}
           />
 
           <CustomPicker
-            actualValue={spaceQueries.state}
-            values={this.state.countryStates}
+            actualValue={spaceQueries.monetaryUnit}
+            values={currenciesMapped}
             labelSize={16}
-            onValueChange={this.setSpaceStateQuery}
-            label={translate('spaceState')}
+            onValueChange={this.setSpaceMonetaryUnitQuery}
+            label={translate('monetaryUnit')}
             marginBottom={10}
             // error={errors.state}
             // errorText={errors.state}
           />
-        </LocationContainer>
 
-        <CardSelect
-          title={translate('parkingQuery')}
-          cards={this.state.parkingOptions}
-          selectedCards={this.state.selectedParkingOption}
-          onCardPress={this.setSpaceHasParkingQuery}
-        />
+          <QueryLabel>{translate('spacePriceLabel')}</QueryLabel>
+          <RowContainer>
+            <CustomInput
+              label={translate('priceMinQuery')}
+              labelSize={12}
+              width={(Dimensions.get('window').width / 2) - 25}
+              value={spaceQueries.priceMin}
+              onChangeText={this.setSpacePriceMinQuery}
+              keyboardType={'numeric'}
+              marginRight={5}
+            />
 
-        <CardSelect
-          title={translate('chargeType')}
-          cards={this.state.chargingTypes}
-          selectedCards={this.state.selectedChargeType}
-          onCardPress={this.setSpaceChargeTypeQuery}
-        />
+            <CustomInput
+              label={translate('priceMaxQuery')}
+              labelSize={12}
+              width={(Dimensions.get('window').width / 2) - 25}
+              value={spaceQueries.priceMax}
+              onChangeText={this.setSpacePriceMaxQuery}
+              keyboardType={'numeric'}
+              marginLeft={5}
+            />
+          </RowContainer>
 
-        <CardSelect
-          title={translate('spaceType')}
-          cards={categoriesMapped}
-          selectedCards={this.state.selectedCategory}
-          onCardPress={this.setSpaceCategoryQuery}
-        />
-      </Container>
+          <QueryLabel>{translate('capacityLabel')}</QueryLabel>
+          <RowContainer>
+            <CustomInput
+              label={translate('capacityMinQuery')}
+              labelSize={12}
+              width={(Dimensions.get('window').width / 2) - 25}
+              value={spaceQueries.capacityMin}
+              onChangeText={this.setSpaceCapacityMinQuery}
+              keyboardType={'numeric'}
+              marginRight={5}
+            />
+
+            <CustomInput
+              label={translate('capacityMaxQuery')}
+              labelSize={12}
+              width={(Dimensions.get('window').width / 2) - 25}
+              value={spaceQueries.capacityMax}
+              onChangeText={this.setSpaceCapacityMaxQuery}
+              keyboardType={'numeric'}
+              marginLeft={5}
+            />
+          </RowContainer>
+
+          <CardSelect
+            title={translate('spaceType')}
+            cards={categoriesMapped}
+            selectedCards={this.state.selectedCategory}
+            onCardPress={this.setSpaceCategoryQuery}
+          />
+
+        <View style={{ marginBottom: 80 }} />
+        </Container>
+
+        <SearchButtonContainer
+          colors={['rgba(238, 238, 238, 0.0)', 'rgba(74, 74, 74, 0.2)']}
+        >
+          <ButtonWithBackground
+            text={translate('searchText')}
+            onPress={() => this.navigateToPlacesListScreen()}/>
+        </SearchButtonContainer>
+      </>
     )
   }
 }

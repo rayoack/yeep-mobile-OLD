@@ -1,0 +1,67 @@
+[
+  {
+    "title": "argentinePeso",
+    "value": "ARS",
+    "symbol": "$"
+  },
+  {
+    "title": "australianDollar",
+    "value": "AUD",
+    "symbol": "$"
+  },
+  {
+    "title": "brazilianReal",
+    "value": "BRL",
+    "symbol": "R$"
+  },
+  {
+    "title": "canadianDollar",
+    "value": "CAD",
+    "symbol_native": "$"
+  },
+  {
+    "title": "chileanPeso",
+    "value": "CLP",
+    "symbol": "$"
+  },
+  {
+    "title": "colombianPeso",
+    "value": "COP",
+    "symbol": "$"
+  },
+  {
+    "title": "euro",
+    "value": "EUR",
+    "symbol": "€"
+  },
+  {
+    "title": "peruvianNuevoSol",
+    "value": "PEN",
+    "symbol": "S/."
+  },
+  {
+    "title": "poundSterling",
+    "value": "GBP",
+    "symbol": "£"
+  },
+  {
+    "title": "mexicanPeso",
+    "value": "MXN",
+    "symbol": "$"
+  },
+  {
+    "title": "paraguayanGuarani",
+    "value": "PYG",
+    "symbol": "₲"
+  },
+  {
+    "title": "unitedStatesDollar",
+    "value": "USD",
+    "symbol": "$"
+  },
+  {
+    "title": "uruguayanPeso",
+    "value": "UYU",
+    "symbol": "$"
+  }
+]

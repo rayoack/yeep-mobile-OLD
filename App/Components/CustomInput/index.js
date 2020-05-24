@@ -19,12 +19,16 @@ const CustomInput = ({
   error,
   errorText,
   autoCapitalize,
-  height
+  height,
+  width,
+  labelSize,
+  marginRight,
+  marginLeft
 }) => {
   return (
-    <>
+    <View>
       {label ? (
-        <InputLabel>{label}</InputLabel>
+        <InputLabel labelSize={labelSize}>{label}</InputLabel>
       ) : null}
       {text ?
         <InputText>{text}</InputText>
@@ -32,12 +36,15 @@ const CustomInput = ({
       <InputContainer
         // value={value}
         height={height}
+        width={width}
         onChangeText={onChangeText}
         placeholder={placeholder}
         onBlur={onBlur}
         onFocus={onFocus}      
         marginTop={marginTop}
         marginBottom={marginBottom}
+        marginRight={marginRight}
+        marginLeft={marginLeft}
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
         multiline={multiline}
@@ -51,7 +58,7 @@ const CustomInput = ({
           error={error}  
         >{errorText}</ErrorText>
       : null}
-    </>
+    </View>
   );
 }
 
@@ -70,7 +77,11 @@ CustomInput.defaultProps = {
   error: false,
   errorText: '',
   autoCapitalize: 'sentences',
-  height: ''
+  height: '',
+  width: '',
+  labelSize: 20,
+  marginRight: 0,
+  marginLeft: 0,
 }
 
 export default CustomInput;

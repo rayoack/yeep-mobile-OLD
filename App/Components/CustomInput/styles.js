@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { Colors } from 'App/Theme'
 
 export const InputLabel = styled.Text`
-  font-size: 20px;
+  font-size: ${props => props.labelSize};
   text-align: left;
   font-family: 'Nunito Bold';
   color: ${Colors.labelBlack};
@@ -17,10 +17,12 @@ export const InputText = styled.Text`
 `
 
 export const InputContainer = styled.TextInput`
-  width: 290px;
+  width: ${props => props.width ? props.width : '290px'};
   height: ${props => props.height ? props.height : '50px'};
   border-radius: 10px;
   padding: 14px;
+  margin-right: ${props => props.marginRight};
+  margin-left: ${props => props.marginLeft};
   margin-top: ${props => props.marginTop};
   margin-bottom: ${props => !props.error ? props.marginBottom : 0};
   background-color: #ECECEC;

@@ -36,6 +36,8 @@ export default {
   notification_inactive: require('App/Assets/Images/notification-inactive.png'),
   place_active: require('App/Assets/Images/place-active.png'),
   place_inactive: require('App/Assets/Images/place-inactive.png'),
+  coins: require('App/Assets/Images/coins.png'),
+  group: require('App/Assets/Images/group.png'),
   
   // ORGANIZER STEPs
   organizerStepOne: require('App/Assets/Images/organizer-step-1.png'),

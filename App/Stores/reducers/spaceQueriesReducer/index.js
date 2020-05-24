@@ -8,6 +8,7 @@ export const Types = {
   SET_SPACE_CHARGE_TYPE_QUERY: 'manageUserReducer/SET_SPACE_CHARGE_TYPE_QUERY',
   SET_SPACE_CAPACITY_MIN_QUERY: 'manageUserReducer/SET_SPACE_CAPACITY_MIN_QUERY',
   SET_SPACE_CAPACITY_MAX_QUERY: 'manageUserReducer/SET_SPACE_CAPACITY_MAX_QUERY',
+  SET_SPACE_MONETARY_UNIT_QUERY: 'manageUserReducer/SET_SPACE_MONETARY_UNIT_QUERY',
   SET_SPACE_PRICE_MIN_QUERY: 'manageUserReducer/SET_SPACE_PRICE_MIN_QUERY',
   SET_SPACE_PRICE_MAX_QUERY: 'manageUserReducer/SET_SPACE_PRICE_MAX_QUERY',
 }
@@ -45,6 +46,10 @@ export const Creators = {
     type: Types.SET_SPACE_CAPACITY_MAX_QUERY,
     payload
   }),
+  setSpaceMonetaryUnitQuery: (payload) => ({
+    type: Types.SET_SPACE_MONETARY_UNIT_QUERY,
+    payload
+  }),
   setSpacePriceMinQuery: (payload) => ({
     type: Types.SET_SPACE_PRICE_MIN_QUERY,
     payload
@@ -64,6 +69,7 @@ const INITIAL_STATE = {
     chargeType: '',
     capacityMin: '',
     capacityMax: '',
+    monetaryUnit: '',
     priceMin: '',
     priceMax: ''
   }
@@ -139,6 +145,15 @@ export default function spaceQueriesReducer(state = INITIAL_STATE, action) {
           queries: {
             ...queries,
             capacityMax: action.payload
+          }
+      }
+
+    case Types.SET_SPACE_MONETARY_UNIT_QUERY:
+      return {
+        ...state,
+          queries: {
+            ...queries,
+            monetaryUnit: action.payload
           }
       }
 
