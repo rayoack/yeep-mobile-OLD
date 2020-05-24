@@ -7,17 +7,18 @@ const CustomPicker = ({
   onValueChange,
   values,
   fullWidth,
+  labelSize,
   label,
   marginTop,
   marginBottom,
   error,
   errorText,
-  text
+  text,
 }) => {
   return (
     <Container>
       {label ?
-        <PickerLabel>{label}</PickerLabel>
+        <PickerLabel labelSize={labelSize}>{label}</PickerLabel>
       : null}
       {text ?
         <PickerText>{text}</PickerText>
@@ -55,6 +56,7 @@ CustomPicker.defaultProps = {
   fullWidth: false,
   marginTop: 0,
   marginBottom: 0,
+  labelSize: 20
 }
 
 export default CustomPicker;

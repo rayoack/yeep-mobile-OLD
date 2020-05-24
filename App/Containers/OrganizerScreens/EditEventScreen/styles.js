@@ -20,12 +20,13 @@ export const BackButtonContainer = styled.TouchableOpacity`
 
 export const HeaderContainer = styled.View`
   flex-direction: row;
-  background-color: ${Colors.secondary};
   align-items: center;
   justify-content: space-between;
   padding: 20px;
   height: 60px;
   margin-bottom: 20px;
+  border-bottom-width: 1px;
+  border-bottom-color: ${Colors.ligthGray};
 `
 
 export const EventTitle = styled.Text`
@@ -33,5 +34,5 @@ export const EventTitle = styled.Text`
   text-align: right;
   font-size: 30px;
   font-family: 'Nunito Semi Bold';
-  color: ${Colors.ligthGray};
+  color: ${Colors.labelBlack};
 `

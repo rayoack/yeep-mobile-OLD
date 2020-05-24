@@ -142,13 +142,6 @@ export class CreationEventSteps extends Component {
     }
   }
 
-  // SAVE FIRST STEP
-  setFirstStepFormdata = (newData) => {
-    this.props.setFirstStep(newData)
-
-    this.saveOrUpdateEvent(0)
-  }
-
   // SAVE EVENT CHANGES
   saveOrUpdateEvent = async (step) => {
     const { event } = this.props
@@ -234,11 +227,6 @@ export class CreationEventSteps extends Component {
     }
   }
 
-  deleteCover = () => {
-    this.props.setCover(null)
-    this.props.setCoverId(null)
-  }
-
   // IMAGES
   uploadImage = (id) => {
     const { event } = this.props
@@ -321,12 +309,6 @@ export class CreationEventSteps extends Component {
 
   onSnapToImage = (index) => {
     this.setState({ activeImageIndex: index, isCarrouselOpen: true })
-  }
-
-  // EVENT DESCRIPTION
-  setDescription = (values) => {
-    this.props.setDescription(values.description)
-    this.saveOrUpdateEvent(2)
   }
 
   // EVENT DATES
@@ -602,8 +584,7 @@ export class CreationEventSteps extends Component {
                   setSaveNextStepForm={this.setSaveNextStepForm}
                   setStepErrors={this.setStepErrors}
                   setCoverImage={this.showImagePicker}
-                  setFirstStepFormdata={this.setFirstStepFormdata}
-                  deleteCover={this.deleteCover}
+                  saveOrUpdateEvent={this.saveOrUpdateEvent}
                 />
               </ProgressStep>
 
@@ -638,7 +619,7 @@ export class CreationEventSteps extends Component {
                 onNext={onNextFunc}>
                   <EventDescription
                     setSaveNextStepForm={this.setSaveNextStepForm}
-                    setDescription={this.setDescription}
+                    saveOrUpdateEvent={this.saveOrUpdateEvent}
                   />
               </ProgressStep>
 

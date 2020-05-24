@@ -14,6 +14,9 @@ export default {
   nextBtnText: 'Salvar',
   previousBtnText: 'Voltar',
   finishBtnText: 'Concluir',
+  chargeType: 'Tipo de cobrança',
+  perHour: 'Por hora',
+  perDay: 'Por dia',
 
   // auth
   registerAction: 'Registrar',
@@ -144,4 +147,33 @@ export default {
   endHourError: 'Desculpe, você não pode selecionar um horário de término que seja antes do horário de início.',
   inserDateButton: 'Inserir uma nova data',
   dateRequired: 'Você deve adicionar pelo menos uma data para o evento.',
+
+  // SPACES FILTERS
+  parkingQuery: 'Exibir apenas espaços',
+  whereQuery: 'Onde?',
+  spaceCountry: 'País',
+  spaceState: 'Estado',
+  spaceType: 'Tipo de espaço',
+  withParking: 'Com estacionamento',
+  allSpace: 'Todos',
+  barnFarmRanch: 'Celeiro / Fazenda / Rancho',
+  pub: 'Bares',
+  meetingRoom: 'Sala de reunião',
+  boat: 'Barco',
+  churchTemple: 'Igreja / Templo',
+  classroom: 'Sala de aula',
+  coworkingSpace: 'Espaço de coworking',
+  cruiseShipYacht: 'Navio de cruzeiro / Iate',
+  eventVenuePartyHall: 'Espaço para eventos / Salão de festas',
+  gallerie: 'Galeria',
+  house: 'Casa',
+  hotelResort: 'Hotel / Resort',
+  loft: 'Loft',
+  mansion: 'Mansão',
+  parkGarden: 'Parque / Jardim',
+  restaurant: 'Restaurante',
+  stadium: 'Estádio',
+  studio: 'Estúdio',
+  theater: 'Teatro',
+  warehouse: 'Armazém'
 }

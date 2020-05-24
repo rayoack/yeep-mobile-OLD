@@ -1,15 +1,15 @@
 
 export const Types = {
-  SET_EVENT_FORM_DATA: 'manageUserReducer/SET_EVENT_FORM_DATA',
-  SET_EVENT_ID: 'manageUserReducer/SET_EVENT_ID',
-  SET_TITLE: 'manageUserReducer/SET_TITLE',
-  SET_DESCRIPTION: 'manageUserReducer/SET_DESCRIPTION',
-  SET_COVER_ID: 'manageUserReducer/SET_COVER_ID',
-  SET_COVER: 'manageUserReducer/SET_COVER',
-  SET_IMAGES: 'manageUserReducer/SET_IMAGES',
-  SET_FIRST_STEP: 'manageUserReducer/SET_FIRST_STEP',
-  SET_EVENT_DATES: 'manageUserReducer/SET_EVENT_DATES',
-  CLEAR_EVENT_FORM: 'manageUserReducer/CLEAR_EVENT_FORM',
+  SET_EVENT_FORM_DATA: 'manageEventReducer/SET_EVENT_FORM_DATA',
+  SET_EVENT_ID: 'manageEventReducer/SET_EVENT_ID',
+  SET_TITLE: 'manageEventReducer/SET_TITLE',
+  SET_DESCRIPTION: 'manageEventReducer/SET_DESCRIPTION',
+  SET_COVER_ID: 'manageEventReducer/SET_COVER_ID',
+  SET_COVER: 'manageEventReducer/SET_COVER',
+  SET_IMAGES: 'manageEventReducer/SET_IMAGES',
+  SET_FIRST_STEP: 'manageEventReducer/SET_FIRST_STEP',
+  SET_EVENT_DATES: 'manageEventReducer/SET_EVENT_DATES',
+  CLEAR_EVENT_FORM: 'manageEventReducer/CLEAR_EVENT_FORM',
 }
 
 export const Creators = {

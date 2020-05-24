@@ -16,15 +16,15 @@ export const SelectPicker = styled.Picker`
 
 export const PickerLabel = styled.Text`
   font-family: 'Nunito Bold';
-  font-size: 20px;
-  color: #373A42;
+  font-size: ${props => props.labelSize ? props.labelSize : '20px'};
+  color: ${Colors.labelBlack};
   margin-bottom: 4px;
 `
 
 export const PickerText = styled.Text`
   font-family: 'Nunito Regular';
   font-size: 16px;
-  color: #373A42;
+  color: ${Colors.labelBlack};
   margin-bottom: 10px;
 `
 

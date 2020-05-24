@@ -68,6 +68,7 @@ export const EventHeader = styled.View`
   position: absolute;
   top: 0;
   z-index: 99;
+  margin-top: 10px;
   padding: 20px;
   height: 50px;
   justify-content: center;

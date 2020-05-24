@@ -25,6 +25,8 @@ export default {
   textDefault: '#616368',
   primary: '#D7C6CF',
   secondary: '#8965A3',
+  tertiary: '#ede6f2',
+  quaternary: '#736db0',
   brightPink: '#B0649E',
   lightPink: '#AF6ABA',
   blueViolet: '#836ABA',

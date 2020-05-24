@@ -17,6 +17,7 @@ import EventDetailsScreen from './OrganizerScreens/EventDetailsScreen'
 import EditEventScreen from './OrganizerScreens/EditEventScreen'
 import CreationEventSteps from './OrganizerScreens/CreationEventSteps'
 import Calendar from './Calendar'
+import PlacesFilterScreen from './OrganizerScreens/PlacesFilterScreen'
 
 export {
   ExampleScreen,
@@ -38,5 +39,6 @@ export {
   ProvidersScreen,
   EventDetailsScreen,
   EditEventScreen,
-  CreationEventSteps
+  CreationEventSteps,
+  PlacesFilterScreen
 }

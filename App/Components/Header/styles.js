@@ -12,8 +12,8 @@ export const Container = styled.View`
   height: 120px;
   width: ${Dimensions.get('window').width};
   padding: 20px;
-  /* border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 40px; */
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
@@ -50,7 +50,7 @@ export const ProfileImage = styled(FastImage)`
 export const ProfileName = styled.Text`
   font-size: 20px;
   font-family: 'Nunito Semi Bold';
-  color: ${Colors.labelBlack};
+  color: ${Colors.white};
 `
 
 export const NotificationContainer = styled.TouchableOpacity``

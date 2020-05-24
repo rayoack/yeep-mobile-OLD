@@ -4,6 +4,8 @@ import { Keyboard } from 'react-native'
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
+import { Creators as ManagerEventActions } from '../../Stores/reducers/manageEventReducer'
+
 import CustomInput from '../CustomInput'
 
 import { translate } from '../../Locales'
@@ -13,9 +15,15 @@ import {
   Container,
   ViewContainer } from './styles'
 
+const setEventDescription = (values, saveOrUpdateEvent, setDescription) => {
+  setDescription(values.description)
+  saveOrUpdateEvent(2)
+}
+
 export const EventDescription = ({
   event,
   setSaveNextStepForm,
+  saveOrUpdateEvent,
   setDescription,
 }) => {
   const { description } = event
@@ -26,7 +34,7 @@ export const EventDescription = ({
         <Formik
           initialValues={{
             description: description }}
-          onSubmit={values => setDescription(values)}
+          onSubmit={values => setEventDescription(values, saveOrUpdateEvent, setDescription)}
           validationSchema={
             Yup.object().shape({
               description: Yup
@@ -73,8 +81,6 @@ const mapStateToProps = (state) => ({
   event: state.manageEventReducer.event
 })
 
-const mapDispatchToProps = {
-  
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EventDescription)
+export default connect(mapStateToProps, {
+  ...ManagerEventActions
+})(EventDescription)

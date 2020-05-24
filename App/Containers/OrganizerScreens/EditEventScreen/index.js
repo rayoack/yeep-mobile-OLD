@@ -82,7 +82,7 @@ class EditEventScreen extends Component {
         <HeaderContainer>
           <BackButtonContainer
             onPress={() => this.props.navigation.goBack(null)}>
-            <BackButton color={Colors.white} size={30}/>
+            <BackButton color={Colors.white} size={20}/>
           </BackButtonContainer>
 
           <EventTitle>{event.title}</EventTitle>

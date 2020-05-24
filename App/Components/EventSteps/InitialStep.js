@@ -4,6 +4,8 @@ import { Keyboard } from 'react-native'
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
+import { Creators as ManagerEventActions } from '../../Stores/reducers/manageEventReducer'
+
 import CustomInput from '../CustomInput'
 import CustomPicker from '../CustomPicker'
 
@@ -21,13 +23,26 @@ import {
   DeleteEventCoverContainer,
   DeleteEventCoverIcon } from './styles'
 
+  
+const setFirstStepFormdata = (newData, saveOrUpdateEvent, setFirstStep) => {
+  setFirstStep(newData)
+
+  saveOrUpdateEvent(0)
+}
+
+const deleteCover = () => {
+  this.props.setCover(null)
+  this.props.setCoverId(null)
+}
+
+
 export const InitialStep = ({
   event,
   setSaveNextStepForm,
   setStepErrors,
   setCoverImage,
-  setFirstStepFormdata,
-  deleteCover
+  setFirstStep,
+  saveOrUpdateEvent,
 }) => {
   const { title, estimated_audience, category, event_logo } = event
   eventCategories.sort()
@@ -50,7 +65,7 @@ export const InitialStep = ({
             title: title,
             category: category,
             estimated_audience: estimated_audience }}
-          onSubmit={values => setFirstStepFormdata(values)}
+          onSubmit={values => setFirstStepFormdata(values, saveOrUpdateEvent, setFirstStep)}
           validationSchema={
             Yup.object().shape({
               title: Yup
@@ -142,8 +157,6 @@ const mapStateToProps = (state) => ({
   event: state.manageEventReducer.event
 })
 
-const mapDispatchToProps = {
-  
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(InitialStep)
+export default connect(mapStateToProps, {
+  ...ManagerEventActions
+})(InitialStep)
