@@ -9,6 +9,8 @@ import {
   CarouselContainer,
   CarouselFooterContainer,
   Slide,
+  SlideCountContainer,
+  SlideCount,
   styles
 } from './styles';
 
@@ -47,16 +49,9 @@ const CarrouselFullScreen = ({
           />
 
           <CarouselFooterContainer>
-            <Pagination
-              activeDotIndex={activeImageIndex}
-              dotsLength={data.length}
-              dotStyle={styles.dotStyle}
-              inactiveDotStyle={styles.inactiveDotStyle}
-              dotContainerStyle={styles.dotContainerStyle}
-              containerStyle={styles.paginationContainerStyle}
-              inactiveDotOpacity={1}
-              inactiveDotScale={0.9}
-            />
+            <SlideCountContainer>
+              <SlideCount>{`${activeImageIndex + 1}/${data.length}`}</SlideCount>
+            </SlideCountContainer>
           </CarouselFooterContainer>
         </CarouselContainer> 
       </ModalContainer>

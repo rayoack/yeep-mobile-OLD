@@ -8,10 +8,18 @@ import { translate } from '../../Locales'
 
 import { ModalContainer, LoadingLabel, AnimationContainer } from './styles';
 
+const randomAnimation = [
+  Images.yeep_loading,
+  Images.yeep_loading_2,
+  Images.yeep_loading_3,
+]
+
 const AnimationLoading = ({
   fullscreen,
   loading
 }) => {
+  let randomIndex = Math.floor(Math.random() * (3 - 0)) + 0
+  console.log(randomIndex)
   return (
     <>
       {fullscreen ? (
@@ -23,7 +31,7 @@ const AnimationLoading = ({
             fullscreen={fullscreen}
           >
             <LottieView
-              source={Images.yeep_loading}
+              source={randomAnimation[randomIndex]}
               style={{ marginBottom: 120 }}
               autoPlay
               loop

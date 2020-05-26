@@ -18,17 +18,22 @@ import {
   Icon,
   CarouselContainer,
   CarouselFooterContainer,
+  SlideCountContainer,
+  SlideCount,
   styles,
 } from './styles';
 
 const CardWithImage = ({
   item,
-  onSnapToItem
+  onSnapToItem,
+  onCardPress
 }) => {
   return (
     <>
       {item ? (
-        <CardContainer>
+        <CardContainer
+          activeOpacity={0.9}
+          onPress={() => onCardPress(item.id)}>
           {item.images ? (
             <CarouselContainer>
 
@@ -43,23 +48,16 @@ const CardWithImage = ({
                   )
                 }}
                 onSnapToItem={index => onSnapToItem(item, index)}
-                sliderWidth={Dimensions.get('window').width - 20} 
-                itemWidth={Dimensions.get('window').width - 20}
+                sliderWidth={Dimensions.get('window').width - 40} 
+                itemWidth={Dimensions.get('window').width - 40}
                 removeClippedSubviews={false}
                 firstItem={item.imageIndex}
               />
 
               <CarouselFooterContainer>
-                <Pagination
-                  activeDotIndex={item.imageIndex}
-                  dotsLength={item.images.length}
-                  dotStyle={styles.dotStyle}
-                  inactiveDotStyle={styles.inactiveDotStyle}
-                  dotContainerStyle={styles.dotContainerStyle}
-                  containerStyle={styles.paginationContainerStyle}
-                  inactiveDotOpacity={1}
-                  inactiveDotScale={0.9}
-                />
+                <SlideCountContainer>
+                  <SlideCount>{`${item.imageIndex + 1}/${item.images.length}`}</SlideCount>
+                </SlideCountContainer>
               </CarouselFooterContainer>
             </CarouselContainer>
           ) : (
@@ -99,7 +97,8 @@ const CardWithImage = ({
 CardWithImage.defaultProps = {
   item: {},
   activeImageIndex: 0,
-  onSnapToItem: () => null
+  onSnapToItem: () => null,
+  onCardPress: () => null,
 }
 
 export default CardWithImage;

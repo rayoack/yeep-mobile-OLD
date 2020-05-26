@@ -8,6 +8,7 @@ export const Container = styled.View`
 
 export const CardList = styled.FlatList`
   flex: 1;
+  padding: 0 20px;
 `
 
 export const HeaderContainer = styled.View`

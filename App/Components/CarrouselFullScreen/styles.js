@@ -39,10 +39,29 @@ export const CarouselContainer = styled.View`
 export const CarouselFooterContainer = styled.View`
   position: absolute;
   bottom: 40px;
-  flex-direction: ${props => props.rowReverse ? 'row-reverse' : 'row' };
+  right: 10px;
+  flex-direction: row-reverse;
   justify-content: space-between;
   width: 100%;
   padding: 0 16px;
+`
+
+export const SlideCountContainer = styled.View`
+  height: 40px;
+  width: 50px;
+  margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background-color: ${Colors.lightSecondaryTransparent};
+  box-shadow: 3px 2px 10px rgba(0, 0, 0, 0.32);
+  elevation: 10;
+`
+
+export const SlideCount = styled.Text`
+  font-size: 12px;
+  font-family: 'Nunito Bold';
+  color: ${Colors.white};
 `
 
 export const Slide = styled(FastImage)`

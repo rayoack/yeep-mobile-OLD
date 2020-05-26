@@ -15,6 +15,8 @@ export default {
   // ANIMATIONS
   editing_animation: require('App/Assets/Images/editing-animation.json'),
   yeep_loading: require('App/Assets/Images/yeep-loading.json'),
+  yeep_loading_2: require('App/Assets/Images/yeep-loading-2.json'),
+  yeep_loading_3: require('App/Assets/Images/yeep-loading-3.json'),
   
   // ICONS
   profile_boy: require('App/Assets/Images/profile-boy.png'),

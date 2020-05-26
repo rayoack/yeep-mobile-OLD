@@ -26,7 +26,8 @@ import {
   CreationEventSteps,
   Calendar,
   PlacesFilterScreen,
-  PlacesListScreen
+  PlacesListScreen,
+  PlaceDetailsScreen,
 } from '../Containers'
 
 const AuthNavigator = createSwitchNavigator({
@@ -124,6 +125,7 @@ const StackNavigator = createStackNavigator(
     Calendar: { screen: Calendar },
     PlacesFilterScreen: { screen: PlacesFilterScreen },
     PlacesListScreen: { screen: PlacesListScreen },
+    PlaceDetailsScreen: { screen: PlaceDetailsScreen },
   },
   {
     initialRouteName: 'tabs',

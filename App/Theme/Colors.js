@@ -11,7 +11,10 @@ export default {
   whiteTransparent: 'rgba(255, 255, 255, 0.3)',
   grayTransparent: 'rgba(97, 99, 104, 0.1)',
   primaryTransparent: 'rgba(215, 198, 207, 0.5)',
-  // Example colors:
+  lightBlueTransparent: 'rgba(212, 226, 243, 0.3)',
+  saintBlueTransparent: 'rgba(151, 184, 225, 0.3)',
+  lightSecondaryTransparent: 'rgba(165, 115, 255, 0.6)',
+  // colors:
   white: '#ffffff',
   lightRed: '#FC1055',
   text: '#212529',

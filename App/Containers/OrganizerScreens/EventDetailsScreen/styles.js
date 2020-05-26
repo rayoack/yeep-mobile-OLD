@@ -84,7 +84,7 @@ export const BackButtonContainer = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   margin-top: 50px;
-  background-color: ${Colors.blackTransparent};
+  background-color: ${Colors.lightSecondaryTransparent};
 `
 
 export const EventContainer = styled.View`

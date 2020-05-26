@@ -36,7 +36,7 @@ export class PlacesListScreen extends Component {
   }
   
   componentDidMount() {
-    this.loadMyEvents()
+    this.loadSpaces()
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
 
@@ -55,7 +55,7 @@ export class PlacesListScreen extends Component {
     return symbol[0].symbol
   }
 
-  loadMyEvents = async () => {
+  loadSpaces = async () => {
     const { queries } = this.props
     this.setState({ loading: true })
 
@@ -117,6 +117,12 @@ export class PlacesListScreen extends Component {
     this.props.navigation.goBack(null)
   }
 
+  goToPlaceDetails = (id) => {
+    this.props.navigation.push('PlaceDetailsScreen', {
+      space_id: id
+    })
+  }
+
   render() {
     const { queries } = this.props
 
@@ -136,12 +142,13 @@ export class PlacesListScreen extends Component {
 
             <CardList
               data={this.state.spaces}
-              onRefresh={() => this.loadMyEvents()} 
+              onRefresh={() => this.loadSpaces()} 
               refreshing={false}
               renderItem={({item}) => (
                 <CardWithImage
                   item={item}
                   activeImageIndex={this.state.activeImageIndex}
+                  onCardPress={this.goToPlaceDetails}
                   onSnapToItem={this.onSnapToItem}
                 />
               )}

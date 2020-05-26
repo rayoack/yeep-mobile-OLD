@@ -16,7 +16,8 @@ import api from '../../../Services/api'
 import {
   ReadMoreText,
   BackButton,
-  CarrouselFullScreen
+  CarrouselFullScreen,
+  AnimationLoading
 } from '../../../Components'
 
 
@@ -86,39 +87,6 @@ export class EventDetailsScreen extends Component {
     }
   }
 
-  _shimmerLoading = (loading) => {
-    return (
-      <>
-        <Shimmer>
-          <EventCover />
-        </Shimmer>
-        <EventContainer loading={loading}>
-          <Shimmer>
-            <EventTitle loading={loading}></EventTitle>
-          </Shimmer>
-        </EventContainer>
-
-        <EventContainer loading={loading}>
-          <Shimmer>
-            <EventLabel loading={loading}></EventLabel>
-          </Shimmer>
-        </EventContainer>
-
-        <EventContainer loading={loading}>
-          <Shimmer>
-            <EventLabel loading={loading}></EventLabel>
-          </Shimmer>
-        </EventContainer>
-
-        <EventContainer loading={loading}>
-          <Shimmer>
-            <EventLabel loading={loading}></EventLabel>
-          </Shimmer>
-        </EventContainer>
-      </>
-    )
-  }
-
   formatDates = (event) => {
     let eventCopy = { ...event }
 
@@ -158,7 +126,9 @@ export class EventDetailsScreen extends Component {
         <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
 
         {loading ? (
-          this._shimmerLoading(loading)
+          <AnimationLoading
+            fullscreen={true}
+            loading={loading}/>
         ) : (
           <>
             <EventHeader>

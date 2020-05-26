@@ -3,10 +3,10 @@ import { Dimensions, StyleSheet } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Colors } from 'App/Theme'
 
-export const CardContainer = styled.View`
+export const CardContainer = styled.TouchableOpacity`
   min-height: 330px;
-  padding: 10px;
   margin-bottom: 15px;
+  padding-bottom: 20px;
   border-bottom-width: 1px;
   border-bottom-color: ${Colors.ligthGray};
 `;
@@ -14,7 +14,7 @@ export const CardContainer = styled.View`
 export const CardImage = styled(FastImage)`
   height: 200px;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 5px;
 `
 
 export const CarouselContainer = styled.View`
@@ -27,17 +27,36 @@ export const CarouselContainer = styled.View`
 export const CarouselFooterContainer = styled.View`
   position: absolute;
   bottom: 15px;
-  left: 10px;
-  flex-direction: ${props => props.rowReverse ? 'row-reverse' : 'row' };
+  right: 10px;
+  flex-direction: row-reverse;
   justify-content: space-between;
   width: 100%;
   padding: 0 16px;
+`
+
+export const SlideCountContainer = styled.View`
+  height: 40px;
+  width: 50px;
+  margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background-color: ${Colors.lightSecondaryTransparent};
+  box-shadow: 3px 2px 10px rgba(0, 0, 0, 0.32);
+  elevation: 10;
+`
+
+export const SlideCount = styled.Text`
+  font-size: 12px;
+  font-family: 'Nunito Bold';
+  color: ${Colors.white};
 `
 
 export const CardInfoContainer = styled.View`
 `;
 
 export const CardTitle = styled.Text`
+  margin-top: 10px;
   font-size: 18px;
   font-family: 'Nunito Bold';
   color: ${Colors.labelBlack};
