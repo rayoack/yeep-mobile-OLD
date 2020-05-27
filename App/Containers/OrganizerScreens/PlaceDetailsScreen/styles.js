@@ -4,7 +4,7 @@ import FastImage from 'react-native-fast-image'
 import { Colors } from 'App/Theme'
 
 export const Container = styled.ScrollView`
-  padding: 0 20px;
+  padding: 0 25px;
   background-color: ${Colors.backgroundGray};
 `;
 
@@ -80,7 +80,25 @@ export const SlideCount = styled.Text`
 
 export const PlaceTitle = styled.Text`
   font-size: 30px;
-  font-family: 'Nunito Extra Bold';
+  font-family: 'Nunito Bold';
   margin-bottom: 10px;
+  color: ${Colors.labelBlack};
+`
+
+export const RowContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: ${props => props.container ? 'space-between' : 'flex-start'};
+`
+
+export const IconImage = styled.Image`
+  height: 25px;
+  width: 25px;
+  margin-right: 10px;
+`
+
+export const IconTitle = styled.Text`
+  font-size: 20px;
+  font-family: 'Nunito Regular';
   color: ${Colors.labelBlack};
 `

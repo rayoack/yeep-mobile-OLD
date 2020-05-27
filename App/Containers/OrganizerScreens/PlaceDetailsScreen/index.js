@@ -3,6 +3,7 @@ import { View, BackHandler, Dimensions, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 
+import { translate } from '../../../Locales'
 import { Images, Colors } from 'App/Theme'
 import api from '../../../Services/api'
 
@@ -23,6 +24,9 @@ import {
   PlaceDetailsHeader,
   BackButtonContainer,
   PlaceTitle,
+  RowContainer,
+  IconImage,
+  IconTitle,
 } from './styles'
 
 export class PlaceDetailsScreen extends Component {
@@ -81,9 +85,21 @@ export class PlaceDetailsScreen extends Component {
     this.props.navigation.goBack(null)
   }
 
+  categoriesMapped = (category) => {
+    if(!category || !category.length) return { title: '', imageActive: '', imageInactive: '' }
+    const categorieTranslate = translate(category)
+    return {
+      title: categorieTranslate,
+      imageActive: Images[`${category}Active`],
+      imageInactive: Images[`${category}Inactive`]
+    }
+  }
+
   render() {
     const { space, activeImageIndex, isModalOpen } = this.state
+    const spaceCategorie = this.categoriesMapped(space.category)
     console.log(space)
+
     return (
       <>
       {this.state.loading ? (
@@ -143,6 +159,18 @@ export class PlaceDetailsScreen extends Component {
           )}
           <Container>
             <PlaceTitle>{space.name}</PlaceTitle>
+            
+            <RowContainer container={true}>
+              <RowContainer>
+                <IconImage source={spaceCategorie.imageInactive}/>
+                <IconTitle>{spaceCategorie.title}</IconTitle>
+              </RowContainer>
+              
+              <RowContainer>
+                <IconImage source={Images.group}/>
+                <IconTitle>{space.capacity}</IconTitle>
+              </RowContainer>
+            </RowContainer>
             
           </Container>
         </>
