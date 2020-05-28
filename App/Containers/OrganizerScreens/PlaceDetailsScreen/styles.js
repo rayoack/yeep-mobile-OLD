@@ -38,6 +38,7 @@ export const CarouselContainer = styled.View`
   width: ${Dimensions.get('window').width};
   align-items: center;
   align-self: center;
+  margin-bottom: 15px;
 `
 
 export const CarouselFooterContainer = styled.View`
