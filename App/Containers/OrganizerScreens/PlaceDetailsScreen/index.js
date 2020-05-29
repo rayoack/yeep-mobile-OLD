@@ -10,11 +10,14 @@ import api from '../../../Services/api'
 import {
   CarrouselFullScreen,
   AnimationLoading,
-  BackButton
+  BackButton,
+  Feedback,
+  BetterReadMore
 } from '../../../Components'
 
 import {
   Container,
+  PlaceDivider,
   SlideContainer,
   SlideImage,
   SlideCountContainer,
@@ -27,6 +30,11 @@ import {
   RowContainer,
   IconImage,
   IconTitle,
+  PlaceLabel,
+  CenterView,
+  PlaceText,
+  TouchableView,
+  ProfileImage
 } from './styles'
 
 export class PlaceDetailsScreen extends Component {
@@ -34,7 +42,7 @@ export class PlaceDetailsScreen extends Component {
     super(props)
     this.state = {
       loading: false,
-      space: {},
+      space: null,
       feedbackType: '',
       activeImageIndex: 0,
       isModalOpen: false,
@@ -97,84 +105,134 @@ export class PlaceDetailsScreen extends Component {
 
   render() {
     const { space, activeImageIndex, isModalOpen } = this.state
-    const spaceCategorie = this.categoriesMapped(space.category)
+    const spaceCategorie = this.categoriesMapped(space ? space.category : null)
     console.log(space)
 
     return (
       <>
-      {this.state.loading ? (
-        <AnimationLoading
-          fullscreen={true}
-          loading={this.state.loading}
-        />
-      ) : (
-        <>
-          <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
-          <PlaceDetailsHeader>
-            <BackButtonContainer onPress={() => this.goBack()}>
-              <BackButton color={Colors.white} size={20}/>
-            </BackButtonContainer>
+        {this.state.loading && (
+          <AnimationLoading
+            fullscreen={true}
+            loading={this.state.loading}
+          />
+        )}
 
-          </PlaceDetailsHeader>
+        {!this.state.loading && space ? (
+          <>
+            <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
+            <PlaceDetailsHeader>
+              <BackButtonContainer onPress={() => this.goBack()}>
+                <BackButton color={Colors.white} size={20}/>
+              </BackButtonContainer>
 
-          {space.Images ? (
-            <CarouselContainer>
-              <Carousel
-                data={space.Images}
-                renderItem={ ({item, index}) => {
-                  return (
-                    <SlideContainer
-                      activeOpacity={0.8}
-                      onPress={() => this.showModal()}>
-                      <SlideImage 
-                        key={index}
-                        source={{ uri: item.url }}
-                      />
-                    </SlideContainer>
-                  )
-                }}
-                onSnapToItem={this.onSnapToItem}
-                sliderWidth={Dimensions.get('window').width} 
-                itemWidth={Dimensions.get('window').width}
-                removeClippedSubviews={false}
-                firstItem={activeImageIndex}
-              />
+            </PlaceDetailsHeader>
 
-              <CarouselFooterContainer>
-                <SlideCountContainer>
-                  <SlideCount>{`${activeImageIndex + 1}/${space.Images.length}`}</SlideCount>
-                </SlideCountContainer>
-              </CarouselFooterContainer>
+            {space.Images ? (
+              <CarouselContainer>
+                <Carousel
+                  data={space.Images}
+                  renderItem={ ({item, index}) => {
+                    return (
+                      <SlideContainer
+                        activeOpacity={0.8}
+                        onPress={() => this.showModal()}>
+                        <SlideImage 
+                          key={index}
+                          source={{ uri: item.url }}
+                        />
+                      </SlideContainer>
+                    )
+                  }}
+                  onSnapToItem={this.onSnapToItem}
+                  sliderWidth={Dimensions.get('window').width} 
+                  itemWidth={Dimensions.get('window').width}
+                  removeClippedSubviews={false}
+                  firstItem={activeImageIndex}
+                />
 
-              <CarrouselFullScreen
-                data={space.Images}
-                onSnapToItem={this.onSnapToItem}
-                showModal={this.showModal}
-                isModalOpen={isModalOpen}
-                activeImageIndex={activeImageIndex}
-              />
-            </CarouselContainer>
-          ) : (
-            <SlideImage source={Images.image_background} />
-          )}
-          <Container>
-            <PlaceTitle>{space.name}</PlaceTitle>
-            
-            <RowContainer container={true}>
-              <RowContainer>
-                <IconImage source={spaceCategorie.imageInactive}/>
-                <IconTitle>{spaceCategorie.title}</IconTitle>
-              </RowContainer>
+                <CarouselFooterContainer>
+                  <SlideCountContainer>
+                    <SlideCount>{`${activeImageIndex + 1}/${space.Images.length}`}</SlideCount>
+                  </SlideCountContainer>
+                </CarouselFooterContainer>
+
+                <CarrouselFullScreen
+                  data={space.Images}
+                  onSnapToItem={this.onSnapToItem}
+                  showModal={this.showModal}
+                  isModalOpen={isModalOpen}
+                  activeImageIndex={activeImageIndex}
+                />
+              </CarouselContainer>
+            ) : (
+              <SlideImage source={Images.image_background} />
+            )}
+            <Container>
+              <View>
+                <PlaceTitle>{space.name}</PlaceTitle>
+                {space.adress && <PlaceText marginBottom={'20px'}>
+                  {`${space.adress}, ${space.city}, ${space.state}, ${translate(space.country)}`}
+                </PlaceText>}
+              </View>
+              <PlaceDivider marginBottom={'15px'}/>
               
-              <RowContainer>
-                <IconImage source={Images.group}/>
-                <IconTitle>{space.capacity}</IconTitle>
+              <RowContainer marginBottom={'15px'} container={true}>
+                <View style={{ flex: 1 }}>
+                  <PlaceText
+                    fontSize={'22px'}
+                    fontFamily={'Nunito Bold'}
+                    fontColor={Colors.labelGray}
+                  >
+                    {spaceCategorie.title}
+                  </PlaceText>
+                  
+                  <PlaceText
+                    fontSize={'16px'}
+                    fontFamily={'Nunito Semi Bold'}
+                    marginBottom={'10px'}
+                    marginTop={'-5px'}
+                  >
+                    {`${translate('owner')} ${space.User.name}`}
+                  </PlaceText>
+
+                  <PlaceText
+                    fontSize={'15px'}
+                  >
+                    {`${translate('capacity')} ${space.capacity} ${translate('people')}`}
+                  </PlaceText>
+
+                </View>
+                
+                <TouchableView
+                  activeOpacity={0.8}
+                  alignItems={'center'}
+                >
+                  {space.User.avatar ? (
+                    <ProfileImage source={{ uri: space.User.avatar.url }}/>
+                  ) : (
+                    <ProfileImage source={Images.image_background}/>
+                  )}
+                </TouchableView>
               </RowContainer>
-            </RowContainer>
-            
-          </Container>
-        </>
-      )}
+              <PlaceDivider marginBottom={'25px'}/>
+
+              <BetterReadMore
+                numberOfLines={3}
+              >
+                <PlaceText
+                  fontColor={Colors.text}
+                  fontSize={'15px'}
+                >
+                  {space.description}
+                </PlaceText>
+              </BetterReadMore>
+              <PlaceDivider marginTop={'25px'} marginBottom={'15px'}/>
+
+            </Container>
+          </>
+        ) : (
+          <Feedback feedbackType={'error'}/>
+        )}
       </>
     )
   }

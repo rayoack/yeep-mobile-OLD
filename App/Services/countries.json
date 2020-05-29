@@ -275,6 +275,81 @@
     ]
   },
   {
+    "code2": "CA",
+    "code3": "CAN",
+    "name": "Canada",
+    "capital": "Ottawa",
+    "region": "Americas",
+    "subregion": "Northern America",
+    "states": [
+      {
+        "code": "AB",
+        "name": "Alberta",
+        "subdivision": "province"
+      },
+      {
+        "code": "BC",
+        "name": "British Columbia",
+        "subdivision": "province"
+      },
+      {
+        "code": "MB",
+        "name": "Manitoba",
+        "subdivision": "province"
+      },
+      {
+        "code": "NB",
+        "name": "New Brunswick",
+        "subdivision": "province"
+      },
+      {
+        "code": "NL",
+        "name": "Newfoundland and Labrador",
+        "subdivision": "province"
+      },
+      {
+        "code": "NS",
+        "name": "Nova Scotia",
+        "subdivision": "province"
+      },
+      {
+        "code": "ON",
+        "name": "Ontario",
+        "subdivision": "province"
+      },
+      {
+        "code": "PE",
+        "name": "Prince Edward Island",
+        "subdivision": "province"
+      },
+      {
+        "code": "QC",
+        "name": "Quebec",
+        "subdivision": "province"
+      },
+      {
+        "code": "SK",
+        "name": "Saskatchewan",
+        "subdivision": "province"
+      },
+      {
+        "code": "NT",
+        "name": "Northwest Territories",
+        "subdivision": "territory"
+      },
+      {
+        "code": "NU",
+        "name": "Nunavut",
+        "subdivision": "territory"
+      },
+      {
+        "code": "YT",
+        "name": "Yukon",
+        "subdivision": "territory"
+      }
+    ]
+  },
+  {
     "code2": "CL",
     "code3": "CHL",
     "name": "Chile",
@@ -355,6 +430,181 @@
       {
         "code": "VS",
         "name": "Valparaíso",
+        "subdivision": null
+      }
+    ]
+  },
+  {
+    "code2": "CO",
+    "code3": "COL",
+    "name": "Colombia",
+    "capital": "Bogotá",
+    "region": "Americas",
+    "subregion": "South America",
+    "states": [
+      {
+        "code": "AMA",
+        "name": "Amazonas",
+        "subdivision": null
+      },
+      {
+        "code": "ANT",
+        "name": "Antioquia",
+        "subdivision": null
+      },
+      {
+        "code": "ARA",
+        "name": "Arauca",
+        "subdivision": null
+      },
+      {
+        "code": "ATL",
+        "name": "Atlántico",
+        "subdivision": null
+      },
+      {
+        "code": "BOL",
+        "name": "Bolívar",
+        "subdivision": null
+      },
+      {
+        "code": "BOY",
+        "name": "Boyacá",
+        "subdivision": null
+      },
+      {
+        "code": "CAL",
+        "name": "Caldas",
+        "subdivision": null
+      },
+      {
+        "code": "CAQ",
+        "name": "Caquetá",
+        "subdivision": null
+      },
+      {
+        "code": "CAS",
+        "name": "Casanare",
+        "subdivision": null
+      },
+      {
+        "code": "CAU",
+        "name": "Cauca",
+        "subdivision": null
+      },
+      {
+        "code": "CES",
+        "name": "Cesar",
+        "subdivision": null
+      },
+      {
+        "code": "CHO",
+        "name": "Chocó",
+        "subdivision": null
+      },
+      {
+        "code": "CUN",
+        "name": "Cundinamarca",
+        "subdivision": null
+      },
+      {
+        "code": "COR",
+        "name": "Córdoba",
+        "subdivision": null
+      },
+      {
+        "code": "DC",
+        "name": "Distrito Capital de Bogotá",
+        "subdivision": null
+      },
+      {
+        "code": "GUA",
+        "name": "Guainía",
+        "subdivision": null
+      },
+      {
+        "code": "GUV",
+        "name": "Guaviare",
+        "subdivision": null
+      },
+      {
+        "code": "HUI",
+        "name": "Huila",
+        "subdivision": null
+      },
+      {
+        "code": "LAG",
+        "name": "La Guajira",
+        "subdivision": null
+      },
+      {
+        "code": "MAG",
+        "name": "Magdalena",
+        "subdivision": null
+      },
+      {
+        "code": "MET",
+        "name": "Meta",
+        "subdivision": null
+      },
+      {
+        "code": "NAR",
+        "name": "Nariño",
+        "subdivision": null
+      },
+      {
+        "code": "NSA",
+        "name": "Norte de Santander",
+        "subdivision": null
+      },
+      {
+        "code": "PUT",
+        "name": "Putumayo",
+        "subdivision": null
+      },
+      {
+        "code": "QUI",
+        "name": "Quindío",
+        "subdivision": null
+      },
+      {
+        "code": "RIS",
+        "name": "Risaralda",
+        "subdivision": null
+      },
+      {
+        "code": "SAP",
+        "name": "San Andrés, Providencia y Santa Catalina",
+        "subdivision": null
+      },
+      {
+        "code": "SAN",
+        "name": "Santander",
+        "subdivision": null
+      },
+      {
+        "code": "SUC",
+        "name": "Sucre",
+        "subdivision": null
+      },
+      {
+        "code": "TOL",
+        "name": "Tolima",
+        "subdivision": null
+      },
+      {
+        "code": "VAC",
+        "name": "Valle del Cauca",
+        "subdivision": null
+      },
+      {
+        "code": "VAU",
+        "name": "Vaupés",
+        "subdivision": null
+      },
+      {
+        "code": "VID",
+        "name": "Vichada",
         "subdivision": null
       }
     ]

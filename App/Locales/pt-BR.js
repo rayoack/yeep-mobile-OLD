@@ -19,6 +19,18 @@ export default {
   perHour: 'Por hora',
   perDay: 'Por dia',
   monetaryUnit: 'Moeda',
+  category: 'Categoria',
+
+  // COUNTRIES
+  Brazil: 'Brasil',
+  Argentina: 'Argentina',
+  Canada: 'Canadá',
+  Chile: 'Chile',
+  Colombia: 'Colômbia',
+  Mexico: 'México',
+  'United Kingdom': 'Reino Unido',
+  'United States': 'Estados Unidos',
+  Uruguay: 'Uruguay',
 
   // CURRENCIES
   argentinePeso: 'ARS: Peso argentino',
@@ -165,7 +177,10 @@ export default {
   inserDateButton: 'Inserir uma nova data',
   dateRequired: 'Você deve adicionar pelo menos uma data para o evento.',
 
-  // SPACES FORM AND FILTERS
+  // SPACES
+  owner: 'Proprietário',
+  capacity: 'Capacidade para',
+  people: 'pessoas',
   spacesInTitle: 'Espaços em',
   spacePriceLabel: 'Preço do espaço',
   priceMinQuery: 'Preço mínimo',
@@ -199,5 +214,40 @@ export default {
   stadium: 'Estádio',
   studio: 'Estúdio',
   theater: 'Teatro',
-  warehouse: 'Armazém'
+  warehouse: 'Armazém',
+  
+  // SPACE RESTRICTIONS
+  alcoolProvidedByVenue: 'As bebidas devem ser fornecidas pelo local',
+  allFoodHandledByeVenue: 'Toda comida e bebida manipuladas pelo local',
+  musicToMidnight: 'A música deve terminar às 00:00',
+  noAlcoholDrinks: 'Não permite bebidas alcoólicas',
+  noAnimals: 'Não permite animais',
+  noLoudMusic: 'Sem música alta',
+  noRice: 'Sem arroz, semente de pássaro, confete, etc',
+  noSmoking: 'Proibido fumar',
+  religiousEventOnly: 'Apenas eventos religiosos',
+  smokingInArea: 'Fumar apenas em áreas designadas',
+  smokingOutside: 'Fumar apenas fora do local',
+  venueMustApproveDecorations: 'O local deve aprovar todas as decorações',
+  
+  // SPACE FEATURES
+  allowsLoudSound: 'Permite som alto',
+  barbecueGrill: 'Grelha de churrasco',
+  pollReleased: 'Piscina liberada',
+  tablesAndChairsProvided: 'Mesas e cadeiras fornecidas',
+  wifi: 'Wi-Fi',
+  allowsOverNight: 'Permite pernoite',
+  sportsCourt: 'Quadra de esportes',
+  airConditioners: 'Ar condicionado',
+  playground: 'Playground',
+  stage: 'Palco',
+  brideDressingArea: 'Área de vestir da noiva',
+  groomDresingArea: 'Área de vestir do noivo',
+  venueSetupAndClean: 'Instalação e limpeza do local',
+  kitchenFacilities: 'Cozinha completa',
+  danceFloor: 'Pista de dança',
+  silverwareProvided: 'Lençóis, talheres, copos fornecidos',
+  outdoorLighting: 'Iluminação externa',
+  valetServiceProvided: 'Serviço de manobrista/traslado fornecido',
+  security: 'Segurança',
 }

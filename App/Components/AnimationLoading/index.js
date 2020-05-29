@@ -19,7 +19,6 @@ const AnimationLoading = ({
   loading
 }) => {
   let randomIndex = Math.floor(Math.random() * (3 - 0)) + 0
-  console.log(randomIndex)
   return (
     <>
       {fullscreen ? (

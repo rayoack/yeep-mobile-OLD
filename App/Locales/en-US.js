@@ -19,6 +19,18 @@ export default {
   perHour: 'Per hour',
   perDay: 'Per day',
   monetaryUnit: 'Currency',
+  category: 'Category',
+
+  // COUNTRIES
+  Brazil: 'Brazil',
+  Argentina: 'Argentina',
+  Canada: 'Canada',
+  Chile: 'Chile',
+  Colombia: 'Colombia',
+  Mexico: 'Mexico',
+  'United Kingdom': 'United Kingdom',
+  'United States': 'United States',
+  Uruguay: 'Uruguay',
 
   // CURRENCIES
   argentinePeso: 'ARS: Argentine Peso',
@@ -164,7 +176,10 @@ export default {
   inserDateButton: 'Insert a new date',
   dateRequired: 'You must add at least one date for the event.',
 
-  // SPACES FORM AND FILTERS
+  // SPACES
+  owner: 'Owner',
+  capacity: 'Capacity for',
+  people: 'people',
   spacesInTitle: 'Spaces in',
   spacePriceLabel: 'Space price',
   priceMinQuery: 'Minimum price',
@@ -198,5 +213,40 @@ export default {
   stadium: 'Stadium',
   studio: 'Studio',
   theater: 'Theater',
-  warehouse: 'Warehouse'
+  warehouse: 'Warehouse',
+
+  // SPACE RESTRICTIONS
+  alcoolProvidedByVenue: 'Drinks must be provided by venue',
+  allFoodHandledByeVenue: 'All food and beverage handled by venue',
+  musicToMidnight: 'Music must end by 00:00',
+  noAlcoholDrinks: 'Does not allow alcoholic beverages',
+  noAnimals: 'Does not allow animals',
+  noLoudMusic: 'No loud music',
+  noRice: 'No rice, birdseed, confetti, etc',
+  noSmoking: 'No smoking',
+  religiousEventOnly: 'Religious events only',
+  smokingInArea: 'Smoking in designated areas only',
+  smokingOutside: 'Smoking just off site',
+  venueMustApproveDecorations: 'Venue must approve all decorations',
+
+  // SPACE FEATURES
+  allowsLoudSound: 'Allows loud sound',
+  barbecueGrill: 'Barbecue grill',
+  pollReleased: 'Pool released',
+  tablesAndChairsProvided: 'Tables and chairs provided',
+  wifi: 'WiFi',
+  allowsOverNight: 'Allows overnight',
+  sportsCourt: 'Sports court',
+  airConditioners: 'Air conditioning',
+  playground: 'Playground',
+  stage: 'Stage',
+  brideDressingArea: 'Bride\'s dressing area',
+  groomDresingArea: 'Groom\'s dressing area',
+  venueSetupAndClean: 'Venue set up and clean up',
+  kitchenFacilities: 'Full kitchen facilities',
+  danceFloor: 'Dance floor',
+  silverwareProvided: 'Linens, silverware, glassware provided',
+  outdoorLighting: 'Outdoor lighting',
+  valetServiceProvided: 'Valet/shuttle service provided',
+  security: 'Security',
 }

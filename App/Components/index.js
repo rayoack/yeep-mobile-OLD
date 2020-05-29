@@ -16,6 +16,7 @@ import ScreensHeader from './ScreensHeader'
 import CardSelect from './CardSelect'
 import CardWithImage from './CardWithImage'
 import AnimationLoading from './AnimationLoading'
+import BetterReadMore from './BetterReadMore'
 
 import {
   InitialStep,
@@ -43,6 +44,7 @@ export {
   CardSelect,
   CardWithImage,
   AnimationLoading,
+  BetterReadMore,
   InitialStep,
   AddImagesToEvent,
   EventDescription,

@@ -104,8 +104,8 @@ class AdressRegisterScreen extends React.Component {
     const actualCountry = countriesList.filter(country => country.name == countryName)
     const countryStates = actualCountry[0].states.map(state => {
       return {
-        title: state.name,
-        value: state.name
+        title: translate(state.name),
+        value: state.code
       }
     })
 

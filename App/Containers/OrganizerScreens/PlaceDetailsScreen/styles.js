@@ -8,12 +8,18 @@ export const Container = styled.ScrollView`
   background-color: ${Colors.backgroundGray};
 `;
 
+export const CenterView = styled.View`
+  align-items: center;
+  margin: ${props => props.margin ? props.margin : '0' };
+`
+
 export const PlaceDivider = styled.View`
   width: ${Dimensions.get('window').width};
   border-bottom-width: 1px;
   border-bottom-color: ${Colors.ligthGray};
   margin: 5px 0;
-  margin-bottom: ${props => props.final ? '100px' : "5px"};
+  margin-top: ${props => props.marginTop ? props.marginTop : 0};
+  margin-bottom: ${props => props.marginBottom ? props.marginBottom : "5px"};
 `
 
 export const PlaceDetailsHeader = styled.View`
@@ -89,6 +95,7 @@ export const RowContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: ${props => props.container ? 'space-between' : 'flex-start'};
+  marginBottom: ${props => props.marginBottom ? props.marginBottom : '0' };
 `
 
 export const IconImage = styled.Image`
@@ -98,7 +105,34 @@ export const IconImage = styled.Image`
 `
 
 export const IconTitle = styled.Text`
-  font-size: 20px;
+  font-size: 16px;
   font-family: 'Nunito Regular';
   color: ${Colors.labelBlack};
+`
+
+export const PlaceLabel = styled.Text`
+  font-size: 20px;
+  font-family: 'Nunito Bold';
+  color: ${Colors.labelBlack};
+`
+
+export const PlaceText = styled.Text`
+  font-size: ${props => props.fontSize ? props.fontSize : '12px' };
+  font-family: ${props => props.fontFamily ? props.fontFamily : 'Nunito Regular' };
+  color: ${props => props.fontColor ? props.fontColor : Colors.textDefault };
+  text-align: ${props => props.textAlign ? props.textAlign : 'left' };
+  margin-top: ${props => props.marginTop ? props.marginTop : '0' };
+  margin-bottom: ${props => props.marginBottom ? props.marginBottom : '0' };
+`
+
+export const TouchableView = styled.TouchableOpacity`
+  align-items: ${props => props.alignItems ? props.alignItems : 'flex-start' };
+  align-self: ${props => props.alignSelf ? props.alignSelf : 'flex-start' };
+  margin: ${props => props.margin ? props.margin : '0' };
+`
+
+export const ProfileImage = styled(FastImage)`
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
 `

@@ -20,7 +20,7 @@ import {
   HeaderContainer,
   ListTitle
 } from './styles'
-import { translate } from '../../../Locales'
+import { translate, toNumber } from '../../../Locales'
 
 export class PlacesListScreen extends Component {
   constructor(props) {
@@ -69,7 +69,7 @@ export class PlacesListScreen extends Component {
       this.setState({
         spaces: mappedSpaces,
         loading: false,
-        feedbackType: 'emptyFeedback'
+        feedbackType: 'not_found'
       })
 
     } catch (error) {
@@ -89,7 +89,7 @@ export class PlacesListScreen extends Component {
         imageIndex: 0,
         images: space.images,
         leftIcon: Images.coins,
-        leftInfo: `${this.getCurrencySymbol(space.monetary_unit)}${space.price} / ${translate(space.charge_type)}`,
+        leftInfo: `${this.getCurrencySymbol(space.monetary_unit)}${toNumber(space.price)} / ${translate(space.charge_type)}`,
         rigthIcon: Images.group,
         rigthInfo: space.capacity,
       }

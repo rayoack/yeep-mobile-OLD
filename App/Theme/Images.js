@@ -7,7 +7,7 @@ export default {
   organizer: require('App/Assets/Images/event_planner.jpg'),
   service_provider: require('App/Assets/Images/service_provider.jpg'),
   image_background: require('App/Assets/Images/image-background.png'),
-  error: require('App/Assets/Images/error.jpg'),
+  error: require('App/Assets/Images/error.png'),
   coming_soon: require('App/Assets/Images/coming-soon.jpg'),
   empty: require('App/Assets/Images/empty.png'),
   not_found: require('App/Assets/Images/not-found.png'),
@@ -41,6 +41,7 @@ export default {
   place_inactive: require('App/Assets/Images/place-inactive.png'),
   coins: require('App/Assets/Images/coins.png'),
   group: require('App/Assets/Images/group.png'),
+  group2: require('App/Assets/Images/group-2.png'),
   
   // ORGANIZER STEPs
   organizerStepOne: require('App/Assets/Images/organizer-step-1.png'),

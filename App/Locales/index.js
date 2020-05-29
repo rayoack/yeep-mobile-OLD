@@ -45,3 +45,4 @@ const setLanguageToI18n = () => {
 setLanguageToI18n()
 
 export const translate = key => I18n.t(key)
+export const toNumber = value => I18n.toNumber(value, {delimiter: ".", separator: ",", precision: 2})

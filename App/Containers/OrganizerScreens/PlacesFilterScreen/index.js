@@ -86,7 +86,6 @@ export class PlacesFilterScreen extends Component {
 
   setUserCurrency = () => {
     const userCurrencies = RNLocalize.getCurrencies()
-    console.log(userCurrencies)
     userCurrencies.length ?
       this.setSpaceMonetaryUnitQuery(userCurrencies[0])
       : this.setSpaceMonetaryUnitQuery('BRL')
@@ -149,7 +148,7 @@ export class PlacesFilterScreen extends Component {
     const countryStates = actualCountry[0].states.map(state => {
       return {
         title: state.name,
-        value: state.name
+        value: state.code
       }
     })
 
@@ -160,7 +159,7 @@ export class PlacesFilterScreen extends Component {
   setCountries = () => {
     const countries = countriesList.map(country => {
       return {
-        title: country.name,
+        title: translate(country.name),
         value: country.name
       }
     })
@@ -194,7 +193,6 @@ export class PlacesFilterScreen extends Component {
       }
     })
 
-    console.log(spaceQueries)
     return (
       <>
         <Container>
