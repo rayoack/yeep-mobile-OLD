@@ -17,6 +17,7 @@ import CardSelect from './CardSelect'
 import CardWithImage from './CardWithImage'
 import AnimationLoading from './AnimationLoading'
 import BetterReadMore from './BetterReadMore'
+import CollapsibleList from './CollapsibleList'
 
 import {
   InitialStep,
@@ -45,6 +46,7 @@ export {
   CardWithImage,
   AnimationLoading,
   BetterReadMore,
+  CollapsibleList,
   InitialStep,
   AddImagesToEvent,
   EventDescription,

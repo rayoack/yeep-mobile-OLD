@@ -1,18 +1,22 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { View, BackHandler, Dimensions, StatusBar } from 'react-native'
+import { MAPBOX_KEY } from 'react-native-dotenv'
+import MapboxGL from '@react-native-mapbox-gl/maps'
+import FastImage from 'react-native-fast-image'
 import { connect } from 'react-redux'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 
-import { translate } from '../../../Locales'
-import { Images, Colors } from 'App/Theme'
 import api from '../../../Services/api'
+import { translate, toNumber } from '../../../Locales'
+import { getCurrencySymbol } from '../../../Services/currenciesHelpers'
+import { Images, Colors } from 'App/Theme'
 
 import {
   CarrouselFullScreen,
   AnimationLoading,
   BackButton,
   Feedback,
-  BetterReadMore
+  BetterReadMore,
 } from '../../../Components'
 
 import {
@@ -34,10 +38,15 @@ import {
   CenterView,
   PlaceText,
   TouchableView,
-  ProfileImage
+  ProfileImage,
+  ViewMoreButton,
+  StyledCollapsibleList,
+  ScrollContainer,
+  FooterContainer,
+  CheckButton
 } from './styles'
 
-export class PlaceDetailsScreen extends Component {
+export class PlaceDetailsScreen extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -46,10 +55,14 @@ export class PlaceDetailsScreen extends Component {
       feedbackType: '',
       activeImageIndex: 0,
       isModalOpen: false,
+      amenitiesButtonText: translate('viewMoreAmenities'),
+      restrictionsButtonText: translate('viewMoreRestrictions'),
     }
   }
 
   componentDidMount() {
+    // MapboxGL.setAccessToken(MAPBOX_KEY)
+    // MapboxGL.setConnected(true)
     this.loadMyEvents()
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
@@ -69,8 +82,17 @@ export class PlaceDetailsScreen extends Component {
         authorization: `Bearer ${this.props.user.token}`
       })
 
+      const spaceCategorie = this.categoriesMapped(data ? data.category : null)
+      const spaceFeatures = this.featuresMapped(data ? data.features : null)
+      const spaceRestrictions = this.restrictionsMapped(data ? data.restrictions : null)
+
       this.setState({
-        space: data,
+        space: {
+          ...data,
+          spaceCategorie,
+          spaceFeatures,
+          spaceRestrictions
+        },
         loading: false,
         feedbackType: 'emptyFeedback'
       })
@@ -103,135 +125,289 @@ export class PlaceDetailsScreen extends Component {
     }
   }
 
+  featuresMapped = (features) => {
+    if(!features || !features.length) return []
+    let featuresArr = features.split(",")
+    
+    featuresArr = featuresArr.map(feature => {
+      const featureTranslate = translate(feature)
+      return {
+        title: featureTranslate,
+        icon: Images[`${feature}`],
+      }
+    })
+
+    return featuresArr
+  }
+
+  restrictionsMapped = (restrictions) => {
+    if(!restrictions || !restrictions.length) return []
+    let restrictionsArr = restrictions.split(",")
+    
+    restrictionsArr = restrictionsArr.map(restriction => {
+      const restrictionTranslate = translate(restriction)
+      return {
+        title: restrictionTranslate,
+        icon: Images[`${restriction}`],
+      }
+    })
+
+    return restrictionsArr
+  }
+
+  setButtonAmenitiesText = (text) => this.setState({ amenitiesButtonText: text })
+  setButtonRestrictionsText = (text) => this.setState({ restrictionsButtonText: text })
+
   render() {
-    const { space, activeImageIndex, isModalOpen } = this.state
-    const spaceCategorie = this.categoriesMapped(space ? space.category : null)
+    const { space, activeImageIndex, isModalOpen, amenitiesButtonText, restrictionsButtonText } = this.state
     console.log(space)
 
     return (
       <>
-        {this.state.loading && (
+        {this.state.loading ? (
           <AnimationLoading
             fullscreen={true}
             loading={this.state.loading}
           />
-        )}
+        ) : null}
 
         {!this.state.loading && space ? (
           <>
-            <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
-            <PlaceDetailsHeader>
-              <BackButtonContainer onPress={() => this.goBack()}>
-                <BackButton color={Colors.white} size={20}/>
-              </BackButtonContainer>
 
-            </PlaceDetailsHeader>
+            <ScrollContainer>
+              <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
+              <PlaceDetailsHeader>
+                <BackButtonContainer onPress={() => this.goBack()}>
+                  <BackButton color={Colors.white} size={20}/>
+                </BackButtonContainer>
 
-            {space.Images ? (
-              <CarouselContainer>
-                <Carousel
-                  data={space.Images}
-                  renderItem={ ({item, index}) => {
-                    return (
-                      <SlideContainer
-                        activeOpacity={0.8}
-                        onPress={() => this.showModal()}>
-                        <SlideImage 
-                          key={index}
-                          source={{ uri: item.url }}
-                        />
-                      </SlideContainer>
-                    )
-                  }}
-                  onSnapToItem={this.onSnapToItem}
-                  sliderWidth={Dimensions.get('window').width} 
-                  itemWidth={Dimensions.get('window').width}
-                  removeClippedSubviews={false}
-                  firstItem={activeImageIndex}
-                />
+              </PlaceDetailsHeader>
 
-                <CarouselFooterContainer>
-                  <SlideCountContainer>
-                    <SlideCount>{`${activeImageIndex + 1}/${space.Images.length}`}</SlideCount>
-                  </SlideCountContainer>
-                </CarouselFooterContainer>
+              {space.Images ? (
+                <CarouselContainer>
+                  <Carousel
+                    data={space.Images}
+                    renderItem={ ({item, index}) => {
+                      return (
+                        <SlideContainer
+                          activeOpacity={0.8}
+                          onPress={() => this.showModal()}>
+                          <SlideImage 
+                            key={index}
+                            source={{ uri: item.url }}
+                            resizeMode={FastImage.resizeMode.cover}
+                          />
+                        </SlideContainer>
+                      )
+                    }}
+                    onSnapToItem={this.onSnapToItem}
+                    sliderWidth={Dimensions.get('window').width} 
+                    itemWidth={Dimensions.get('window').width}
+                    removeClippedSubviews={false}
+                    firstItem={activeImageIndex}
+                  />
 
-                <CarrouselFullScreen
-                  data={space.Images}
-                  onSnapToItem={this.onSnapToItem}
-                  showModal={this.showModal}
-                  isModalOpen={isModalOpen}
-                  activeImageIndex={activeImageIndex}
-                />
-              </CarouselContainer>
-            ) : (
-              <SlideImage source={Images.image_background} />
-            )}
-            <Container>
-              <View>
-                <PlaceTitle>{space.name}</PlaceTitle>
-                {space.adress && <PlaceText marginBottom={'20px'}>
-                  {`${space.adress}, ${space.city}, ${space.state}, ${translate(space.country)}`}
-                </PlaceText>}
-              </View>
-              <PlaceDivider marginBottom={'15px'}/>
-              
-              <RowContainer marginBottom={'15px'} container={true}>
-                <View style={{ flex: 1 }}>
-                  <PlaceText
-                    fontSize={'22px'}
-                    fontFamily={'Nunito Bold'}
-                    fontColor={Colors.labelGray}
-                  >
-                    {spaceCategorie.title}
-                  </PlaceText>
-                  
-                  <PlaceText
-                    fontSize={'16px'}
-                    fontFamily={'Nunito Semi Bold'}
-                    marginBottom={'10px'}
-                    marginTop={'-5px'}
-                  >
-                    {`${translate('owner')} ${space.User.name}`}
-                  </PlaceText>
+                  <CarouselFooterContainer>
+                    <SlideCountContainer>
+                      <SlideCount>{`${activeImageIndex + 1}/${space.Images.length}`}</SlideCount>
+                    </SlideCountContainer>
+                  </CarouselFooterContainer>
 
-                  <PlaceText
-                    fontSize={'15px'}
-                  >
-                    {`${translate('capacity')} ${space.capacity} ${translate('people')}`}
-                  </PlaceText>
-
+                  <CarrouselFullScreen
+                    data={space.Images}
+                    onSnapToItem={this.onSnapToItem}
+                    showModal={this.showModal}
+                    isModalOpen={isModalOpen}
+                    activeImageIndex={activeImageIndex}
+                  />
+                </CarouselContainer>
+              ) : (
+                <SlideImage source={Images.image_background} />
+              )}
+              <Container>
+                <View>
+                  <PlaceTitle>{space.name}</PlaceTitle>
+                  {space.adress && <PlaceText marginBottom={'20px'}>
+                    {`${space.adress}, ${space.city}, ${space.state}, ${translate(space.country)}`}
+                  </PlaceText>}
                 </View>
+                <PlaceDivider marginBottom={'15px'}/>
                 
-                <TouchableView
-                  activeOpacity={0.8}
-                  alignItems={'center'}
-                >
-                  {space.User.avatar ? (
-                    <ProfileImage source={{ uri: space.User.avatar.url }}/>
-                  ) : (
-                    <ProfileImage source={Images.image_background}/>
-                  )}
-                </TouchableView>
-              </RowContainer>
-              <PlaceDivider marginBottom={'25px'}/>
+                <RowContainer marginBottom={'15px'} container={true}>
+                  <View style={{ flex: 1 }}>
+                    <PlaceText
+                      fontSize={'22px'}
+                      fontFamily={'Nunito Bold'}
+                      fontColor={Colors.labelGray}
+                    >
+                      {space.spaceCategorie.title}
+                    </PlaceText>
+                    
+                    <PlaceText
+                      fontSize={'16px'}
+                      fontFamily={'Nunito Semi Bold'}
+                      marginBottom={'10px'}
+                      marginTop={'-5px'}
+                    >
+                      {`${translate('owner')} ${space.User.name}`}
+                    </PlaceText>
 
-              <BetterReadMore
-                numberOfLines={3}
+                    <PlaceText
+                      fontSize={'15px'}
+                    >
+                      {`${translate('capacity')} ${space.capacity} ${translate('people')}`}
+                    </PlaceText>
+
+                  </View>
+                  
+                  <TouchableView
+                    activeOpacity={0.8}
+                    alignItems={'center'}
+                  >
+                    {space.User.avatar ? (
+                      <ProfileImage source={{ uri: space.User.avatar.url }}/>
+                    ) : (
+                      <ProfileImage source={Images.image_background}/>
+                    )}
+                  </TouchableView>
+                </RowContainer>
+                <PlaceDivider marginBottom={'25px'}/>
+                
+                {space.description ? (
+                  <>
+                    <BetterReadMore
+                      numberOfLines={3}
+                    >
+                      <PlaceText
+                        fontColor={Colors.text}
+                        fontSize={'15px'}
+                      >
+                        {space.description}
+                      </PlaceText>
+                    </BetterReadMore>
+                    <PlaceDivider marginTop={'25px'} marginBottom={'15px'}/>
+                  </>
+                ) : null}
+                
+                {space.spaceFeatures.length ? (
+                  <>
+                    <PlaceText
+                      fontSize={'22px'}
+                      fontFamily={'Nunito Bold'}
+                      fontColor={Colors.labelGray}
+                      marginBottom={'15px'}
+                    >
+                      {translate('amenitiesTitle')}
+                    </PlaceText>
+
+                    <StyledCollapsibleList
+                      numberOfVisibleItems={2}
+                      onToggle={collapsed =>
+                        collapsed
+                          ? this.setButtonAmenitiesText(translate('viewLessAmenities'))
+                          : this.setButtonAmenitiesText(translate('viewMoreAmenities'))
+                      }
+                      buttonContent={
+                        <ViewMoreButton>
+                          <PlaceText
+                            fontColor={Colors.secondary}
+                            fontFamily={'Nunito Bold'}
+                            fontSize={'15px'}
+                          >
+                            {amenitiesButtonText}
+                          </PlaceText>
+                        </ViewMoreButton>
+                      }
+                    >
+                      {space.spaceFeatures.map((feature, index) => (
+                        <RowContainer marginBottom={'15px'} key={index} container={true}>
+                          <IconTitle>{feature.title}</IconTitle>
+
+                          <IconImage source={feature.icon}/>
+                        </RowContainer>
+                      ))}
+                    </StyledCollapsibleList>
+                    <PlaceDivider marginTop={'25px'} marginBottom={'15px'}/>
+
+                  </>
+                ) : null}
+                
+                {space.spaceRestrictions.length ? (
+                  <>
+                    <PlaceText
+                      fontSize={'22px'}
+                      fontFamily={'Nunito Bold'}
+                      fontColor={Colors.labelGray}
+                      marginBottom={'15px'}
+                    >
+                      {translate('restrictionsTitle')}
+                    </PlaceText>
+
+                    <StyledCollapsibleList
+                      numberOfVisibleItems={2}
+                      onToggle={collapsed =>
+                        collapsed
+                          ? this.setButtonRestrictionsText(translate('viewLessRestrictions'))
+                          : this.setButtonRestrictionsText(translate('viewMoreRestrictions'))
+                      }
+                      buttonContent={
+                        <ViewMoreButton>
+                          <PlaceText
+                            fontColor={Colors.secondary}
+                            fontFamily={'Nunito Bold'}
+                            fontSize={'15px'}
+                          >
+                            {restrictionsButtonText}
+                          </PlaceText>
+                        </ViewMoreButton>
+                      }
+                    >
+                      {space.spaceRestrictions.map((restriction, index) => (
+                        <RowContainer marginBottom={'15px'} key={index} container={true}>
+                          <IconTitle>{restriction.title}</IconTitle>
+
+                          <IconImage source={restriction.icon}/>
+                        </RowContainer>
+                      ))}
+                    </StyledCollapsibleList>
+                    <PlaceDivider marginTop={'100px'} marginBottom={'15px'}/>
+
+                  </>
+                ) : null}
+
+              </Container>
+            </ScrollContainer>
+
+            <FooterContainer>
+              <PlaceText
+                fontColor={Colors.labelBlack}
+                fontFamily={'Nunito Bold'}
+                fontSize={'15px'}
+              >
+                {`${getCurrencySymbol(space.monetary_unit)}${toNumber(space.price)} / ${translate(space.charge_type)}`}
+              </PlaceText>
+
+              <CheckButton
+                activeOpacity={0.8}
               >
                 <PlaceText
-                  fontColor={Colors.text}
-                  fontSize={'15px'}
+                  fontColor={Colors.white}
+                  fontFamily={'Nunito Bold'}
+                  fontSize={'12px'}
+                  textAlign={'center'}
                 >
-                  {space.description}
+                  {translate('checkAvailability')}
                 </PlaceText>
-              </BetterReadMore>
-              <PlaceDivider marginTop={'25px'} marginBottom={'15px'}/>
-
-            </Container>
+              </CheckButton>
+              
+            </FooterContainer>
           </>
         ) : (
-          <Feedback feedbackType={'error'}/>
+          <>
+            {this.state.feedbackType == 'error' ? (
+              <Feedback feedbackType={'error'}/>
+            ) : null}
+          </>
         )}
       </>
     )

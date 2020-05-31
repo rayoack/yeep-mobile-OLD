@@ -20,6 +20,8 @@ export default {
   perDay: 'Per day',
   monetaryUnit: 'Currency',
   category: 'Category',
+  locationTitle: 'Location',
+  checkAvailability: 'CHECK AVAILABILITY',
 
   // COUNTRIES
   Brazil: 'Brazil',
@@ -177,6 +179,12 @@ export default {
   dateRequired: 'You must add at least one date for the event.',
 
   // SPACES
+  viewMoreAmenities: 'Show more amenities',
+  viewLessAmenities: 'Show less amenities',
+  viewMoreRestrictions: 'Show more restrictions',
+  viewLessRestrictions: 'Show less restrictions',
+  amenitiesTitle: 'Amenities',
+  restrictionsTitle: 'Restrictions',
   owner: 'Owner',
   capacity: 'Capacity for',
   people: 'people',
@@ -216,7 +224,7 @@ export default {
   warehouse: 'Warehouse',
 
   // SPACE RESTRICTIONS
-  alcoolProvidedByVenue: 'Drinks must be provided by venue',
+  drinksProvidedByVenue: 'Drinks must be provided by venue',
   allFoodHandledByeVenue: 'All food and beverage handled by venue',
   musicToMidnight: 'Music must end by 00:00',
   noAlcoholDrinks: 'Does not allow alcoholic beverages',
@@ -248,5 +256,5 @@ export default {
   silverwareProvided: 'Linens, silverware, glassware provided',
   outdoorLighting: 'Outdoor lighting',
   valetServiceProvided: 'Valet/shuttle service provided',
-  security: 'Security',
+  securityGuard: 'Security guard',
 }

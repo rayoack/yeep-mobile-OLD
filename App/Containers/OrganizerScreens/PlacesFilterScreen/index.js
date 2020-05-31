@@ -25,7 +25,9 @@ import {
   LocationContainer,
   QueryLabel,
   RowContainer,
-  SearchButtonContainer
+  SearchButtonContainer,
+  ImageHeaderContainer,
+  ImageHeader
 } from './styles'
 
 export class PlacesFilterScreen extends Component {
@@ -200,6 +202,10 @@ export class PlacesFilterScreen extends Component {
             onPress={() => this.goBack()}
             title={translate('spacesTabLabel')}
           />
+
+          <ImageHeaderContainer>
+            <ImageHeader source={Images.cityIllustration}/>
+          </ImageHeaderContainer>
 
           <QueryLabel>{translate('whereQuery')}</QueryLabel>
           <LocationContainer>

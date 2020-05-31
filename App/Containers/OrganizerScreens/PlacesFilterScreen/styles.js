@@ -45,3 +45,12 @@ export const SearchButtonContainer = styled(LinearGradient)`
   padding-bottom: 20px;
   width: ${Dimensions.get('window').width};
 `
+
+export const ImageHeaderContainer = styled.View`
+  margin: 0 0 15px;
+`
+
+export const ImageHeader = styled(FastImage)`
+  height: 150px;
+  width: ${Dimensions.get('window').width};
+`

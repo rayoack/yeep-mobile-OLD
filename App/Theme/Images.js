@@ -12,6 +12,9 @@ export default {
   empty: require('App/Assets/Images/empty.png'),
   not_found: require('App/Assets/Images/not-found.png'),
 
+  // ILLUSTRATIONS
+  cityIllustration: require('App/Assets/Images/city.png'),
+
   // ANIMATIONS
   editing_animation: require('App/Assets/Images/editing-animation.json'),
   yeep_loading: require('App/Assets/Images/yeep-loading.json'),
@@ -42,6 +45,42 @@ export default {
   coins: require('App/Assets/Images/coins.png'),
   group: require('App/Assets/Images/group.png'),
   group2: require('App/Assets/Images/group-2.png'),
+
+  // SPACE FEATURES ICONS
+  allowsLoudSound: require('App/Assets/Images/allowsLoudSound.png'),
+  barbecueGrill: require('App/Assets/Images/barbecueGrill.png'),
+  pollReleased: require('App/Assets/Images/pollReleased.png'),
+  tablesAndChairsProvided: require('App/Assets/Images/tablesAndChairsProvided.png'),
+  wifi: require('App/Assets/Images/wifi.png'),
+  allowsOverNight: require('App/Assets/Images/allowsOverNight.png'),
+  sportsCourt: require('App/Assets/Images/sportsCourt.png'),
+  airConditioners: require('App/Assets/Images/airConditioners.png'),
+  playground: require('App/Assets/Images/playground.png'),
+  stage: require('App/Assets/Images/stage.png'),
+  brideDressingArea: require('App/Assets/Images/brideDressingArea.png'),
+  groomDresingArea: require('App/Assets/Images/groomDresingArea.png'),
+  venueSetupAndClean: require('App/Assets/Images/venueSetupAndClean.png'),
+  kitchenFacilities: require('App/Assets/Images/kitchenFacilities.png'),
+  danceFloor: require('App/Assets/Images/danceFloor.png'),
+  silverwareProvided: require('App/Assets/Images/silverwareProvided.png'),
+  allowsLoudSound: require('App/Assets/Images/allowsLoudSound.png'),
+  outdoorLighting: require('App/Assets/Images/outdoorLighting.png'),
+  valetServiceProvided: require('App/Assets/Images/valetServiceProvided.png'),
+  securityGuard: require('App/Assets/Images/securityGuard.png'),
+
+  // SPACE RESTRICTIONS ICONS
+  drinksProvidedByVenue: require('App/Assets/Images/drinksProvidedByVenue.png'),
+  allFoodHandledByeVenue: require('App/Assets/Images/allFoodHandledByeVenue.png'),
+  musicToMidnight: require('App/Assets/Images/musicToMidnight.png'),
+  noAlcoholDrinks: require('App/Assets/Images/noAlcoholDrinks.png'),
+  noAnimals: require('App/Assets/Images/noAnimals.png'),
+  noLoudMusic: require('App/Assets/Images/noLoudMusic.png'),
+  noRice: require('App/Assets/Images/noRice.png'),
+  noSmoking: require('App/Assets/Images/noSmoking.png'),
+  religiousEventOnly: require('App/Assets/Images/religiousEventOnly.png'),
+  smokingInArea: require('App/Assets/Images/smokingInArea.png'),
+  smokingOutside: require('App/Assets/Images/smokingOutside.png'),
+  venueMustApproveDecorations: require('App/Assets/Images/venueMustApproveDecorations.png'),
   
   // ORGANIZER STEPs
   organizerStepOne: require('App/Assets/Images/organizer-step-1.png'),

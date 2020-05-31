@@ -2,8 +2,11 @@ import styled from 'styled-components/native';
 import { Dimensions, StyleSheet } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Colors } from 'App/Theme'
+import { CollapsibleList } from '../../../Components'
 
-export const Container = styled.ScrollView`
+export const ScrollContainer = styled.ScrollView``
+
+export const Container = styled.View`
   padding: 0 25px;
   background-color: ${Colors.backgroundGray};
 `;
@@ -135,4 +138,44 @@ export const ProfileImage = styled(FastImage)`
   height: 60px;
   width: 60px;
   border-radius: 30px;
+`
+
+export const ViewMoreButton = styled.View`
+  height: 50px;
+  width: 100%;
+  border-width: 2px;
+  border-color: ${Colors.secondary};
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+`
+
+export const StyledCollapsibleList = styled(CollapsibleList)`
+  flex: 1;
+  overflow: hidden;
+  margin-bottom: 15px;
+`
+
+export const FooterContainer = styled.View`
+  height: 80px;
+  position: absolute;
+  bottom: 0;
+  width: ${Dimensions.get('window').width};
+  padding: 20px;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: ${Colors.white};
+  box-shadow: 3px 2px 10px rgba(0, 0, 0, 0.32);
+  elevation: 10;
+  align-items: center;
+`
+
+export const CheckButton = styled.TouchableOpacity`
+  height: 50px;
+  width: 150px;
+  padding: 10px;
+  background-color: ${Colors.secondary};
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
 `
