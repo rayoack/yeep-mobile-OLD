@@ -1,5 +1,6 @@
 import React from 'react'
 import FastImage from 'react-native-fast-image'
+import { View } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Images } from 'App/Theme'
 import {
@@ -11,10 +12,10 @@ import {
   LabelTextContainer,
   LabelTitle,
   LabelDescription,
-  Touchable
+  Touchable,
+  ItemImage,
+  ImageContainer
 } from './styles'
-import selectedIconSrc from '../../assets/images/selected-icon-round.png'
-import deselectedIconSrc from '../../assets/images/deselected-icon-round.png'
 
 const ViewComponent = ({
   items,
@@ -105,15 +106,17 @@ const RegularItem = ({
     <Touchable onPress={() => onItemPress(item)} activeOpacity={0.5}>
       <Item>
         <LabelContainer>
-          {item.image && (
-            <FastImage
-              style={styles.retangularThumbnail}
-              source={{ uri: item.image }}
-            />
-          )}
-          <LabelTitle supplierList={supplierList} numberOfLines={1}>
-            {item.label}
-          </LabelTitle>
+          {item.image ? (
+              <ItemImage
+                // style={styles.retangularThumbnail}
+                source={{ uri: item.image }}
+              />
+          ) : null}
+          <View>
+            <LabelTitle numberOfLines={1}>
+              {item.title}
+            </LabelTitle>
+          </View>
         </LabelContainer>
         {multipleSelection && <SelectionIcon selected={item.selected} />}
         {typeof deleteItem == 'function' && (
@@ -137,14 +140,14 @@ const AvatarItem = ({
     <Touchable onPress={() => onItemPress(item)} activeOpacity={0.5}>
       <NoBorderItem>
         <LabelContainer>
-          <FastImage style={styles.avatar} source={item.image} />
+          <ItemImage style={styles.avatar} source={item.image} />
           <LabelTextContainer>
             <LabelTitle
               isAddSupplierSelectionScreen={isAddSupplierSelectionScreen}
               numberOfLines={1}
               isGroupDetails={isGroupDetails}
             >
-              {item.label}
+              {item.title}
             </LabelTitle>
             {isGroupDetails ? (
               <LabelDescription isGroupDetails={isGroupDetails}>
@@ -161,9 +164,9 @@ const AvatarItem = ({
 
 const SelectionIcon = ({ selected }) => {
   return selected ? (
-    <FastImage style={styles.selectionIcon} source={Images.check_mark} />
+    <ItemImage style={styles.selectionIcon} source={Images.check_mark} />
   ) : (
-    <FastImage style={styles.selectionIcon} source={Images.button_remove} />
+    <ItemImage style={styles.selectionIcon} source={Images.button_remove} />
   )
 }
 

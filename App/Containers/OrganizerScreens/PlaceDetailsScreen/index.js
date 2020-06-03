@@ -63,7 +63,7 @@ export class PlaceDetailsScreen extends PureComponent {
   componentDidMount() {
     // MapboxGL.setAccessToken(MAPBOX_KEY)
     // MapboxGL.setConnected(true)
-    this.loadMyEvents()
+    this.fetchSpaceDetails()
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
 
@@ -72,7 +72,7 @@ export class PlaceDetailsScreen extends PureComponent {
     return true;
   }
 
-  loadMyEvents = async () => {
+  fetchSpaceDetails = async () => {
     const id = this.props.navigation.getParam('space_id', null)
 
     this.setState({ loading: true })
@@ -153,6 +153,14 @@ export class PlaceDetailsScreen extends PureComponent {
     })
 
     return restrictionsArr
+  }
+
+  navigateToEventsSelectScreen = () => {
+    if(this.state.space) {
+      this.props.navigation.push('MyEventsSelectScreen', {
+        space: this.state.space
+      })
+    }
   }
 
   setButtonAmenitiesText = (text) => this.setState({ amenitiesButtonText: text })
@@ -389,6 +397,7 @@ export class PlaceDetailsScreen extends PureComponent {
 
               <CheckButton
                 activeOpacity={0.8}
+                onPress={() => this.navigateToEventsSelectScreen()}
               >
                 <PlaceText
                   fontColor={Colors.white}

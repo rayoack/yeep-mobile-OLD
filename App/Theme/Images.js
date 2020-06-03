@@ -14,6 +14,7 @@ export default {
 
   // ILLUSTRATIONS
   cityIllustration: require('App/Assets/Images/city.png'),
+  calendarIllustration: require('App/Assets/Images/calendar-illustration.png'),
 
   // ANIMATIONS
   editing_animation: require('App/Assets/Images/editing-animation.json'),

@@ -1,9 +1,23 @@
 import styled from 'styled-components/native'
 import { StyleSheet  } from 'react-native'
 import { Colors } from 'App/Theme'
+import FastImage from 'react-native-fast-image'
 
 export const StyledFlatList = styled.FlatList`
   padding-right: 10px;
+  margin-top: 10px;
+`
+
+export const ItemImage = styled(FastImage)`
+  width: 70px;
+  height: 40px;
+  border-radius: 5px;
+  margin-right: 10px;
+`
+
+export const ImageContainer = styled.View`
+  height: 43px;
+  height: 29px;
 `
 
 export const Touchable = styled.TouchableOpacity``
@@ -19,11 +33,11 @@ export const Item = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
-  height: 44px;
+  padding: 12px;
+  height: 80px;
   margin-bottom: 8px;
-  border-bottom-color: rgba(0, 0, 0, 0.2);
-  border-bottom-width: 1;
+  border-bottom-width: 1px;
+  border-bottom-color: ${Colors.ligthGray};
 `
 
 export const NoBorderItem = styled.View`
@@ -38,11 +52,9 @@ export const LabelTextContainer = styled.View`
 `
 
 export const LabelTitle = styled.Text`
-  width: 80%;
-  font-family: ${props => props.isAddSupplierSelectionScreen ? 'SFProText-Medium' : 'SFProText-Regular'};
-  font-size: 16px;
-  line-height: 16px;
-  color: ${props => props.IconList ? 'rgb(141, 141, 143)' : 'rgb(48, 49, 51)'};
+  font-family: ${props => props.isAddSupplierSelectionScreen ? 'Nunito Semi Bold' : 'Nunito Regular'};
+  font-size: 20px;
+  color: ${Colors.labelBlack};
   margin-bottom: ${props => props.isGroupDetails ? 8 : 0};
 `
 

@@ -18,6 +18,10 @@ const setFeedbackImage = (feedbackType) => {
       return Images.error
       break;
   
+    case 'no_events_with_dates':
+      return Images.calendarIllustration
+      break;
+  
     default:
       return Images.empty
       break;
@@ -40,6 +44,10 @@ const setFeedbackText = (feedbackType) => {
   
     case 'organizer_empty':
       return translate('organizerEmptyFeedback')
+      break;
+  
+    case 'no_events_with_dates':
+      return translate('noEventsWithDates')
       break;
   
     default:

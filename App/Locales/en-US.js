@@ -88,6 +88,9 @@ export default {
   adressRegisterScreenTitle: 'Set your location',
 
   // Organizer
+  selectEventInfo: 'Only events with dates will appear in the list.',
+  noEventsWithDates: 'No dated events found',
+  selectEvent: 'Select the event',
   myEventsTabLabel: 'My events',
   spacesTabLabel: 'Spaces',
   servicesTabLabel: 'Services',

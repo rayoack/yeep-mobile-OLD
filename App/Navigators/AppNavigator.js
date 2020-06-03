@@ -16,6 +16,7 @@ import {
   RoleSelectorScreen,
   RegisterScreen,
   AdressRegisterScreen,
+  // ORGANIZER
   MyEventsScreen,
   OrganizerNegociations,
   PlacesScreen,
@@ -28,6 +29,8 @@ import {
   PlacesFilterScreen,
   PlacesListScreen,
   PlaceDetailsScreen,
+  MyEventsSelectScreen,
+  ReserveForm,
 } from '../Containers'
 
 const AuthNavigator = createSwitchNavigator({
@@ -126,6 +129,8 @@ const StackNavigator = createStackNavigator(
     PlacesFilterScreen: { screen: PlacesFilterScreen },
     PlacesListScreen: { screen: PlacesListScreen },
     PlaceDetailsScreen: { screen: PlaceDetailsScreen },
+    MyEventsSelectScreen: { screen: MyEventsSelectScreen },
+    ReserveForm: { screen: ReserveForm },
   },
   {
     initialRouteName: 'tabs',
