@@ -70,7 +70,7 @@ export class MyEventsSelectScreen extends Component {
       event: item,
       space,
       service,
-      reserveState: 'creation'
+      isCreation: true
     })
 
   }

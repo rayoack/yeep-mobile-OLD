@@ -9,11 +9,11 @@ export const HeaderView = styled.View`
 `
 
 export const Container = styled.View`
-  height: 120px;
+  height: 90px;
   width: ${Dimensions.get('window').width};
   padding: 20px;
-  border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 40px;
+  border-bottom-left-radius: 60px;
+  border-bottom-right-radius: 60px;
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
