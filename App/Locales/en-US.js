@@ -22,6 +22,7 @@ export default {
   category: 'Category',
   locationTitle: 'Location',
   checkAvailability: 'CHECK AVAILABILITY',
+  errorInRequest: 'We had a problem, please try again.',
 
   // COUNTRIES
   Brazil: 'Brazil',
