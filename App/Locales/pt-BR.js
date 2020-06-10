@@ -89,6 +89,9 @@ export default {
   backToRegister: 'Voltar para a tela de registro?',
   adressRegisterScreenTitle: 'Defina sua localização',
 
+  // RESERVES
+  reserveSpacesMessage: 'Olá, gostaria de alugar seu espaço para o meu evento.',
+
   // Organizer
   selectEventInfo: 'Somente eventos com datas aparecerão na lista.',
   noEventsWithDates: 'Nenhum evento com data encontrado',

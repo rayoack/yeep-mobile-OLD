@@ -170,7 +170,7 @@ export class PlacesFilterScreen extends Component {
   }
 
   navigateToPlacesListScreen = () => {
-    this.props.navigation.push('PlacesListScreen')
+    this.props.navigation.navigate('PlacesListScreen')
   }
 
   render() {

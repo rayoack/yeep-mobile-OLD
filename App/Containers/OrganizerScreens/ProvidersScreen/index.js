@@ -15,56 +15,19 @@ class ProvidersScreen extends React.Component {
     super(props)
     this.state = {
     }
-
-    this.stateChange = _.debounce(this.stateChange, 1000)
   }
 
   componentDidMount() {
 
   }
   
-  stateChange = async (state) => {
-    console.log('state', state)
-    if(state.url.includes('process?code')) {
-      const { data: code } = await axios.get(`${state.url}`)
-
-      try {
-        
-        const { data } = await api.post('/userToken', {
-          code,
-          updateMp: true
-        }, {
-          authorization: `Bearer ${this.props.user.token}`
-        })
-
-        console.log('data', data)
-
-      } catch (error) {
-        console.log({error})
-        Alert.alert(translate('errorInRequest'))
-      }
-    } else {
-      Alert.alert(translate('errorInRequest'))
-    }
-
-  }
-
   render() {
     return (
-      <View style={{ justifyContent: 'center', flex: 1 }}>
-      {/* <TouchableOpacity onPress={() => this.goToUrl()}>
-        <Text>ProvidersScreen</Text>
-      </TouchableOpacity> */}
-
-      <WebView
-        source={{
-          uri: `https://auth.mercadopago.com.br/authorization?client_id=2797182559212984&response_type=code&platform_id=mp&redirect_uri=${encodeURI('https://f5b082d1fbef.ngrok.io/process')}`
-      }}
-        onNavigationStateChange={state => this.stateChange(state)}
-        startInLoadingState={true}
-        renderLoading={() => <ActivityIndicator></ActivityIndicator>}
-      />
-    </View>
+      <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('ReserveForm')}>
+          <Text>PlacesScreen</Text>
+        </TouchableOpacity>
+      </View>
     )
   }
 
