@@ -23,6 +23,9 @@ import PlaceDetailsScreen from './OrganizerScreens/PlaceDetailsScreen'
 import MyEventsSelectScreen from './OrganizerScreens/MyEventsSelectScreen'
 import ReserveForm from './OrganizerScreens/ReserveForm'
 
+// RESERVES
+import ReservesList from './ReserveScreens/ReservesList'
+
 export {
   ExampleScreen,
   SplashScreen,
@@ -49,4 +52,7 @@ export {
   PlaceDetailsScreen,
   MyEventsSelectScreen,
   ReserveForm,
+
+  // RESERVES
+  ReservesList,
 }
