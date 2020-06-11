@@ -9,6 +9,8 @@ export default {
   errorFeedback: 'Oops, something went wrong.',
   readMore: 'Read more',
   readLess: 'Read less',
+  showMore: 'Show more',
+  showLess: 'Show less',
   loadingText: 'Loading...',
   savingLoadingText: 'One moment, we\'re saving your changes...',
   searchText: 'Search',
@@ -90,6 +92,16 @@ export default {
 
   // RESERVES
   reserveSpacesMessage: 'Hello, I would like to rent your space for my event.',
+  eventDatesLabel: 'Event dates',
+  quantity: 'Quantity',
+  daysText: 'Days',
+  hoursText: 'Hours',
+  serviceChargeLabel: 'Service charge',
+  totalLabel: 'Total',
+  youWontBeChargedYet: 'You won\'t be charged yet',
+  youWontBeChargedText: 'You will only make payment after the owner approves the reservation.',
+  messageLabel: 'Message',
+  goToNegotiation: 'Go to negotiation',
 
   // Organizer
   selectEventInfo: 'Only events with dates will appear in the list.',

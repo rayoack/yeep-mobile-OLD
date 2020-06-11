@@ -9,6 +9,8 @@ export default {
   errorFeedback: 'Oops, algo deu errado.',
   readMore: 'Ler mais',
   readLess: 'Ler menos',
+  showMore: 'Ver mais',
+  showLess: 'Ver menos',
   loadingText: 'Carregando...',
   savingLoadingText: 'Um momento, estamos salvando suas alterações...',
   searchText: 'Buscar',
@@ -91,6 +93,16 @@ export default {
 
   // RESERVES
   reserveSpacesMessage: 'Olá, gostaria de alugar seu espaço para o meu evento.',
+  eventDatesLabel: 'Datas do evento',
+  quantity: 'Quantidade',
+  daysText: 'Dias',
+  hoursText: 'Horas',
+  serviceChargeLabel: 'Taxa de serviço',
+  totalLabel: 'Total',
+  youWontBeChargedYet: 'Você não será cobrado ainda',
+  youWontBeChargedText: 'Você só fará o pagamento após o proprietário aprovar a reserva.',
+  messageLabel: 'Mensagem',
+  goToNegotiation: 'Ir para negociação',
 
   // Organizer
   selectEventInfo: 'Somente eventos com datas aparecerão na lista.',
