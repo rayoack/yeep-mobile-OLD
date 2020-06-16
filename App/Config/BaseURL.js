@@ -1,12 +1,12 @@
 //STAGING
-const BaseURL = {
-  api: 'https://yeep-web.herokuapp.com/'
-}
+// const BaseURL = {
+//   api: 'https://yeep-web.herokuapp.com/'
+// }
 
 //  LOCAL
-// const BaseURL = {
-//   api: 'http://192.168.0.28:3333'
-// }
+const BaseURL = {
+  api: 'http://192.168.0.44:3333'
+}
 
 
 // PRODUCTION

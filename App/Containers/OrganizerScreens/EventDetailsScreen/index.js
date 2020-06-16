@@ -147,7 +147,12 @@ export class EventDetailsScreen extends Component {
             
             {isAdmin.length >= 1 ? (
               <>
-                <EventActionContainer>
+                <EventActionContainer onPress={
+                  () => this.props.navigation.push('ReservesList', {
+                    targetId: event.id,
+                    request_type: 'event'
+                  })
+                }>
                   <EventActionLabelContainer>
                     <EventActionIcon source={Images.negociations_icon}/>
                     <EventActionLabel>{translate('eventNegocationsLabel')}</EventActionLabel>

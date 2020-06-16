@@ -4,7 +4,7 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { translate } from '../../../Locales'
-import { CardsList, Header } from '../../../Components'
+import { CardsList } from '../../../Components'
 import { Images, Colors } from 'App/Theme'
 
 import {
@@ -45,7 +45,7 @@ const renderScene = (
           loading={loading}
           emptyType={'emptyFeedback'}
           onPress={onPress}
-          onRefresh={refreshMyEvents}
+          onRefresh={refreshMyReserves}
           refreshing={refreshing}
         />
       )
@@ -56,7 +56,7 @@ const renderScene = (
           loading={loading}
           emptyType={'emptyFeedback'}
           onPress={onPress}
-          onRefresh={refreshMyEvents}
+          onRefresh={refreshMyReserves}
           refreshing={refreshing}
         />
       )
@@ -106,8 +106,6 @@ const ViewComponent = ({
 
   return (
     <Container>
-      <Header />
-
       <TabView
         navigationState={{ index, routes }}
         renderScene={({route}) => renderScene(

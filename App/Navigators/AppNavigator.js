@@ -31,6 +31,8 @@ import {
   PlaceDetailsScreen,
   MyEventsSelectScreen,
   ReserveForm,
+  // RESERVES
+  ReservesList,
 } from '../Containers'
 
 const AuthNavigator = createSwitchNavigator({
@@ -131,6 +133,7 @@ const StackNavigator = createStackNavigator(
     PlaceDetailsScreen: { screen: PlaceDetailsScreen },
     MyEventsSelectScreen: { screen: MyEventsSelectScreen },
     ReserveForm: { screen: ReserveForm },
+    ReservesList: { screen: ReservesList },
   },
   {
     initialRouteName: 'tabs',
