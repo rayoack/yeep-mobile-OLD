@@ -19,6 +19,7 @@ import AnimationLoading from './AnimationLoading'
 import BetterReadMore from './BetterReadMore'
 import CollapsibleList from './CollapsibleList'
 import SelectionList from './SelectionList'
+import ChatList from './ChatList'
 
 import {
   InitialStep,
@@ -47,6 +48,7 @@ export {
   CardWithImage,
   AnimationLoading,
   BetterReadMore,
+  ChatList,
   CollapsibleList,
   SelectionList,
   InitialStep,

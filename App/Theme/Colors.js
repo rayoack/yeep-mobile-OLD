@@ -37,6 +37,7 @@ export default {
   nigthPurple: '#503F75',
   lightBlue: '#D4E2F3',
   saintBlue: '#97B8E1',
+  lightGreen: '#B2C0AD',
   success: '#28a745',
   error: '#dc3545',
 }

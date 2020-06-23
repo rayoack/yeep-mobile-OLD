@@ -33,6 +33,8 @@ import {
   ReserveForm,
   // RESERVES
   ReservesList,
+  // CHAT
+  RoomChat,
 } from '../Containers'
 
 const AuthNavigator = createSwitchNavigator({
@@ -134,6 +136,7 @@ const StackNavigator = createStackNavigator(
     MyEventsSelectScreen: { screen: MyEventsSelectScreen },
     ReserveForm: { screen: ReserveForm },
     ReservesList: { screen: ReservesList },
+    RoomChat: { screen: RoomChat },
   },
   {
     initialRouteName: 'tabs',

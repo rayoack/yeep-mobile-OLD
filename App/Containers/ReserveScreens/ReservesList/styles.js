@@ -6,26 +6,22 @@ import { Colors } from 'App/Theme'
 export const Container = styled.View`
   flex: 1;
   background-color: ${Colors.backgroundGray};
-  /* border-top-left-radius: 40px;
-  border-top-right-radius: 40px; */
 `;
 
-export const TabBar = styled.View`
-  /* margin-top: -30px; */
+export const TabBar = styled.ScrollView`
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
-  align-items: center;
   flex-direction: row;
-  justify-content: center;
   width: ${Dimensions.get('window').width};
   background-color: ${Colors.backgroundGray};
   max-height: 70px;
 `
 
 export const Tab = styled.TouchableOpacity`
-  padding: 11px 0 4px;
-  margin: 20px 20px;
+  padding: 11px 0 8px;
+  margin: 20px 10px;
   height: 50px;
+  width: 100px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -36,6 +32,7 @@ export const Tab = styled.TouchableOpacity`
 
 export const TabText = styled.Text`
   font-size: 15px;
+  text-align: center;
   font-family: ${props => props.isFocused ? 'Nunito Bold' : 'Nunito Regular'};
   color: ${props => props.isFocused ? `${Colors.labelBlack}` : `${Colors.mediumGray}`};
 `

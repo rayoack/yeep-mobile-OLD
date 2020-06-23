@@ -103,6 +103,10 @@ export default {
   youWontBeChargedText: 'Você só fará o pagamento após o proprietário aprovar a reserva.',
   messageLabel: 'Mensagem',
   goToNegotiation: 'Ir para negociação',
+  negociationsListLabel: 'Negociações',
+  waitingForApproval: 'Aguardando aprovação',
+  awaitingPayment: 'Aguardando pagamento',
+  completed: 'Concluída',
 
   // Organizer
   selectEventInfo: 'Somente eventos com datas aparecerão na lista.',

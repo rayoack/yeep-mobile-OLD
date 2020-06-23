@@ -4,8 +4,7 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { translate } from '../../../Locales'
-import { CardsList } from '../../../Components'
-import { Images, Colors } from 'App/Theme'
+import { ChatList } from '../../../Components'
 
 import {
   TabBar,
@@ -29,10 +28,9 @@ const renderScene = (
   switch (route.key) {
     case 'first':
       return (
-        <CardsList
+        <ChatList
           data={forApproval}
           loading={loading}
-          emptyType={'emptyFeedback'}
           onPress={onPress}
           onRefresh={refreshMyReserves}
           refreshing={refreshing}
@@ -40,10 +38,9 @@ const renderScene = (
       )
     case 'second':
       return (
-        <CardsList
+        <ChatList
           data={awaitingPayment}
           loading={loading}
-          emptyType={'emptyFeedback'}
           onPress={onPress}
           onRefresh={refreshMyReserves}
           refreshing={refreshing}
@@ -51,10 +48,9 @@ const renderScene = (
       )
     default:
       return (
-        <CardsList
+        <ChatList
           data={completed}
           loading={loading}
-          emptyType={'emptyFeedback'}
           onPress={onPress}
           onRefresh={refreshMyReserves}
           refreshing={refreshing}
@@ -67,7 +63,6 @@ const renderTabBar = (props) => {
   const currentTabIndex = props.navigationState.index
   return (
     <TabBar 
-      contentContainerStyle={{ backgroundColor: 'red' }}
       horizontal={true} 
       showsHorizontalScrollIndicator={false}>
       {props.navigationState.routes.map((route, i) => {
@@ -99,9 +94,9 @@ const ViewComponent = ({
 }) => {
   const [index, setIndex] = useState(0)
   const [routes] = useState([
-    { key: 'first', title: translate('upcomingEventsLabel') },
-    { key: 'second', title: translate('pastEventsLabel') },
-    { key: 'third', title: translate('noDateEventsLabel') },
+    { key: 'first', title: translate('waitingForApproval') },
+    { key: 'second', title: translate('awaitingPayment') },
+    { key: 'third', title: translate('completed') },
   ])
 
   return (

@@ -102,6 +102,10 @@ export default {
   youWontBeChargedText: 'You will only make payment after the owner approves the reservation.',
   messageLabel: 'Message',
   goToNegotiation: 'Go to negotiation',
+  negociationsListLabel: 'Negociations',
+  waitingForApproval: 'Waiting for approval',
+  awaitingPayment: 'Awaiting payment',
+  completed: 'Completed',
 
   // Organizer
   selectEventInfo: 'Only events with dates will appear in the list.',

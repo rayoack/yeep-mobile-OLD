@@ -23,6 +23,9 @@ import PlaceDetailsScreen from './OrganizerScreens/PlaceDetailsScreen'
 import MyEventsSelectScreen from './OrganizerScreens/MyEventsSelectScreen'
 import ReserveForm from './OrganizerScreens/ReserveForm'
 
+// CHAT
+import RoomChat from './RoomChat'
+
 // RESERVES
 import ReservesList from './ReserveScreens/ReservesList'
 
@@ -52,6 +55,9 @@ export {
   PlaceDetailsScreen,
   MyEventsSelectScreen,
   ReserveForm,
+
+  // CHAT
+  RoomChat,
 
   // RESERVES
   ReservesList,

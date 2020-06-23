@@ -22,6 +22,10 @@ const setFeedbackImage = (feedbackType) => {
       return Images.calendarIllustration
       break;
   
+    case 'chat_empty':
+      return Images.conversationIllustration
+      break;
+  
     default:
       return Images.empty
       break;

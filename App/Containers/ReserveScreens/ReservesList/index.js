@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
+
+import { Images, Colors } from 'App/Theme'
+import { ScreensHeader } from '../../../Components'
 import BaseURL from '../../../Config/BaseURL'
 import { translate } from '../../../Locales'
 import api from '../../../Services/api'
-
 import ViewComponent from './ViewComponent'
 
 class ReservesList extends Component {
@@ -23,36 +25,6 @@ class ReservesList extends Component {
   }
 
   componentDidMount = () => {
-    this.socket = io(BaseURL.api,
-      {
-        transports: ['websocket'],
-        agent: false,
-        secure: true,
-        reconnection: true,
-        rejectUnauthorized: false,
-        query: {
-          user_id: this.props.user.id
-        }
-      }
-    )
-
-    console.log(this.socket.on)
-    // this.socket.connect();
-
-    this.socket.on('connected', () => { 
-      console.log('connected to socket server'); 
-    }); 
-
-    this.socket.emit('joinRoom', 'reserve31')
-
-    this.socket.on('message', msg => {
-      console.log('I received a private message by: ', msg);
-    });
-
-    this.socket.on('notification', noti => {
-      console.log('I received a notification: ', noti);
-    });
-
     this.loadMyReserves()
   }
 
@@ -68,50 +40,28 @@ class ReservesList extends Component {
     this.setState({ loading: true })
 
     try {
-      const { data } = await api.get(`/reserves/${targetId}/${page}`, {
+      const response = await api.get(`/reserves/${targetId}/${page}`, {
         request_type
       }, {
         authorization: `Bearer ${this.props.user.token}`
       })
 
-      // const mappedReserves = data.map(reserve => {
-      //   let adress = ''
-      //   let images = (space['Images'] && space['Images'].length) ? space.Images : ''
-  
-      //   if(space.adress != null && space.adress.length) {
-      //     adress = `${space.adress}, ${space.city}, ${space.state}`
-      //   }
-
-      //   let adress = ''
-      //   let final_adress = ''
-      //   let image = reserve.event_logo ? reserve.event_logo.url : ''
-      //   let dates = reserve.dates != null ? reserve.dates : []
-  
-      //   if(reserve.adress != null) {
-      //     adress = `${reserve.adress}, ${reserve.city}`
-      //     final_adress = `${reserve.state}, ${reserve.country}`
-      //   }
-  
-      //   return {
-      //     id: reserve.id,
-      //     title: reserve.title,
-      //     category: reserve.category,
-      //     dates,
-      //     adress,
-      //     final_adress,
-      //     image,
-      //     online: reserve.online
-      //   }
-      // })
-  
-      let forApprovalList = data.filter(reserve => reserve.status == 'waitingForApproval')
-      let awaitingPaymentList = data.filter(reserve => reserve.status == 'awaitingPayment')
-      let completedList = data.filter(reserve => reserve.status == 'completed')
+      let mappedReserves = this.mapReserves(response.data, request_type)
+      
+      let forApprovalList = []
+      let awaitingPaymentList = []
+      let completedList = []
+      
+      if(mappedReserves.length) {
+        forApprovalList = mappedReserves.filter(reserve => reserve.status == 'waitingForApproval')
+        awaitingPaymentList = mappedReserves.filter(reserve => reserve.status == 'awaitingPayment')
+        completedList = mappedReserves.filter(reserve => reserve.status == 'completed')
+      }
 
       this.setState({
-        forApproval: [...forApprovalList],
-        awaitingPayment: [...awaitingPaymentList],
-        completed: [...completedList],
+        forApproval: forApprovalList,
+        awaitingPayment: awaitingPaymentList,
+        completed: completedList,
         loading: false
       })
 
@@ -131,11 +81,52 @@ class ReservesList extends Component {
     })
   }
 
+  goBack = () => {
+    this.props.navigation.goBack(null)
+  }
+
+  mapReserves = (reserves = [], request_type = 'event') => {
+    if(!reserves.length) return []
+
+    const mappedReserves = reserves.map(reserve => {
+      let subInfo = ''
+      let image = request_type == 'event' ?
+        reserve.Space.Images ? reserve.Space.Images[0].url : Images.image_background
+        : reserve.Event.event_logo ? reserve.Space.event_logo.url : Images.image_background
+
+      if(request_type == 'event' && reserve.Space.adress != null) {
+        subInfo = `${reserve.Space.adress}, ${reserve.Space.city}, ${reserve.Space.state}, ${reserve.Space.country}`
+      } else if(request_type == 'space' && reserve.Event.category != null) {
+        subInfo = reserve.Event.category
+      }
+
+      return {
+        id: reserve.id,
+        title: request_type == 'event' ? reserve.Space.name : reserve.Event.title,
+        subInfo,
+        read: reserve.last_message_target_id == this.props.user.id ?
+          reserve.last_message_target_read
+          : true,
+        image,
+        status: reserve.status
+      }
+    })
+
+    return mappedReserves
+  }
+
   render() {
     const { loading, forApproval, awaitingPayment, completed, refreshing } = this.state
 
     return (
       <>
+        <StatusBar translucent={false} barStyle="dark-content"/>
+
+        <ScreensHeader
+          onPress={() => this.goBack()}
+          title={translate('negociationsListLabel')}
+        />
+
         <ViewComponent
           forApproval={forApproval}
           awaitingPayment={awaitingPayment}
