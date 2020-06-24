@@ -108,7 +108,8 @@ class ReservesList extends Component {
           reserve.last_message_target_read
           : true,
         image,
-        status: reserve.status
+        status: reserve.status,
+        // users_id: []
       }
     })
 

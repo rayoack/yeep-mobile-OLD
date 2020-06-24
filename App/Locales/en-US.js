@@ -90,6 +90,10 @@ export default {
   backToRegister: 'Return to the registration screen?',
   adressRegisterScreenTitle: 'Set your location',
 
+  // CHAT
+  errorOnSendMessage: 'Sorry, we had an error when trying to send your message.',
+  errorOnLoadMessages: 'Sorry, we had an error when trying to load messages.',
+
   // RESERVES
   reserveSpacesMessage: 'Hello, I would like to rent your space for my event.',
   eventDatesLabel: 'Event dates',

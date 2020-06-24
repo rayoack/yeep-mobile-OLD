@@ -91,6 +91,10 @@ export default {
   backToRegister: 'Voltar para a tela de registro?',
   adressRegisterScreenTitle: 'Defina sua localização',
 
+  // CHAT
+  errorOnSendMessage: 'Desculpe, tivemos um erro, ao tentar enviar sua mensagem.',
+  errorOnLoadMessages: 'Desculpe, tivemos um erro, ao tentar carregar as mensagens.',
+
   // RESERVES
   reserveSpacesMessage: 'Olá, gostaria de alugar seu espaço para o meu evento.',
   eventDatesLabel: 'Datas do evento',
