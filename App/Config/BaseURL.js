@@ -5,7 +5,7 @@
 
 //  LOCAL
 const BaseURL = {
-  api: 'http://192.168.0.28:3333'
+  api: 'http://192.168.0.44:3333'
 }
 
 

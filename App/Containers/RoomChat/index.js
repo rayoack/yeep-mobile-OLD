@@ -23,6 +23,7 @@ export class RoomChat extends Component {
       loading: false,
       messages: [],
       users: [],
+      activeUsers: {},
       refreshing: false,
       toastText: '',
       showToast: false,
@@ -45,9 +46,17 @@ export class RoomChat extends Component {
 
     this.socket.emit('joinRoom', `reserve${room_id}`)
 
-    this.socket.on('message', msg => {
-      console.log('I received a private message by: ', msg);
-      this.insertNewMessage(msg)
+    this.socket.on('message', newMessage => {
+      this.insertNewMessage(newMessage)
+    });
+
+    this.socket.on('notification', notification => {
+      console.log('notification: ', notification);
+    });
+
+    this.socket.on('usersInRoom', usersInRoom => {
+      console.log('users: ', usersInRoom);
+      this.updateActiveUsers(usersInRoom.users)
     });
 
     this.setState({
@@ -84,7 +93,6 @@ export class RoomChat extends Component {
 
   insertNewMessage = (message) => {
     console.log(message)
-
     const mappedMessage = {
       _id: message.id,
       text: message.message,
@@ -97,7 +105,7 @@ export class RoomChat extends Component {
       Image: message.Image
     }
 
-    this.setState(prevState => ({ messages: [...prevState.messages, mappedMessage] }))
+    this.setState(prevState => ({ messages: [mappedMessage, ...prevState.messages] }))
   }
 
   mapMessages = (messages) => {
@@ -121,6 +129,55 @@ export class RoomChat extends Component {
     })
 
     return mappedMessages
+  }
+
+  onSend = async (message) => {
+    console.log(message)
+
+    let usersCopy = [...this.state.users]
+    const receiverUser =  usersCopy.filter(user => user != this.props.user.id)
+
+    const newMessage = {
+      message: message[0].text,
+      room_id: this.state.room_id,
+      sender_id: message[0].user._id,
+      receiver_id: receiverUser[0]
+    }
+    
+    try {
+      const { data } = await api.post(`/messages`, newMessage, {
+        authorization: `Bearer ${this.props.user.token}`
+      })
+
+      const mappedMessage = {
+        _id: data.id,
+        text: data.message,
+        createdAt: data.createdAt,
+        user: {
+          _id: data.sender_id,
+          name: data.sender_name,
+          avatar: data.sender_avatar ? data.sender_avatar : Images.profile_boy
+        },
+        Image: data.Image
+      }
+  
+      this.setState(prevState => ({ messages: [mappedMessage, ...prevState.messages] }))
+
+    } catch (error) {
+      this.setShowToast(translate('errorOnSendMessage'))
+      console.log({error})
+    }
+  }
+
+  updateActiveUsers = activeUsers => this.setState({ activeUsers })
+
+  setShowToast = (text) => {
+    this.setState({ toastText: text, showToast: true })
+
+    this.interval = setInterval(() => {
+      this.setState({ showToast: false })
+      clearInterval(this.interval)
+    }, 2000);
   }
 
   renderBubble = props => {
@@ -147,45 +204,9 @@ export class RoomChat extends Component {
     );
   }
 
-  onSend = async (message) => {
-    console.log(message)
-
-    let usersCopy = [...this.state.users]
-    const receiverUser =  usersCopy.filter(user => user != this.props.user.id)
-
-    const newMessage = {
-      message: message[0].text,
-      room_id: this.state.room_id,
-      sender_id: message[0].user._id,
-      receiver_id: receiverUser[0]
-    }
-    
-    try {
-      const { data } = await api.post(`/messages`, newMessage, {
-        authorization: `Bearer ${this.props.user.token}`
-      })
-
-      this.setState({
-        messagesInLoading: false
-      })
-
-    } catch (error) {
-      this.setShowToast(translate('errorOnSendMessage'))
-      console.log({error})
-    }
-  }
-
-  setShowToast = (text) => {
-    this.setState({ toastText: text, showToast: true })
-
-    this.interval = setInterval(() => {
-      this.setState({ showToast: false })
-      clearInterval(this.interval)
-    }, 2000);
-  }
-
   render() {
-    const { messages, loading, showToast, toastText } = this.state
+    const { messages, loading, showToast, toastText, activeUsers } = this.state
+    console.log('activeUsers', activeUsers)
     return (
       <>        
         <CustomToast
