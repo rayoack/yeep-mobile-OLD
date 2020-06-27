@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
 import LinearGradient from 'react-native-linear-gradient';
+import * as RNLocalize from "react-native-localize";
 
 import {
   AnimationLoading,
@@ -68,6 +69,11 @@ export class RoomChat extends Component {
     this.socket.emit('leavesRoom', `reserve${this.state.room_id}`)
   }
 
+  getLanguageByDevice = () => {
+    const locales = RNLocalize.getLocales();
+    return locales[0].languageTag;
+  }
+  
   loadMessages = async () => {
     this.setState({ loading: true })
     console.log(this.state.room_id)
@@ -160,8 +166,6 @@ export class RoomChat extends Component {
         },
         Image: data.Image
       }
-  
-      this.setState(prevState => ({ messages: [mappedMessage, ...prevState.messages] }))
 
     } catch (error) {
       this.setShowToast(translate('errorOnSendMessage'))
@@ -225,6 +229,7 @@ export class RoomChat extends Component {
             renderUsernameOnMessage={true}
             onSend={messages => this.onSend(messages)}
             renderBubble={this.renderBubble}
+            locale={this.getLanguageByDevice()}
             user={{
               _id: this.props.user.id,
               name: this.props.user.name,

@@ -99,6 +99,7 @@ class ReservesList extends Component {
       } else if(request_type == 'space' && reserve.Event.category != null) {
         subInfo = reserve.Event.category
       }
+      console.log('reserve', reserve.last_message_target_id)
 
       return {
         id: reserve.id,
