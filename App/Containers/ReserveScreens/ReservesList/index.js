@@ -15,9 +15,7 @@ class ReservesList extends Component {
     super(props)
     this.state = {
       loading: false,
-      forApproval: [],
-      awaitingPayment: [],
-      completed: [],
+      reserves: [],
       page: 1,
       refreshing: false
     }
@@ -46,22 +44,10 @@ class ReservesList extends Component {
         authorization: `Bearer ${this.props.user.token}`
       })
 
-      let mappedReserves = this.mapReserves(response.data, request_type)
-      
-      let forApprovalList = []
-      let awaitingPaymentList = []
-      let completedList = []
-      
-      if(mappedReserves.length) {
-        forApprovalList = mappedReserves.filter(reserve => reserve.status == 'waitingForApproval')
-        awaitingPaymentList = mappedReserves.filter(reserve => reserve.status == 'awaitingPayment')
-        completedList = mappedReserves.filter(reserve => reserve.status == 'completed')
-      }
+      const mappedReserves = this.mapReserves(response.data, request_type)
 
       this.setState({
-        forApproval: forApprovalList,
-        awaitingPayment: awaitingPaymentList,
-        completed: completedList,
+        reserves: mappedReserves,
         loading: false
       })
 
@@ -118,7 +104,11 @@ class ReservesList extends Component {
   }
 
   render() {
-    const { loading, forApproval, awaitingPayment, completed, refreshing } = this.state
+    const { loading, refreshing, reserves } = this.state
+
+    const forApproval = reserves.length ? reserves.filter(reserve => reserve.status == 'waitingForApproval') : []
+    const awaitingPayment = reserves.length ? reserves.filter(reserve => reserve.status == 'awaitingPayment') : []
+    const completed = reserves.length ? reserves.filter(reserve => reserve.status == 'completed') : []
 
     return (
       <>

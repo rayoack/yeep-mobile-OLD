@@ -51,15 +51,6 @@ export class RoomChat extends Component {
       this.insertNewMessage(newMessage)
     });
 
-    this.socket.on('notification', notification => {
-      console.log('notification: ', notification);
-    });
-
-    this.socket.on('usersInRoom', usersInRoom => {
-      console.log('users: ', usersInRoom);
-      this.updateActiveUsers(usersInRoom.users)
-    });
-
     this.setState({
       room_id
     }, () => this.loadMessages())
