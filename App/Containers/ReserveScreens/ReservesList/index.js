@@ -84,6 +84,7 @@ class ReservesList extends Component {
       if(reserve.id == updatedReserve.id) {
         reserve.read = updatedReserve.last_message_target_read
         reserve.last_message_target_id = updatedReserve.last_message_target_read
+        reserve.updatedAt = updatedReserve.updatedAt
       }
 
       return reserve
