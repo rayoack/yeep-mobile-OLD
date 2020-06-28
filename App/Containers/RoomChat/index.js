@@ -34,7 +34,7 @@ export class RoomChat extends Component {
   }
   
   componentDidMount = () => {
-    const room_id = this.props.navigation.getParam('room_id', null)
+    const room = this.props.navigation.getParam('room', null)
 
     this.socket = io(BaseURL.api,
       {
@@ -45,14 +45,14 @@ export class RoomChat extends Component {
       }
     )
 
-    this.socket.emit('joinRoom', `reserve${room_id}`)
+    this.socket.emit('joinRoom', `reserve${room.id}`)
 
     this.socket.on('message', newMessage => {
       this.insertNewMessage(newMessage)
     });
 
     this.setState({
-      room_id
+      room_id: room.id
     }, () => this.loadMessages())
   }
 
@@ -67,7 +67,6 @@ export class RoomChat extends Component {
   
   loadMessages = async () => {
     this.setState({ loading: true })
-    console.log(this.state.room_id)
 
     try {
       const { data } = await api.get(`/messages/${this.state.room_id}`, {}, {
@@ -81,11 +80,36 @@ export class RoomChat extends Component {
         loading: false
       })
 
+      this.updateRoom()
+
     } catch (error) {
       this.setState({ loading: false })
       this.setShowToast(translate('errorOnLoadMessages'))
       console.log({error})
     }
+  }
+
+  updateRoom = () => {
+    const room = this.props.navigation.getParam('room', null)
+    
+    if(!room.read && room.last_message_target_id == this.props.user.id) {
+      const data = {
+        last_message_target_read: true
+      }
+      
+      const response = api.put(`/reserve/${room.id}`, {
+        ...data
+      }, {
+        authorization: `Bearer ${this.props.user.token}`
+      }).then(response => {
+        console.log('okkkkkkkk', response)
+
+      }).catch(error => console.log({error}))
+
+    } else {
+      return null
+    }
+
   }
 
   insertNewMessage = (message) => {
@@ -201,7 +225,7 @@ export class RoomChat extends Component {
 
   render() {
     const { messages, loading, showToast, toastText, activeUsers } = this.state
-    console.log('activeUsers', activeUsers)
+
     return (
       <>        
         <CustomToast

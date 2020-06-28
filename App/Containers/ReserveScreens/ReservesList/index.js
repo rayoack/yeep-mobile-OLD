@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 import io from 'socket.io-client'
 
 import { Images, Colors } from 'App/Theme'
@@ -23,6 +24,19 @@ class ReservesList extends Component {
   }
 
   componentDidMount = () => {
+    this.socket = io(BaseURL.api,
+      {
+        forceNode: true,
+        query: {
+          user_id: this.props.user.id
+        }
+      }
+    )
+
+    this.socket.on('newMessageToRoom', reserve => {
+      this.updateReservesList(reserve)
+    });
+
     this.loadMyReserves()
   }
 
@@ -61,9 +75,26 @@ class ReservesList extends Component {
     }
   }
 
-  navigateToReserveChat = (reserveId) => {
-    this.props.navigation.navigate('RoomChat', {
-      room_id: reserveId
+  updateReservesList = (updatedReserve = {}) => {
+    const { reserves } = this.state
+
+    let reservesCopy = [...reserves]
+
+    reservesCopy.map(reserve => {
+      if(reserve.id == updatedReserve.id) {
+        reserve.read = updatedReserve.last_message_target_read
+        reserve.last_message_target_id = updatedReserve.last_message_target_read
+      }
+
+      return reserve
+    })
+
+    this.setState({ reserves: reservesCopy })
+  }
+
+  navigateToReserveChat = async (reserve) => {
+    this.props.navigation.push('RoomChat', {
+      room: reserve
     })
   }
 
@@ -85,22 +116,23 @@ class ReservesList extends Component {
       } else if(request_type == 'space' && reserve.Event.category != null) {
         subInfo = reserve.Event.category
       }
-      console.log('reserve', reserve.last_message_target_id)
 
       return {
         id: reserve.id,
         title: request_type == 'event' ? reserve.Space.name : reserve.Event.title,
         subInfo,
+        last_message_target_id: reserve.last_message_target_id,
         read: reserve.last_message_target_id == this.props.user.id ?
           reserve.last_message_target_read
           : true,
         image,
         status: reserve.status,
+        updatedAt: reserve.updatedAt
         // users_id: []
       }
     })
 
-    return mappedReserves
+    return _.orderBy(mappedReserves, ['updatedAt'],['asc'])
   }
 
   render() {

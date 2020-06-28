@@ -168,7 +168,6 @@ export class PlaceDetailsScreen extends PureComponent {
 
   render() {
     const { space, activeImageIndex, isModalOpen, amenitiesButtonText, restrictionsButtonText } = this.state
-    console.log(space)
 
     return (
       <>

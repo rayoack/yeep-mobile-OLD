@@ -44,7 +44,6 @@ export class MyEventsSelectScreen extends Component {
 
       let eventsWithDate = data.filter(event => event.dates.length)
       let eventsList = []
-      console.log(eventsWithDate)
 
       if(eventsWithDate.length) {
         eventsList = eventsWithDate.filter(event => isFuture(parseISO(event.dates[0].full_date)))

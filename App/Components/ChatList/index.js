@@ -45,7 +45,7 @@ const ChatList = ({
           renderItem={({item}) => {
             return (
               <CardContainer
-                onPress={() => onPress(item.id)}
+                onPress={() => onPress(item)}
                 activeOpacity={0.7}
               >
                 {!item.read ? 

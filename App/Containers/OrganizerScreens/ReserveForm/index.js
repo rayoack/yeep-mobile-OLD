@@ -173,7 +173,6 @@ export class ReserveForm extends Component {
   render() {
     const { reserve, message, event, space, datesListText } = this.state
     const eventsWithFormatedDates = normalizedDates(event)
-    console.log('reserve', reserve)
 
     return (
       <>
