@@ -33,9 +33,7 @@ class ReservesList extends Component {
       }
     )
 
-    this.socket.on('newMessageToRoom', reserve => {
-      this.updateReservesList(reserve)
-    });
+    this.socket.on('newMessageToRoom', reserve => this.updateReservesList(reserve));
 
     this.loadMyReserves()
   }
@@ -76,11 +74,12 @@ class ReservesList extends Component {
   }
 
   updateReservesList = (updatedReserve = {}) => {
+    console.log('updatedReserve', updatedReserve)
     const { reserves } = this.state
 
     let reservesCopy = [...reserves]
 
-    reservesCopy.map(reserve => {
+    const updatedReserves = reservesCopy.map(reserve => {
       if(reserve.id == updatedReserve.id) {
         reserve.read = updatedReserve.last_message_target_read
         reserve.last_message_target_id = updatedReserve.last_message_target_read
@@ -90,7 +89,7 @@ class ReservesList extends Component {
       return reserve
     })
 
-    this.setState({ reserves: reservesCopy })
+    this.setState({ reserves: updatedReserves })
   }
 
   navigateToReserveChat = async (reserve) => {
@@ -120,6 +119,7 @@ class ReservesList extends Component {
 
       return {
         id: reserve.id,
+        name: reserve.Space && reserve.Space.name ? reserve.Space.name : '',
         title: request_type == 'event' ? reserve.Space.name : reserve.Event.title,
         subInfo,
         last_message_target_id: reserve.last_message_target_id,

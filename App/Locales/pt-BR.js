@@ -94,6 +94,7 @@ export default {
   // CHAT
   errorOnSendMessage: 'Desculpe, tivemos um erro, ao tentar enviar sua mensagem.',
   errorOnLoadMessages: 'Desculpe, tivemos um erro, ao tentar carregar as mensagens.',
+  messageInputLabel: 'Digite sua mensagem aqui...',
 
   // RESERVES
   reserveSpacesMessage: 'Olá, gostaria de alugar seu espaço para o meu evento.',

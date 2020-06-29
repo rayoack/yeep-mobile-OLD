@@ -2,9 +2,13 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
-import { GiftedChat, Bubble } from 'react-native-gifted-chat'
-import LinearGradient from 'react-native-linear-gradient';
+import { GiftedChat, Bubble, Send } from 'react-native-gifted-chat'
 import * as RNLocalize from "react-native-localize";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import LinearGradient from 'react-native-linear-gradient';
+import ptBr from 'dayjs/locale/pt-br'
 
 import {
   AnimationLoading,
@@ -15,6 +19,12 @@ import BaseURL from '../../Config/BaseURL'
 import api from '../../Services/api'
 import { Images, Colors } from 'App/Theme'
 import { translate } from '../../Locales'
+import {
+  Container,
+  ChatHeader,
+  ChatTitle,
+  ReserveDetailsButtonContainer
+} from './styles'
 
 export class RoomChat extends Component {
 
@@ -22,6 +32,7 @@ export class RoomChat extends Component {
     super(props)
     this.state = {
       loading: false,
+      reserveName: '',
       messages: [],
       users: [],
       activeUsers: {},
@@ -62,10 +73,33 @@ export class RoomChat extends Component {
 
   getLanguageByDevice = () => {
     const locales = RNLocalize.getLocales();
-    return locales[0].languageTag;
+    const language = locales[0].languageTag;
+
+    const normalizeTranslate = {
+      'en_US': 'en',
+      'en-US': 'en',
+      'pt_BR': 'pt-br',
+      'pt-BR': 'pt-br',
+      'en': 'en',
+      'pt_US': 'pt-br',
+      'pt_PT': 'pt-br',
+      'pt-PT': 'pt-br',
+      'pt': 'pt-br',      
+    }
+    
+    const localeLanguage = normalizeTranslate[language] == 'en' ?
+      require('dayjs/locale/en')
+      : require('dayjs/locale/pt-br')
+
+    const translateNormalize = normalizeTranslate.hasOwnProperty(language) ?
+      localeLanguage
+      : require('dayjs/locale/en')
+  
+    return translateNormalize
   }
   
   loadMessages = async () => {
+    const room = this.props.navigation.getParam('room', null)
     this.setState({ loading: true })
 
     try {
@@ -77,7 +111,8 @@ export class RoomChat extends Component {
 
       this.setState({
         messages: mappedMessages,
-        loading: false
+        loading: false,
+        reserveName: room && room.name ? room.name : ''
       })
 
       this.updateRoom()
@@ -102,7 +137,7 @@ export class RoomChat extends Component {
       }, {
         authorization: `Bearer ${this.props.user.token}`
       }).then(response => {
-        console.log('okkkkkkkk', response)
+        console.log('response', response)
 
       }).catch(error => console.log({error}))
 
@@ -223,8 +258,26 @@ export class RoomChat extends Component {
     );
   }
 
+  renderSend = (props) => {
+    return (
+      <Send {...props}>
+        <View style={{ justifyContent: 'center', alignItems: 'center', paddingRight: 10 }}>
+         <Icon size={40} name="send-circle" color={Colors.secondary} />
+        </View>
+      </Send>
+    );
+  }
+
+ scrollToBottomComponent = () => {
+    return (
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <Ionicons size={34} name="ios-arrow-down" color={Colors.secondary} />
+      </View>
+    );
+  }
+
   render() {
-    const { messages, loading, showToast, toastText, activeUsers } = this.state
+    const { messages, loading, showToast, toastText, reserveName } = this.state
 
     return (
       <>        
@@ -239,18 +292,32 @@ export class RoomChat extends Component {
           <AnimationLoading
             loading={loading}/>
         ) : (
-          <GiftedChat
-            messages={messages}
-            renderUsernameOnMessage={true}
-            onSend={messages => this.onSend(messages)}
-            renderBubble={this.renderBubble}
-            locale={this.getLanguageByDevice()}
-            user={{
-              _id: this.props.user.id,
-              name: this.props.user.name,
-              avatar: this.props.user.avatar ? this.props.user.avatar.url : Images.profile_boy
-            }}
-          />
+          <>
+            <ChatHeader>
+              <ChatTitle>{reserveName}</ChatTitle>
+
+              <ReserveDetailsButtonContainer>
+                <MaterialIcons size={30} name="more-vert" color={Colors.white} />
+              </ReserveDetailsButtonContainer>
+            </ChatHeader>
+
+            <GiftedChat
+              messages={messages}
+              renderUsernameOnMessage={true}
+              onSend={messages => this.onSend(messages)}
+              renderBubble={this.renderBubble}
+              locale={this.getLanguageByDevice()}
+              placeholder={translate('messageInputLabel')}
+              renderSend={this.renderSend}
+              scrollToBottom
+              scrollToBottomComponent={this.scrollToBottomComponent}
+              user={{
+                _id: this.props.user.id,
+                name: this.props.user.name,
+                avatar: this.props.user.avatar ? this.props.user.avatar.url : Images.profile_boy
+              }}
+            />
+          </>
         )}
       </>
     )
