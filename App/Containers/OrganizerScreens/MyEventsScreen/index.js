@@ -65,7 +65,7 @@ class MyEventsScreen extends React.Component {
       this.setState({ loading: false })
       console.log({error})
 
-      if(error.response.status == 401) {
+      if(error.response && error.response.status == 401) {
         this.redirectToLoginScreen()
       }
     }

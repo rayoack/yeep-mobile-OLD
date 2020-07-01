@@ -22,7 +22,10 @@ import { translate } from '../../Locales'
 import {
   Container,
   ChatHeader,
+  ChatInfoContainer,
+  ChatSubTitle,
   ChatTitle,
+  ChatImage,
   ReserveDetailsButtonContainer
 } from './styles'
 
@@ -33,13 +36,15 @@ export class RoomChat extends Component {
     this.state = {
       loading: false,
       reserveName: '',
+      reserveStatus: '',
+      reserveImage: Images.image_background,
       messages: [],
       users: [],
       activeUsers: {},
       refreshing: false,
       toastText: '',
       showToast: false,
-      room_id: null
+      room_id: null,
     }
 
   }
@@ -112,7 +117,9 @@ export class RoomChat extends Component {
       this.setState({
         messages: mappedMessages,
         loading: false,
-        reserveName: room && room.name ? room.name : ''
+        reserveName: room && room.name ? room.name : '',
+        reserveStatus: translate(room.status),
+        reserveImage: room.image
       })
 
       this.updateRoom()
@@ -276,8 +283,25 @@ export class RoomChat extends Component {
     );
   }
 
+  goBack = () => this.props.navigation.goBack()
+
   render() {
-    const { messages, loading, showToast, toastText, reserveName } = this.state
+    const {
+      messages,
+      loading,
+      showToast,
+      toastText,
+      reserveName,
+      reserveStatus,
+      reserveImage
+     } = this.state
+
+     const pattern = new RegExp('^(https?:\\/\\/)?'+
+     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
+     '((\\d{1,3}\\.){3}\\d{1,3}))'+ 
+     '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+
+     '(\\?[;&a-z\\d%_.~+=-]*)?'+
+     '(\\#[-a-z\\d_]*)?$','i')
 
     return (
       <>        
@@ -294,10 +318,28 @@ export class RoomChat extends Component {
         ) : (
           <>
             <ChatHeader>
-              <ChatTitle>{reserveName}</ChatTitle>
+              <ChatInfoContainer>
+                {pattern.test(reserveImage) ? (
+                  <ChatImage source={{ uri: reserveImage }}/>
+                ) : (
+                  <ChatImage source={reserveImage}/>
+                )}
 
-              <ReserveDetailsButtonContainer>
+                <View>
+                  <ChatTitle>{reserveName}</ChatTitle>
+                  <ChatSubTitle>{reserveStatus}</ChatSubTitle>
+                </View>
+              </ChatInfoContainer>
+
+              {/* <ReserveDetailsButtonContainer>
                 <MaterialIcons size={30} name="more-vert" color={Colors.white} />
+              </ReserveDetailsButtonContainer> */}
+              
+              <ReserveDetailsButtonContainer
+                activeOpacity={0.8}
+                onPress={() => this.goBack()}
+              >
+                <Icon size={30} name="close-circle-outline" color={Colors.white} />
               </ReserveDetailsButtonContainer>
             </ChatHeader>
 
