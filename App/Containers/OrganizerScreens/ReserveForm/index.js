@@ -1,20 +1,25 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { connect } from 'react-redux'
 import differenceInHours from 'date-fns/differenceInHours'
 
 import { parseISO, isBefore, isAfter, formatISO } from 'date-fns';
 import setHours from 'date-fns/setHours'
 import setMinutes from 'date-fns/setMinutes'
 import setSeconds from 'date-fns/setSeconds'
+
 import { translate, toNumber } from '../../../Locales'
 import currencies from '../../../Services/currencies.json'
 import { Images, Colors } from '../../../Theme'
 import { normalizedDates } from '../../../Services/datesHelpers'
+import api from '../../../Services/api'
 
 import {
   CustomInput,
-  InputButton
+  InputButton,
+  CustomToast,
+  SavingLoading
 } from '../../../Components'
 
 import {
@@ -55,6 +60,9 @@ export class ReserveForm extends Component {
       event: null,
       datesListText: translate('showMore'),
       restrictionsButtonText: translate('showLess'),
+      loading: false,
+      showToast: false,
+      toastText: ''
     }
   }
 
@@ -170,15 +178,82 @@ export class ReserveForm extends Component {
 
   setDatesListText = (text) => this.setState({ datesListText: text })
 
+  saveReserve = async () => {
+    const { reserve, message, space, event } = this.state
+
+    let reserveData = {
+      ...reserve,
+      message
+    }
+
+    this.setState({ loading: true })
+
+    try {
+      
+      const { data } = await api.post('/reserve', { ...reserveData }, {
+        authorization: `Bearer ${this.props.user.token}`
+      })
+      
+      let room = {
+        id: data.id,
+        name: space && space.name ? space.name : '',
+        title: space && space.name ? space.name : '',
+        last_message_target_id: data.last_message_target_id,
+        read: data.last_message_target_id == this.props.user.id ?
+          data.last_message_target_read
+          : true,
+        image: space.Images.length ? space.Images[0].url : Images.image_background,
+        status: data.status,
+        updatedAt: data.updatedAt
+      }
+
+      this.setState({loading: false })
+      this.props.navigation.navigate('RoomChat', {
+        room
+      })
+
+    } catch (error) {
+      console.log('error', {error})
+      this.setState({loading: false })
+      this.setShowToast(translate('saveReserveError'))
+    }
+  }
+
+  setShowToast = (text) => {
+    this.setState({ toastText: text, showToast: true })
+
+    this.interval = setInterval(() => {
+      this.setState({ showToast: false })
+      clearInterval(this.interval)
+    }, 2000);
+  }
+
   render() {
-    const { reserve, message, event, space, datesListText } = this.state
+    const {
+      reserve,
+      message,
+      event,
+      space,
+      datesListText,
+      loading,
+      showToast,
+      toastText
+    } = this.state
     const eventsWithFormatedDates = normalizedDates(event)
 
     return (
       <>
-        {reserve ? (
-          <>
+        <SavingLoading loading={loading} />
 
+        <CustomToast
+          show={showToast} 
+          text={toastText} 
+          duration={2000}
+          positionValue={50}
+        />
+
+        {reserve && !loading ? (
+          <>
             <Container>
               <ReserveHeader>
                 <CloseButtonContainer onPress={() => this.cancelReservation()}>
@@ -257,8 +332,8 @@ export class ReserveForm extends Component {
                 numberOfVisibleItems={1}
                 onToggle={collapsed =>
                   collapsed
-                    ? this.setDatesListText(translate('showMore'))
-                    : this.setDatesListText(translate('showLess'))
+                    ? this.setDatesListText(translate('showLess'))
+                    : this.setDatesListText(translate('showMore'))
                 }
                 buttonContent={
                   <ViewMoreButton>
@@ -450,7 +525,7 @@ export class ReserveForm extends Component {
 
               <CheckButton
                 activeOpacity={0.8}
-                onPress={() => null}
+                onPress={() => this.saveReserve()}
               >
                 <StyledText
                   fontColor={Colors.white}
@@ -470,4 +545,13 @@ export class ReserveForm extends Component {
   }
 }
 
-export default ReserveForm
+
+const mapStateToProps = (state) => ({
+  user: state.auth.user
+})
+
+const mapDispatchToProps = {
+  
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReserveForm)

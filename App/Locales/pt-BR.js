@@ -112,6 +112,7 @@ export default {
   waitingForApproval: 'Aguardando aprovação',
   awaitingPayment: 'Aguardando pagamento',
   completed: 'Concluída',
+  saveReserveError: 'Desculpe tivemos um problema ao tentar salvar sua reserva.',
 
   // Organizer
   selectEventInfo: 'Somente eventos com datas aparecerão na lista.',
