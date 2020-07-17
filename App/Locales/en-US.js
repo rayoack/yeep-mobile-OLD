@@ -107,11 +107,12 @@ export default {
   youWontBeChargedText: 'You will only make payment after the owner approves the reservation.',
   messageLabel: 'Message',
   goToNegotiation: 'Go to negotiation',
-  negociationsListLabel: 'Negociations',
+  negociationsListLabel: 'Bookings',
   waitingForApproval: 'Waiting for approval',
   awaitingPayment: 'Awaiting payment',
   completed: 'Completed',
   saveReserveError: 'Sorry we had a problem trying to save your reservation.',
+  loadReserveError: 'Sorry we were unable to load the booking details.',
 
   // Organizer
   selectEventInfo: 'Only events with dates will appear in the list.',
@@ -136,7 +137,7 @@ export default {
   startDay: 'Start',
   endDay: 'End',
   eventImagesLabel: 'Images',
-  eventNegocationsLabel: 'Event negotiations',
+  eventNegocationsLabel: 'Event bookings',
   eventEditLabel: 'Edit event',
   eventDescriptionLabel: 'Description',
   firstEditEventStepTitle: 'Initial settings',

@@ -108,11 +108,12 @@ export default {
   youWontBeChargedText: 'Você só fará o pagamento após o proprietário aprovar a reserva.',
   messageLabel: 'Mensagem',
   goToNegotiation: 'Ir para negociação',
-  negociationsListLabel: 'Negociações',
+  negociationsListLabel: 'Reservas',
   waitingForApproval: 'Aguardando aprovação',
   awaitingPayment: 'Aguardando pagamento',
   completed: 'Concluída',
   saveReserveError: 'Desculpe tivemos um problema ao tentar salvar sua reserva.',
+  loadReserveError: 'Desculpe não conseguimos carregar os detalhes da reserva.',
 
   // Organizer
   selectEventInfo: 'Somente eventos com datas aparecerão na lista.',
@@ -137,7 +138,7 @@ export default {
   startDay: 'Início',
   endDay: 'Fim',
   eventImagesLabel: 'Imagens',
-  eventNegocationsLabel: 'Negociações do evento',
+  eventNegocationsLabel: 'Reservas do evento',
   eventEditLabel: 'Editar evento',
   eventDescriptionLabel: 'Descrição',
   firstEditEventStepTitle: 'Configurações iniciais',

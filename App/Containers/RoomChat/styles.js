@@ -19,7 +19,7 @@ export const ChatHeader = styled.View`
   background-color: ${Colors.secondary};
 `
 
-export const ChatInfoContainer = styled.View`
+export const ChatInfoContainer = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   flex: 1;

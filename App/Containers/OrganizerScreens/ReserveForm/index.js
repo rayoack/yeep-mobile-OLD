@@ -19,7 +19,8 @@ import {
   CustomInput,
   InputButton,
   CustomToast,
-  SavingLoading
+  SavingLoading,
+  AnimationLoading
 } from '../../../Components'
 
 import {
@@ -60,17 +61,65 @@ export class ReserveForm extends Component {
       event: null,
       datesListText: translate('showMore'),
       restrictionsButtonText: translate('showLess'),
-      loading: false,
+      saveLoading: false,
       showToast: false,
-      toastText: ''
+      toastText: '',
+      isEditing: false,
+      hostId: null
     }
   }
 
   componentDidMount = () => {
-    this.setReserveForm()
+    const reserveId = this.props.navigation.getParam('reserveId', false)
+    
+    if(!reserveId) {
+      this.setNewReserve()
+    } else {
+      this.loadActualReserve()
+    }
+
   }
 
-  setReserveForm = () => {
+  loadActualReserve = async () => {
+    this.setState({ loading: true })
+    const reserveId = this.props.navigation.getParam('reserveId', false)
+    
+    try {
+      const { data } = await api.get(`/reserve/${reserveId}`, {}, {
+        authorization: `Bearer ${this.props.user.token}`
+      })
+
+      this.setState(prevState => {
+        return {
+          reserve: data,
+          isEditing: true,
+          space: data.Space,
+          event: data.Event,
+          loading: false,
+          hostId: data.Space.owner_id
+        }
+      }, () => data.Space.charge_type == 'perDay' ?
+        this.setAmountPerDay()
+        : this.setAmountPerHour())
+
+    } catch (error) {
+      console.log('error', {error})
+      this.setState({
+        loading: false,
+        toastText: translate('loadReserveError'),
+        showToast: true
+      })
+
+      this.interval = setInterval(() => {
+        this.setState({ showToast: false })
+        clearInterval(this.interval)
+        this.props.navigation.goBack()
+      }, 2000);
+    }
+
+  }
+
+  setNewReserve = () => {
 
     const space = this.props.navigation.getParam('space', null)
     const event = this.props.navigation.getParam('event', null)
@@ -86,12 +135,6 @@ export class ReserveForm extends Component {
       event_id: event.id,
       status: "waitingForApproval",
     }
-
-    this.setState({
-      reserve: newReserve,
-      space,
-      event
-    })
 
     this.setState(prevState => {
       return {
@@ -186,7 +229,7 @@ export class ReserveForm extends Component {
       message
     }
 
-    this.setState({ loading: true })
+    this.setState({ saveLoading: true })
 
     try {
       
@@ -207,14 +250,15 @@ export class ReserveForm extends Component {
         updatedAt: data.updatedAt
       }
 
-      this.setState({loading: false })
+      this.setState({saveLoading: false })
       this.props.navigation.navigate('RoomChat', {
-        room
+        room,
+        newReserve: true
       })
 
     } catch (error) {
       console.log('error', {error})
-      this.setState({loading: false })
+      this.setState({saveLoading: false })
       this.setShowToast(translate('saveReserveError'))
     }
   }
@@ -228,6 +272,19 @@ export class ReserveForm extends Component {
     }, 2000);
   }
 
+  confirmFunction = () => {
+    const { isEditing, hostId } = this.state
+    const { user } = this.props
+
+    if(!isEditing) {
+      return this.saveReserve()
+    }
+
+    if(isEditing && hostId == user.id) {
+      // continue herre
+    }
+  }
+
   render() {
     const {
       reserve,
@@ -236,14 +293,18 @@ export class ReserveForm extends Component {
       space,
       datesListText,
       loading,
+      saveLoading,
       showToast,
-      toastText
+      toastText,
+      isEditing,
+      hostId
     } = this.state
     const eventsWithFormatedDates = normalizedDates(event)
 
     return (
       <>
-        <SavingLoading loading={loading} />
+        {loading && <AnimationLoading loading={loading}/>}
+        <SavingLoading loading={saveLoading} />
 
         <CustomToast
           show={showToast} 
@@ -252,7 +313,7 @@ export class ReserveForm extends Component {
           positionValue={50}
         />
 
-        {reserve && !loading ? (
+        {reserve && !loading && !saveLoading ? (
           <>
             <Container>
               <ReserveHeader>
@@ -479,38 +540,44 @@ export class ReserveForm extends Component {
               {/* PRICES INFO */}
               
               {/* CHARGE INFO */}
-              <StyledText
-                fontColor={Colors.labelBlack}
-                fontFamily={'Nunito Bold'}
-                fontSize={'20px'}
-                textAlign={'center'}
-              >
-                {translate('youWontBeChargedYet')}
-              </StyledText>
+              {!isEditing ? (
+                <>
+
+                  <StyledText
+                    fontColor={Colors.labelBlack}
+                    fontFamily={'Nunito Bold'}
+                    fontSize={'20px'}
+                    textAlign={'center'}
+                  >
+                    {translate('youWontBeChargedYet')}
+                  </StyledText>
 
 
-              <StyledText
-                fontColor={Colors.textDefault}
-                fontFamily={'Nunito Regular'}
-                fontSize={'14px'}
-                marginBottom={'20px'}
-                textAlign={'center'}
-              >
-                {translate('youWontBeChargedText')}
-              </StyledText>
-              <Divider marginBottom={'15px'}/>
-              {/* CHARGE INFO */}
+                  <StyledText
+                    fontColor={Colors.textDefault}
+                    fontFamily={'Nunito Regular'}
+                    fontSize={'14px'}
+                    marginBottom={'20px'}
+                    textAlign={'center'}
+                  >
+                    {translate('youWontBeChargedText')}
+                  </StyledText>
+                  <Divider marginBottom={'15px'}/>
+                  {/* CHARGE INFO */}
 
-              <CustomInput
-                label={translate('messageLabel')}
-                placeholder={message}
-                value={message}
-                onChangeText={this.setMessage}
-                marginBottom={20}
-                // onBlur={() => setFieldTouched('description')}
-                height={'300px'}
-                multiline={true}
-              />
+                  <CustomInput
+                    label={translate('messageLabel')}
+                    placeholder={message}
+                    value={message}
+                    onChangeText={this.setMessage}
+                    marginBottom={20}
+                    // onBlur={() => setFieldTouched('description')}
+                    height={'300px'}
+                    multiline={true}
+                  />
+                </>
+              ) : null}
+
               <View style={{ marginBottom: 150 }} />
             </Container>
             
@@ -525,7 +592,7 @@ export class ReserveForm extends Component {
 
               <CheckButton
                 activeOpacity={0.8}
-                onPress={() => this.saveReserve()}
+                onPress={() => this.confirmFunction()}
               >
                 <StyledText
                   fontColor={Colors.white}

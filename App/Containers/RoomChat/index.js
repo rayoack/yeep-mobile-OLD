@@ -283,7 +283,22 @@ export class RoomChat extends Component {
     );
   }
 
-  goBack = () => this.props.navigation.goBack()
+  goBack = () => {
+    
+    const newReserve = this.props.navigation.getParam('newReserve', false)
+
+    if(newReserve) {
+      this.props.navigation.navigate('MyEventsScreen')
+    } else {
+      this.props.navigation.goBack()
+    }
+  }
+
+  goToReserveDetails = () => {
+    this.props.navigation.push('ReserveForm', {
+      reserveId: this.state.room_id
+    })
+  }
 
   render() {
     const {
@@ -318,7 +333,10 @@ export class RoomChat extends Component {
         ) : (
           <>
             <ChatHeader>
-              <ChatInfoContainer>
+              <ChatInfoContainer
+                onPress={() => this.goToReserveDetails()}
+                activeOpacity={0.8}
+              >
                 {pattern.test(reserveImage) ? (
                   <ChatImage source={{ uri: reserveImage }}/>
                 ) : (
