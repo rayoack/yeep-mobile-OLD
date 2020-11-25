@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { View, BackHandler, Dimensions, StatusBar } from 'react-native'
-import { MAPBOX_KEY } from 'react-native-dotenv'
+// import { MAPBOX_KEY } from 'react-native-dotenv'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import FastImage from 'react-native-fast-image'
 import { connect } from 'react-redux'

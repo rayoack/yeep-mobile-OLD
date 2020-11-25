@@ -158,6 +158,10 @@ export class CreationEventSteps extends Component {
           step
           : formData.register_step
 
+        if(formData.dates.length &&
+          formData.register_step < 3 &&
+          !formData.register_step > 3) formData.register_step = 3;
+
         const { data } = await api.put(`/events/${event.id}`, formData, {
           authorization: `Bearer ${this.props.user.token}`
         })
@@ -630,7 +634,7 @@ export class CreationEventSteps extends Component {
                 previousBtnTextStyle={this.nextButtonTextStyle}
                 onPrevious={this.goBackStep}
                 onNext={event.dates ? onNextFunc : () => this.setShowToast(translate('dateRequired'))}
-                label="Third Step">
+                label={translate('fourthEditEventStepTitle')}>
                   <EventDates
                     navigateToCalendar={this.navigateToCalendar}
                     openTimePicker={this.openTimePicker}
@@ -640,30 +644,6 @@ export class CreationEventSteps extends Component {
                     insertNewDate={this.insertNewDate}
                     removeDate={this.removeDate}
                   />
-              </ProgressStep>
-
-              <ProgressStep label="Third Step">
-                  <View style={{ alignItems: 'center' }}>
-                      <Text>This is the content within step 3!</Text>
-                  </View>
-              </ProgressStep>
-
-              <ProgressStep label="Third Step">
-                  <View style={{ alignItems: 'center' }}>
-                      <Text>This is the content within step 3!</Text>
-                  </View>
-              </ProgressStep>
-
-              <ProgressStep label="Third Step">
-                  <View style={{ alignItems: 'center' }}>
-                      <Text>This is the content within step 3!</Text>
-                  </View>
-              </ProgressStep>
-
-              <ProgressStep label="Third Step">
-                  <View style={{ alignItems: 'center' }}>
-                      <Text>This is the content within step 3!</Text>
-                  </View>
               </ProgressStep>
             </ProgressSteps>
         </Container>

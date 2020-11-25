@@ -27,10 +27,6 @@ class EditEventScreen extends Component {
         { title: translate('secondEditEventStepTitle'), text: translate('secondEditEventStepText') },
         { title: translate('thirdEditEventStepTitle'), text: translate('thirdEditEventStepText') },
         { title: translate('fourthEditEventStepTitle'), text: translate('fourthEditEventStepText') },
-        { title: translate('fifthEditEventStepTitle'), text: translate('fifthEditEventStepText') },
-        { title: translate('sixthEditEventStepTitle'), text: translate('sixthEditEventStepText') },
-        { title: translate('seventhEditEventStepTitle'), text: translate('seventhEditEventStepText') },
-        { title: translate('eighthEditEventStepTitle'), text: translate('eighthEditEventStepText') },
       ],
       loading: false,
     }

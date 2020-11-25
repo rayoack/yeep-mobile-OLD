@@ -127,7 +127,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.yeep"
+        applicationId "com.klub"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

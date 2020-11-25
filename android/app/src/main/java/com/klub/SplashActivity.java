@@ -1,4 +1,4 @@
-package com.yeep; // ← Make sure that is your package name
+package com.klub; // ← Make sure that is your package name
 
 import android.content.Intent;
 import android.os.Bundle;
