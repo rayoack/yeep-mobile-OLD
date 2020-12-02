@@ -16,6 +16,7 @@ export default {
   cityIllustration: require('App/Assets/Images/city.png'),
   calendarIllustration: require('App/Assets/Images/calendar-illustration.png'),
   conversationIllustration: require('App/Assets/Images/conversation-feedback.png'),
+  AdressIllustration: require('App/Assets/Images/Address-pana.png'),
 
   // ANIMATIONS
   editing_animation: require('App/Assets/Images/editing-animation.json'),
@@ -140,4 +141,11 @@ export default {
   perDayInactive: require('App/Assets/Images/perDayInactive.png'),
   perHourActive: require('App/Assets/Images/perHourActive.png'),
   perHourInactive: require('App/Assets/Images/perHourInactive.png'),
+
+  // SPACE CATEGORIES WHITE
+  studioWhite: require('App/Assets/Images/studioWhite.png'),
+  meetingRoomWhite: require('App/Assets/Images/meetingRoomWhite.png'),
+  eventVenuePartyHallWhite: require('App/Assets/Images/eventVenuePartyHallWhite.png'),
+  houseWhite: require('App/Assets/Images/houseWhite.png'),
+
 }

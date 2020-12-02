@@ -40,8 +40,8 @@ export const SelectedCardBox = styled.TouchableOpacity`
   border-radius: 5px;
   margin-bottom: 15px;
   margin-right: 15;
-  border: 2px solid ${props => props.selected ? Colors.secondary : Colors.primary};
-  background-color: ${props => props.selected ? Colors.secondary : Colors.backgroundGray};
+  border: 2px solid ${props => props.selected ? Colors.primary : Colors.primary};
+  background-color: ${props => props.selected ? Colors.primary : Colors.backgroundGray};
   /* flex: ${props => props.full ? 1 : 0}; */
   padding: 5px 5px;
 `

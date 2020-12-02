@@ -3,6 +3,7 @@ import { Platform, Text, TouchableOpacity, View, Button, ActivityIndicator, Imag
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import { ApplicationStyles, Helpers, Images, Metrics } from 'App/Theme'
+import { Header } from '../../../Components'
 import { translate } from '../../../Locales'
 import * as RNLocalize from "react-native-localize";
 
@@ -14,11 +15,15 @@ class PlacesScreen extends React.Component {
 
   render() {
     return (
-      <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('PlacesFilterScreen')}>
-          <Text>PlacesScreen</Text>
-        </TouchableOpacity>
-      </View>
+      <>
+        <Header />
+
+        <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('PlacesFilterScreen')}>
+            <Text>PlacesScreen</Text>
+          </TouchableOpacity>
+        </View>
+      </>
     )
   }
 
