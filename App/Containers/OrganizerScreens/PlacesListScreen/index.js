@@ -58,12 +58,12 @@ export class PlacesListScreen extends Component {
   loadSpaces = async () => {
     const { queries } = this.props
     this.setState({ loading: true })
+    console.log({queries})
 
     try {
       const { data } = await api.get(`/spaces/${this.state.page}`, { ...queries }, {
         authorization: `Bearer ${this.props.user.token}`
       })
-
       const mappedSpaces = this.mapSpaces(data)
 
       this.setState({

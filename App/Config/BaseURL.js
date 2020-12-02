@@ -5,7 +5,7 @@
 
 //  LOCAL
 const BaseURL = {
-  api: 'https://0db3ed60f296.ngrok.io'
+  api: 'https://ecdcaa05983b.ngrok.io'
 }
 
 

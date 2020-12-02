@@ -54,11 +54,13 @@ const CardWithImage = ({
                 firstItem={item.imageIndex}
               />
 
-              <CarouselFooterContainer>
-                <SlideCountContainer>
-                  <SlideCount>{`${item.imageIndex + 1}/${item.images.length}`}</SlideCount>
-                </SlideCountContainer>
-              </CarouselFooterContainer>
+              {item.images.length > 1 ?
+                <CarouselFooterContainer>
+                  <SlideCountContainer>
+                    <SlideCount>{`${item.imageIndex + 1}/${item.images.length}`}</SlideCount>
+                  </SlideCountContainer>
+                </CarouselFooterContainer>
+              : null}
             </CarouselContainer>
           ) : (
             <CardImage source={Images.image_background} />

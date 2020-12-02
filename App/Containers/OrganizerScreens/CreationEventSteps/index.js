@@ -148,6 +148,7 @@ export class CreationEventSteps extends Component {
     this.setState({ loading: true })
 
     let isLocalImageUri = uri => !uri.includes('http')
+    let oldStep = event.register_step;
 
     try {
       let updateEvent
@@ -158,9 +159,9 @@ export class CreationEventSteps extends Component {
           step
           : formData.register_step
 
-        if(formData.dates.length &&
-          formData.register_step < 3 &&
-          !formData.register_step > 3) formData.register_step = 3;
+        // if(formData.dates.length &&
+        //   formData.register_step < 3 &&
+        //   !formData.register_step > 3) formData.register_step = 3;
 
         const { data } = await api.put(`/events/${event.id}`, formData, {
           authorization: `Bearer ${this.props.user.token}`
@@ -191,6 +192,13 @@ export class CreationEventSteps extends Component {
       this.setState({ loading: false })
 
       this.goToNextStep()
+
+      if(step === 3) {
+        // ALTERAR Se for a primeira vez levar para a tela de sucesso
+        if(oldStep < step) return
+
+        this.props.navigation.goBack()
+      } 
 
     } catch (error) {
       console.log({error})
@@ -633,7 +641,7 @@ export class CreationEventSteps extends Component {
                 previousBtnStyle={this.nextButtonStyle}
                 previousBtnTextStyle={this.nextButtonTextStyle}
                 onPrevious={this.goBackStep}
-                onNext={event.dates ? onNextFunc : () => this.setShowToast(translate('dateRequired'))}
+                onSubmit={event.dates ? () => this.saveOrUpdateEvent(3) : () => this.setShowToast(translate('dateRequired'))}
                 label={translate('fourthEditEventStepTitle')}>
                   <EventDates
                     navigateToCalendar={this.navigateToCalendar}
