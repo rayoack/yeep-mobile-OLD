@@ -67,8 +67,10 @@ export default function auth(state = INITIAL_STATE, action) {
 
     case Types.SET_SIGNOUT:
       return {
-        user: null,
-        token: null,
+        user: {
+          ...state.user,
+          token: null,
+        },
         signed: false
       }
     default:

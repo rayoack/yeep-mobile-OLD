@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Images, Colors } from 'App/Theme'
 import { translate } from '../Locales'
 
-import TabBar from '../Components'
+import { TabBar } from '../Components'
 
 import {
   ExampleScreen,
@@ -16,6 +16,8 @@ import {
   RoleSelectorScreen,
   RegisterScreen,
   AdressRegisterScreen,
+  // USER
+  ProfileScreen,
   // ORGANIZER
   MyEventsScreen,
   OrganizerNegociations,
@@ -31,6 +33,9 @@ import {
   PlaceDetailsScreen,
   MyEventsSelectScreen,
   ReserveForm,
+  // HOST
+  MyPlacesScreen,
+  HostScheduleScreen,
   // RESERVES
   ReservesList,
   // CHAT
@@ -111,6 +116,54 @@ const OrganizerNavigator = createBottomTabNavigator(
   }
 )
 
+const HostNavigator = createBottomTabNavigator(
+  {
+    MyPlacesScreen: {
+      screen: MyPlacesScreen,
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => {
+          return (
+            <>
+              {focused ? (
+                <Image style={{ height: 30, width: 30 }} source={Images.place_active}/>
+              ) : (
+                <Image style={{ height: 30, width: 30 }} source={Images.place_inactive}/>
+              )}
+            </>
+          )
+        },
+        title: translate('mySpacesTabLabel')
+      }
+    },
+    HostScheduleScreen: {
+      screen: HostScheduleScreen,
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => {
+          return (
+            <>
+              {focused ? (
+                <Image style={{ height: 30, width: 30 }} source={Images.my_event_active}/>
+              ) : (
+                <Image style={{ height: 30, width: 30 }} source={Images.my_event_inactive}/>
+              )}
+            </>
+          )
+        },
+        title: translate('hostScheduleTabLabel')
+      }
+    },
+  },
+  {
+    initialRouteName: 'MyPlacesScreen',
+    tabBarComponent: TabBar,
+    tabBarOptions: {
+      activeTintColor: Colors.labelBlack,
+      inactiveTintColor: Colors.ligthGray,
+      headerShown: false
+    }
+  }
+)
+
 const StackNavigator = createStackNavigator(
   {
     auth:{
@@ -121,6 +174,12 @@ const StackNavigator = createStackNavigator(
     },
     tabs: {
       screen: OrganizerNavigator,
+      navigationOptions: {
+        headerShown: false
+      }
+    },
+    hostTabs: {
+      screen: HostNavigator,
       navigationOptions: {
         headerShown: false
       }
@@ -137,9 +196,10 @@ const StackNavigator = createStackNavigator(
     ReserveForm: { screen: ReserveForm },
     ReservesList: { screen: ReservesList },
     RoomChat: { screen: RoomChat },
+    ProfileScreen: { screen: ProfileScreen }
   },
   {
-    initialRouteName: 'tabs',
+    initialRouteName: 'auth',
     headerMode: 'none',
   }
 )
@@ -147,6 +207,7 @@ const StackNavigator = createStackNavigator(
 const AppContainer = createSwitchNavigator({
   AuthRoutes: { screen: AuthNavigator },
   OrganizerRoutes: { screen: OrganizerNavigator },
+  HostRoutes: { screen: HostNavigator },
   Stack: { screen: StackNavigator }
 })
 

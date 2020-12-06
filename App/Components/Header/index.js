@@ -14,13 +14,14 @@ import {
 } from './styles';
 
 const Header = ({
-  user
+  user,
+  navigation
 }) => {
   return (
     <HeaderView>
       <Container>
         <ProfileContainer>
-          <ProfileImageContainer>
+          <ProfileImageContainer onPress={() => navigation.navigate('ProfileScreen')}>
             {(user.avatar && user.avatar.url) ? (
               <ProfileImage source={{ uri: user.avatar.url }}/>
             ) : (

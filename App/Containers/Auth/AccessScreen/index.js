@@ -31,6 +31,8 @@ class AccessScreen extends React.Component {
       switch (this.props.user.role) {
         case 'organizer':
           return this.props.navigation.navigate('MyEventsScreen')
+        case 'owner':
+          return this.props.navigation.navigate('MyPlacesScreen')
         default:
           return this.props.navigation.navigate('AccessScreen')
       }

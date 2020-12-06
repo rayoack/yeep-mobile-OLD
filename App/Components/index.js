@@ -20,6 +20,8 @@ import BetterReadMore from './BetterReadMore'
 import CollapsibleList from './CollapsibleList'
 import SelectionList from './SelectionList'
 import ChatList from './ChatList'
+import HeaderWithBackButton from './HeaderWithBackButton'
+import TabBar from './TabBar'
 
 import {
   InitialStep,
@@ -55,4 +57,6 @@ export {
   AddImagesToEvent,
   EventDescription,
   EventDates,
+  HeaderWithBackButton,
+  TabBar
 }

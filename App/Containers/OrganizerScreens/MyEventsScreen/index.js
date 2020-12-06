@@ -35,6 +35,10 @@ class MyEventsScreen extends React.Component {
 
   loadMyEvents = async () => {
     const { page, noDate, events, pastEvents } = this.state
+    
+    if(!this.props.user && !this.props.signed && !this.props.user.token) {
+      this.redirectToLoginScreen()
+    }
 
     this.setState({ loading: true })
 
@@ -100,6 +104,7 @@ class MyEventsScreen extends React.Component {
           navigateToEventDetails={this.navigateToEventDetails}
           refreshMyEvents={this.loadMyEvents}
           refreshing={refreshing}
+          navigation={this.props.navigation}
           navigateToCreateEvent={this.navigateToCreateEvent}
         />
       </>
@@ -112,7 +117,8 @@ MyEventsScreen.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user
+  user: state.auth.user,
+  signed: state.auth.signed
 })
 
 export default connect(

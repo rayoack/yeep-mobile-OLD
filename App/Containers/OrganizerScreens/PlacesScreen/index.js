@@ -16,7 +16,7 @@ class PlacesScreen extends React.Component {
   render() {
     return (
       <>
-        <Header />
+        <Header navigation={this.props.navigation}/>
 
         <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('PlacesFilterScreen')}>

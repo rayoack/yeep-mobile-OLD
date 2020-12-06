@@ -48,6 +48,7 @@ export default {
   coins: require('App/Assets/Images/coins.png'),
   group: require('App/Assets/Images/group.png'),
   group2: require('App/Assets/Images/group-2.png'),
+  confettiWhite: require('App/Assets/Images/confettiWhite.png'),
 
   // SPACE FEATURES ICONS
   allowsLoudSound: require('App/Assets/Images/allowsLoudSound.png'),
@@ -148,4 +149,7 @@ export default {
   eventVenuePartyHallWhite: require('App/Assets/Images/eventVenuePartyHallWhite.png'),
   houseWhite: require('App/Assets/Images/houseWhite.png'),
 
+  // USER
+  idCard: require('App/Assets/Images/id-card.png'),
+  logout: require('App/Assets/Images/logout.png'),
 }

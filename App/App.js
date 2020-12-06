@@ -7,7 +7,6 @@ import RootScreen from './Containers/Root/RootScreen'
 import AppNavigator from 'App/Navigators/AppNavigator'
 
 const { store, persistor } = createStore()
-
 export default class App extends Component {
 
   componentDidMount() {

@@ -96,6 +96,9 @@ class LoginScreen extends React.Component {
     if(data.user.role == 'organizer') {
       this.setState({ loading: false })
       this.props.navigation.navigate('MyEventsScreen')
+    } else if(data.user.role == 'owner') {
+      this.setState({ loading: false })
+      this.props.navigation.navigate('MyPlacesScreen')
     }
   }
 

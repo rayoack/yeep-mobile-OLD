@@ -12,7 +12,8 @@
     "lint-fix": "eslint --fix .",
     "lint-check": "eslint .",
     "rename": "react-native-rename",
-    "postinstall": "npx jetify"
+    "postinstall": "npx jetify",
+    "tsc:w": "tsc --watch"
   },
   "rnpm": {
     "assets": [
@@ -21,12 +22,16 @@
   },
   "dependencies": {
     "@eva-design/eva": "^2.0.0-alpha.1",
+    "@gorhom/animated-tabbar": "^2.1.0",
     "@mapbox/mapbox-gl-geocoder": "^4.5.1",
     "@react-native-community/datetimepicker": "^2.4.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/picker": "^1.6.0",
     "@react-native-mapbox-gl/maps": "^8.1.0-beta.1",
     "@rimiti/react-native-toastify": "^1.2.0",
+    "@types/jest": "^26.0.16",
+    "@types/react": "^17.0.0",
+    "@types/react-native": "^0.63.37",
     "@ui-kitten/components": "^5.0.0-alpha.1",
     "appcenter": "3.0.3",
     "appcenter-analytics": "3.0.3",
@@ -81,6 +86,7 @@
     "reduxsauce": "^1.0.1",
     "socket.io-client": "^2.3.0",
     "styled-components": "^5.1.0",
+    "typescript": "^4.1.2",
     "yup": "^0.28.5"
   },
   "devDependencies": {
@@ -112,6 +118,7 @@
     ],
     "transformIgnorePatterns": [
       "/node_modules/(?!react-native)/.+"
-    ]
+    ],
+    "testRegex": "compiled/__tests__/.*"
   }
 }

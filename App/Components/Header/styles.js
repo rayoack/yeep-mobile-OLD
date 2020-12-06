@@ -15,9 +15,11 @@ export const Container = styled.View`
   border-bottom-left-radius: 60px;
   border-bottom-right-radius: 60px;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  background-color: ${Colors.primary};
+  border-bottom-width: 1px;
+  border-bottom-color: ${Colors.ligthGray};
+  /* background-color: ${Colors.primary}; */
 `;
 
 export const ProfileContainer = styled.View`
@@ -50,7 +52,7 @@ export const ProfileImage = styled(FastImage)`
 export const ProfileName = styled.Text`
   font-size: 20px;
   font-family: 'Nunito Semi Bold';
-  color: ${Colors.white};
+  color: ${Colors.textDefault};
 `
 
 export const NotificationContainer = styled.TouchableOpacity``
