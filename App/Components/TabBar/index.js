@@ -46,10 +46,14 @@ const TabBar = props => {
           >
             {renderIcon({ route, focused: isRouteActive, tintColor })}
 
-            <TabNavText
-              routeActive={isRouteActive}
-            >{getLabelText({ route })}</TabNavText>
-          </TabButton>
+            {isRouteActive ? (
+              <TabNavText
+                routeActive={isRouteActive}
+              >
+                {getLabelText({ route })}
+              </TabNavText>
+            ) : null}
+            </TabButton>
         );
       })}
     </Container>

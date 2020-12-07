@@ -109,8 +109,8 @@ const OrganizerNavigator = createBottomTabNavigator(
     initialRouteName: 'MyEventsScreen',
     tabBarComponent: TabBar,
     tabBarOptions: {
-      activeTintColor: Colors.labelBlack,
-      inactiveTintColor: Colors.ligthGray,
+      activeTintColor: Colors.primary,
+      inactiveTintColor: Colors.labelBlack,
       headerShown: false
     }
   }

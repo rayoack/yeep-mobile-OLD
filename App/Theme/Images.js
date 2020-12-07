@@ -8,7 +8,7 @@ export default {
   service_provider: require('App/Assets/Images/service_provider.jpg'),
   image_background: require('App/Assets/Images/image-background.png'),
   error: require('App/Assets/Images/error.png'),
-  coming_soon: require('App/Assets/Images/coming-soon.jpg'),
+  coming_soon: require('App/Assets/Images/coming-soon.png'),
   empty: require('App/Assets/Images/empty.png'),
   not_found: require('App/Assets/Images/not-found.png'),
 
