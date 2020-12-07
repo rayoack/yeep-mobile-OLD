@@ -113,12 +113,12 @@ const OrganizerNavigator = createBottomTabNavigator(
 
 const StackNavigator = createStackNavigator(
   {
-    auth:{
+     auth:{
       screen: AuthNavigator,
       navigationOptions: {
         headerShown: false
       }
-    },
+    }, 
     tabs: {
       screen: OrganizerNavigator,
       navigationOptions: {

@@ -148,4 +148,5 @@ export default {
   eventVenuePartyHallWhite: require('App/Assets/Images/eventVenuePartyHallWhite.png'),
   houseWhite: require('App/Assets/Images/houseWhite.png'),
 
+
 }
