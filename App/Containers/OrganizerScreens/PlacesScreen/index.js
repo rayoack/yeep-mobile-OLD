@@ -26,7 +26,7 @@ class PlacesScreen extends React.Component {
           name: translate('eventVenuePartyHall'),
           image: Images.eventVenuePartyHallWhite,
           value: 'eventVenuePartyHall',
-          backgroundColor: Colors.quaternary
+          backgroundColor: Colors.primary
         },
         {
           name: translate('studio'),
@@ -105,7 +105,7 @@ class PlacesScreen extends React.Component {
     return (
       <>
         <Header navigation={this.props.navigation}/>
-        <ScrollView>
+        <ScrollView style={{ backgroundColor: Colors.backgroundGray }}>
           <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
            <TextImageAdress>
             {translate('placesScreenTitle')}
@@ -114,7 +114,7 @@ class PlacesScreen extends React.Component {
 
           <View style={{flexDirection: 'row', marginTop: 20}}>
           <TouchableFilter onPress={() => this.navigateToFilters()}>
-            <Icon name={'search'} size={20} style={{color: 'gray'}}/>
+            <Icon name={'search'} size={30} style={{color: Colors.primary}}/>
             <TouchableFilterText >
             {translate('searchSpace')}
             </TouchableFilterText>
@@ -128,19 +128,22 @@ class PlacesScreen extends React.Component {
                 activeOpacity={0.6}
                 style={{backgroundColor: category.backgroundColor, alignItems: 'center', justifyContent: 'center'}}>
                 <Image style= {{width: 70, height: 70, marginBottom: 10}}source={category.image} />
-                <Text style={{textAlign: 'center', fontSize: 12, color: 'white'}}>{category.name}</Text>
+                <Text style={{textAlign: 'center', fontSize: 12, color: Colors.white, fontFamily: 'Nunito Regular'}}>
+                  {category.name}
+                </Text>
               </Category>
             ))}
           </View>
 
           <View style={{width: 350}}>
-          <View style={{marginBottom: 20}}> 
-            <Text style={{fontSize:20, fontWeight: 'bold'}}>{translate('spaceAproximity')}</Text>
-            <Text style={{fontSize: 15}}>{translate('city')}: Belford Roxo</Text>
+          <View style={{marginBottom: 20, marginLeft: 20}}> 
+            <Text style={{fontSize:20, fontFamily: 'Nunito Bold', color: Colors.labelBlack}}>{translate('nearbySpaces')}</Text>
+            <Text style={{fontSize: 15, fontFamily: 'Nunito Regular', color: Colors.textDefault}}>{translate('city')}: Belford Roxo</Text>
           </View>
         <FlatList
           data={cards}
           refreshing={false}
+          style={{ flex: 1, paddingLeft: 20, paddingRight: 20 }}
           renderItem = {({item}) => (
           <CardWithImage
           item={item} 

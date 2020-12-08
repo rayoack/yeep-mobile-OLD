@@ -220,7 +220,7 @@ class AdressRegisterScreen extends React.Component {
                 <ButtonWithBackground
                   onPress={handleSubmit}
                   text={translate('next')}
-                  backgroundColor={Colors.secondary}
+                  backgroundColor={Colors.primary}
                   textColor={Colors.white}
                   disabled={loading}
                   loading={loading}

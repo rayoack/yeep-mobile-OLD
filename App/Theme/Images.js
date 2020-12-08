@@ -4,8 +4,9 @@
 
 export default {
   logo: require('App/Assets/Images/yeep-logo-2.png'),
-  organizer: require('App/Assets/Images/event_planner.jpg'),
-  service_provider: require('App/Assets/Images/service_provider.jpg'),
+  organizer: require('App/Assets/Images/event_planner.png'),
+  service_provider: require('App/Assets/Images/service_provider.png'),
+  owner: require('App/Assets/Images/owner.png'),
   image_background: require('App/Assets/Images/image-background.png'),
   error: require('App/Assets/Images/error.png'),
   coming_soon: require('App/Assets/Images/coming-soon.png'),
@@ -49,6 +50,7 @@ export default {
   group: require('App/Assets/Images/group.png'),
   group2: require('App/Assets/Images/group-2.png'),
   confettiWhite: require('App/Assets/Images/confettiWhite.png'),
+  settings: require('App/Assets/Images/settings.png'),
 
   // SPACE FEATURES ICONS
   allowsLoudSound: require('App/Assets/Images/allowsLoudSound.png'),

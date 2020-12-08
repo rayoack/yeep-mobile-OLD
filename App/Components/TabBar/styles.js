@@ -10,9 +10,14 @@ export const Container = styled.View`
   margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 5px;
-  box-shadow: 3px 12px 10px rgba(0, 0, 0, 0.32);
   elevation: 1;
+  shadow-offset: {width: 0, height: 1 }; 
+  shadow-color: #000;
+  shadow-opacity: 0.1;
+  shadow-radius: 0;
   border-radius: 40px;
+  align-items: center;
+  justify-content: center;
   /* border-top-left-radius: 40px;
   border-top-right-radius: 40px; */
   /* position: absolute;
@@ -22,7 +27,7 @@ export const Container = styled.View`
 
 export const TabButton = styled.TouchableOpacity`
   flex: 1;
-  margin-top: 20;
+  margin-top: ${props => props.routeActive ? 20 : 0 };;
   justify-content: center;
   align-items: center;
 `;

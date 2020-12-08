@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform, Text, View, Alert, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { Platform, Text, View, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import axios from 'axios'

@@ -32,6 +32,7 @@ export default {
   organizer: 'Organizer',
   owner: 'Host',
   service_provider: 'Service provider',
+  serviceProviderComingSoon: 'Service provider (Coming soon)',
   personalInformation: 'Personal information',
   balance: 'Balance',
 
@@ -85,9 +86,9 @@ export default {
   roleTitleorganizer: 'Event organizer',
   roleTitleowner: 'Owner of party halls and event spaces',
   roleTitleservice_provider: 'Service provider',
-  roleDescriptionorganizer: 'It manages, plans, captures, promotes, performs, administers resources and provides specialized services for events to happen.',
-  roleDescriptionowner: 'It owns and manages a concert hall, studios, party halls or even its own house with space available for events.',
-  roleDescriptionservice_provider: 'Offers services for parties and events.\nExamples: Singer, Confectioner, DJ, Waiter, Security, etc.',
+  roleDescriptionorganizer: 'If you want to rent spaces or hire service providers for your events.',
+  roleDescriptionowner: 'If you have a party hall, a space in your home, a photo studio or any type of space for holding events.',
+  roleDescriptionservice_provider: 'If you are a singer, DJ, waiter, photographer, have a band or work offering any type of service for events.',
   yourAdress: 'Your adress',
   city: 'City',
   yourCity: 'Your city',
@@ -169,7 +170,7 @@ export default {
   eighthEditEventStepTitle: 'Final settings',
   eighthEditEventStepText: 'Set up a visibility of your event, a nomenclature of ticket and registration or organizer.',
   in: 'in',
-  placesScreenTitle: 'Find amazing spaces for your event',
+  placesScreenTitle: 'What kind of space are you looking for?',
 
   // HOST
   mySpacesTabLabel: 'My spaces',
@@ -237,7 +238,7 @@ export default {
   capacity: 'Capacity for',
   people: 'people',
   spacesInTitle: 'Spaces in',
-  spaceAproximity: 'Spaces near you',
+  nearbySpaces: 'Spaces near you',
   spacePriceLabel: 'Space price',
   priceMinQuery: 'Minimum price',
   priceMaxQuery: 'Maximum price',

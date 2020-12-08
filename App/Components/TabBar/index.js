@@ -42,6 +42,7 @@ const TabBar = props => {
             onLongPress={() => {
               onTabLongPress({ route });
             }}
+            routeActive={isRouteActive}
             accessibilityLabel={getAccessibilityLabel({ route })}
           >
             {renderIcon({ route, focused: isRouteActive, tintColor })}

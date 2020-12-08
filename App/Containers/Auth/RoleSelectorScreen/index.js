@@ -1,5 +1,5 @@
 import React from 'react'
-import { BackHandler, Platform, ActivityIndicator, Dimensions } from 'react-native'
+import { BackHandler, Platform, View, Dimensions } from 'react-native'
 import { connect } from 'react-redux'
 import Carousel, { getInputRangeFromIndexes } from 'react-native-snap-carousel';
 import FastImage from 'react-native-fast-image'
@@ -99,7 +99,7 @@ class RoleSelectorScreen extends React.Component {
   }
 
   render() {
-    const roles = ['organizer', 'service_provider', 'owner']
+    const roles = ['organizer', 'owner', 'service_provider']
     const sliderWidth = Dimensions.get('window').width
 
     return (
@@ -108,7 +108,33 @@ class RoleSelectorScreen extends React.Component {
           <SelectorTitle>{translate('roleScreenTitle')}</SelectorTitle>
         </SelectorTitleContainer>
 
-        <Carousel
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          {roles.map((role, index) => (
+            <RoleContainer
+              key={index}
+              onPress={() => role !== 'service_provider' ? this.setUserRolerAndNavigate(role) : null}
+              onLongPress={() => null}
+              activeOpacity={0.8}
+              role={role}
+            >
+              <RoleImage
+                source={Images[role]}
+              />
+      
+              <RoleTextContainer>
+                {role !== 'service_provider' ? (
+                  <RoleTitle>{translate(`roleTitle${role}`)}</RoleTitle>
+                  ) : (
+                    <RoleTitle>{translate('serviceProviderComingSoon')}</RoleTitle>
+                )}
+      
+                <RoleDescription>{translate(`roleDescription${role}`)}</RoleDescription>
+              </RoleTextContainer>
+            </RoleContainer>
+          ))}
+        </View>
+
+        {/* <Carousel
           ref={(c) => { this._carousel = c }}
           data={roles}
           renderItem={this._renderItem}
@@ -116,7 +142,7 @@ class RoleSelectorScreen extends React.Component {
           itemWidth={300}
           scrollInterpolator={this.scrollInterpolator}
           slideInterpolatedStyle={this.animatedStyles}
-        />
+        /> */}
       </Container>
     )
   }

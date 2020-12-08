@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { Colors } from 'App/Theme';
 
 export const Container = styled.View`
   
@@ -6,10 +7,11 @@ export const Container = styled.View`
 
 
 export const TextImageAdress = styled.Text `
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 25px;
+  font-family: 'Nunito Semi Bold';
   text-align: center;
-  width:250px;
+  width:300px;
+  color: ${Colors.labelBlack};
 `;
 export const ImageAdress = styled.Image`
   height: 250px
@@ -20,16 +22,19 @@ export const ImageAdress = styled.Image`
 export const TouchableFilter = styled.TouchableOpacity`
   flex-direction: row;
   align-items:center;
-  width: 350px;
-  height:30px;
-  background: #eeeeee;
-  border-radius:5px;
-  padding-left:10px;  
+  justify-content: center;
+  width: 300px;
+  height: 50px;
+  background: ${Colors.white};
+  border-radius: 20px;
+  padding: 10px;  
+  elevation: 1;
 `;
 
 export const TouchableFilterText = styled.Text`
-  color: gray;
+  color: ${Colors.textDefault};
   margin-left: 5px;
+  font-family: 'Nunito Semi Bold'
 `;
 
 export const Category = styled.TouchableOpacity `
@@ -39,4 +44,5 @@ export const Category = styled.TouchableOpacity `
    margin-right: 5px;
    margin-left: 20px;
    border-radius: 5px;
+   elevation: 1;
 `;

@@ -2,12 +2,10 @@ import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image'
 import { Colors } from 'App/Theme'
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
   flex: 1;
-  align-items: center;
-  padding-left: 60px;
-  padding-right: 60px;
-  background-color: ${Colors.primary};
+  /* align-items: center; */
+  background-color: ${Colors.backgroundGray};
 `;
 
 export const SelectorTitleContainer = styled.View`
@@ -18,36 +16,39 @@ export const SelectorTitleContainer = styled.View`
 export const SelectorTitle = styled.Text`
   font-size: 30px;
   font-family: 'Nunito Regular';
-  color: #fff;
+  color: ${Colors.primary};
   text-align: center;
 `
 
 export const RoleContainer = styled.TouchableOpacity`
-  width: 300px;
-  height: 500px;
-  border-radius: 10px;
+  width: 340px;
+  height: 170px;
+  border-radius: 5px;
+  elevation: 1;
+  background-color: ${Colors.white};
+  flex-direction: row;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
 `
 
-export const RoleImage = styled(FastImage)`
-  width: 300px;
-  height: 500px;
-  border-radius: 10px;
+export const RoleImage = styled.Image`
+  width: 120px;
+  height: 120px;
+  border-radius: 5px;
 `
 
 export const RoleTextContainer = styled.View`
-  position: absolute;
-  bottom: 0;
-  width: 300px;
+  width: 200px;
   height: 190px;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 35px 20px;
   align-items: center;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  justify-content: center;
+  padding: 0 20px;
 `
 
 export const RoleTitle = styled.Text`
-  font-size: 18px;
+  font-size: 14px;
   text-align: center;
   color: ${Colors.primary};
   font-family: 'Nunito Bold';
@@ -56,6 +57,7 @@ export const RoleTitle = styled.Text`
 
 export const RoleDescription = styled.Text`
   font-size: 13px;
-  color: ${Colors.white};
+  text-align: center;
+  color: ${Colors.textDefault};
   font-family: 'Nunito Regular';
 `

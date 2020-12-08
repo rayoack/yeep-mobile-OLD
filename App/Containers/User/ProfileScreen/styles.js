@@ -73,8 +73,8 @@ export const OptionsListIcon = styled.Image`
 
 export const OptionsListText = styled.Text`
     font-size: 18px;
-    font-family: 'Nunito Bold';
-    color: ${Colors.primary};
+    font-family: 'Nunito Semi Bold';
+    color: ${Colors.textDefault};
 `
 
 export const LogoutContainer = styled.View`

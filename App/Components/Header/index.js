@@ -9,8 +9,8 @@ import {
   ProfileImageContainer,
   ProfileImage,
   ProfileName,
-  NotificationContainer,
-  NotificationBell,
+  HeaderContainer,
+  HeaderIcon,
 } from './styles';
 
 const Header = ({
@@ -21,7 +21,7 @@ const Header = ({
     <HeaderView>
       <Container>
         <ProfileContainer>
-          <ProfileImageContainer onPress={() => navigation.navigate('ProfileScreen')}>
+          <ProfileImageContainer>
             {(user.avatar && user.avatar.url) ? (
               <ProfileImage source={{ uri: user.avatar.url }}/>
             ) : (
@@ -32,9 +32,13 @@ const Header = ({
           {user.name ? <ProfileName>{user.name}</ProfileName> : null}
         </ProfileContainer>
 
-        <NotificationContainer>
-          <NotificationBell source={Images.notification_inactive}/>
-        </NotificationContainer>
+        {/* <HeaderContainer>
+          <HeaderIcon source={Images.notification_inactive}/>
+        </HeaderContainer> */}
+
+        <HeaderContainer onPress={() => navigation.navigate('ProfileScreen')}>
+          <HeaderIcon source={Images.settings}/>
+        </HeaderContainer>
       </Container>
     </HeaderView>
   );

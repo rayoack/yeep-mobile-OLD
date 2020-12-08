@@ -25,13 +25,13 @@ export const Footer = styled.TouchableOpacity`
 `
 
 export const AskRegisterText = styled.Text`
-  color: ${Colors.primary};
+  color: ${Colors.secondary};
   font-size: 14px;
   font-family: "Nunito Semi Bold"
 `
 
 export const SignupText = styled.Text`
-  color: ${Colors.secondary};
+  color: ${Colors.primary};
   font-size: 14px;
   font-family: "Nunito Extra Bold";
   margin-left: 10px;

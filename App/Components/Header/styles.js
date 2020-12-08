@@ -55,9 +55,9 @@ export const ProfileName = styled.Text`
   color: ${Colors.textDefault};
 `
 
-export const NotificationContainer = styled.TouchableOpacity``
+export const HeaderContainer = styled.TouchableOpacity``
 
-export const NotificationBell = styled.Image`
+export const HeaderIcon = styled.Image`
   height: 25px;
   width: 25px;
 `
