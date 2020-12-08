@@ -20,6 +20,7 @@ export const CardListLoading = styled.ActivityIndicator`
 
 export const List = styled.FlatList`
   flex: 1;
+  padding: 0 20px;
 `
 
 export const CardContainer = styled.TouchableOpacity`

@@ -429,7 +429,7 @@ export class CreationEventSteps extends Component {
   
     const orderDates = _.orderBy(eventDates, ['day'], ['asc'])
     this.props.setEventDates(orderDates)
-    this.props.navigation.goBack(null)
+    this.props.navigation.goBack()
   }
 
   openTimePicker = (index, hourType) => {

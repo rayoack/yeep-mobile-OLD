@@ -52,7 +52,7 @@ export const CreateEventButton = styled.TouchableOpacity`
   border-radius: 35px;
   align-items: center;
   justify-content: center;
-  background-color: ${Colors.secondary};
+  background-color: ${Colors.primary};
   box-shadow: 3px 2px 10px rgba(0, 0, 0, 0.32);
   elevation: 10;
 `

@@ -39,7 +39,7 @@ class EditEventScreen extends Component {
   }
 
   handleBackButton = () => {
-    this.props.navigation.goBack(null)
+    this.props.navigation.goBack()
     return true;
   }
 
@@ -77,7 +77,7 @@ class EditEventScreen extends Component {
 
         <HeaderContainer>
           <BackButtonContainer
-            onPress={() => this.props.navigation.goBack(null)}>
+            onPress={() => this.props.navigation.goBack()}>
             <BackButton color={Colors.white} size={20}/>
           </BackButtonContainer>
 

@@ -107,7 +107,7 @@ const ViewComponent = ({
 
   return (
     <Container>
-      <Header />
+      <Header navigation={navigation}/>
       
       <CreateEventButton
         activeOpacity={0.8}

@@ -27,6 +27,14 @@ export default {
   checkAvailability: 'CHECK AVAILABILITY',
   errorInRequest: 'We had a problem, please try again.',
 
+  // USER
+  wallet: 'Wallet',
+  organizer: 'Organizer',
+  owner: 'Host',
+  service_provider: 'Service provider',
+  personalInformation: 'Personal information',
+  balance: 'Balance',
+
   // COUNTRIES
   Brazil: 'Brazil',
   Argentina: 'Argentina',
@@ -91,6 +99,7 @@ export default {
   countryRequired: 'Country is required',
   backToRegister: 'Return to the registration screen?',
   adressRegisterScreenTitle: 'Set your location',
+  logoutText: 'Log out',
 
   // CHAT
   errorOnSendMessage: 'Sorry, we had an error when trying to send your message.',
@@ -159,6 +168,12 @@ export default {
   seventhEditEventStepText: 'Find service providers for your event such as singers, waiters, securities and much more.',
   eighthEditEventStepTitle: 'Final settings',
   eighthEditEventStepText: 'Set up a visibility of your event, a nomenclature of ticket and registration or organizer.',
+  in: 'in',
+  placesScreenTitle: 'Find amazing spaces for your event',
+
+  // HOST
+  mySpacesTabLabel: 'My spaces',
+  hostScheduleTabLabel: 'Calendar',
 
   // EVENT CATEGORIES
   musicFestival: 'Music festival',

@@ -27,6 +27,15 @@ export default {
   checkAvailability: 'CHECAR DISPONIBILIDADE',
   errorInRequest: 'Ocorreu um problema, tente novamente.',
 
+  // USER
+  wallet: 'Carteira',
+  organizer: 'Organizador',
+  owner: 'Anfitrião',
+  service_provider: 'Prestador de serviço',
+  personalInformation: 'Informações pessoais',
+  balance: 'Saldo',
+
+
   // COUNTRIES
   Brazil: 'Brasil',
   Argentina: 'Argentina',
@@ -92,6 +101,7 @@ export default {
   countryRequired: 'País é obrigatório',
   backToRegister: 'Voltar para a tela de registro?',
   adressRegisterScreenTitle: 'Defina sua localização',
+  logoutText: 'Sair',
 
   // CHAT
   errorOnSendMessage: 'Desculpe, tivemos um erro, ao tentar enviar sua mensagem.',
@@ -160,6 +170,12 @@ export default {
   seventhEditEventStepText: 'Encontre prestadores de serviços para o seu evento, como cantores, garçons, seguranças, e muito mais.',
   eighthEditEventStepTitle: 'Configurações finais',
   eighthEditEventStepText: 'Configure a visibilidade do seu evento, a nomenclatura do ingresso e registre o organizador.',
+  in: 'em',
+  placesScreenTitle: 'Encontre espaços incríveis para o seu evento',
+
+  // HOST
+  mySpacesTabLabel: 'Meus espaços',
+  hostScheduleTabLabel: 'Calendário',
 
   // EVENT CATEGORIES
   musicFestival: 'Festival de música',

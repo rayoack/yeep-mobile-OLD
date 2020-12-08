@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 import {
   Container,
-  TabButton
+  TabButton,
+  TabNavText
 } from './styles'
 
 const styles = StyleSheet.create({
@@ -26,7 +27,7 @@ const TabBar = props => {
   const { routes, index: activeRouteIndex } = navigation.state;
 
   return (
-    <Container style={styles.container}>
+    <Container>
       {routes.map((route, routeIndex) => {
         const isRouteActive = routeIndex === activeRouteIndex;
 
@@ -45,10 +46,14 @@ const TabBar = props => {
           >
             {renderIcon({ route, focused: isRouteActive, tintColor })}
 
-            <TabNavText
-              routeActive={isRouteActive}
-            >{getLabelText({ route })}</TabNavText>
-          </TabButton>
+            {isRouteActive ? (
+              <TabNavText
+                routeActive={isRouteActive}
+              >
+                {getLabelText({ route })}
+              </TabNavText>
+            ) : null}
+            </TabButton>
         );
       })}
     </Container>

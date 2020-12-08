@@ -72,21 +72,25 @@ const CardWithImage = ({
 
             <CardSubInfoContainer>
 
-              <LeftSubInfoContainer>
-                <LeftIconContainer>
-                  <Icon source={item.leftIcon} />
-                </LeftIconContainer>
+              {item.leftInfo ? (
+                <LeftSubInfoContainer>
+                  <LeftIconContainer>
+                    <Icon source={item.leftIcon} />
+                  </LeftIconContainer>
 
-                <CardSubInfoText>{item.leftInfo}</CardSubInfoText>
-              </LeftSubInfoContainer>
+                  <CardSubInfoText>{item.leftInfo}</CardSubInfoText>
+                </LeftSubInfoContainer>
+              ) : null}
 
-              <RigthSubInfoContainer>
-                <RigthIconContainer>
-                  <Icon source={item.rigthIcon} />
-                </RigthIconContainer>
+              {item.rigthInfo ? (
+                <RigthSubInfoContainer>
+                  <RigthIconContainer>
+                    <Icon source={item.rigthIcon} />
+                  </RigthIconContainer>
 
-                <CardSubInfoText>{item.rigthInfo}</CardSubInfoText>
-              </RigthSubInfoContainer>
+                  <CardSubInfoText>{item.rigthInfo}</CardSubInfoText>
+                </RigthSubInfoContainer>
+              ) : null}
 
             </CardSubInfoContainer>
           </CardInfoContainer>

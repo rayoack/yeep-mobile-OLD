@@ -11,6 +11,7 @@ export const Types = {
   SET_SPACE_MONETARY_UNIT_QUERY: 'manageUserReducer/SET_SPACE_MONETARY_UNIT_QUERY',
   SET_SPACE_PRICE_MIN_QUERY: 'manageUserReducer/SET_SPACE_PRICE_MIN_QUERY',
   SET_SPACE_PRICE_MAX_QUERY: 'manageUserReducer/SET_SPACE_PRICE_MAX_QUERY',
+  CLEAR_SPACE_QUERIES: 'manageUserReducer/CLEAR_SPACE_QUERIES',
 }
 
 export const Creators = {
@@ -56,6 +57,10 @@ export const Creators = {
   }),
   setSpacePriceMaxQuery: (payload) => ({
     type: Types.SET_SPACE_PRICE_MAX_QUERY,
+    payload
+  }),
+  clearSpaceQueries: (payload) => ({
+    type: Types.CLEAR_SPACE_QUERIES,
     payload
   }),
 }
@@ -174,6 +179,17 @@ export default function spaceQueriesReducer(state = INITIAL_STATE, action) {
             priceMax: action.payload
           }
       }
+    case Types.SET_SPACE_PRICE_MAX_QUERY:
+      return {
+        ...state,
+          queries: {
+            ...queries,
+            priceMax: action.payload
+          }
+      }
+
+    case Types.CLEAR_SPACE_QUERIES:
+      return INITIAL_STATE
 
     default:
       return state

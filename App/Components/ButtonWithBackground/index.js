@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
-
+import { Colors } from 'App/Theme'
 import { ButtonContainer, ButtonText } from './styles';
 
 const ButtonWithBackground = ({
@@ -35,7 +35,7 @@ const ButtonWithBackground = ({
 ButtonWithBackground.defaultProps = {
   onPress: () => {},
   text: '',
-  backgroundColor: '#8965A3',
+  backgroundColor: Colors.primary,
   textColor: '#fff',
   disabled: false,
   loading: false,

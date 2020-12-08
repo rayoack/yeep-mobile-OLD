@@ -5,6 +5,7 @@ import { PropTypes } from 'prop-types'
 import { ApplicationStyles, Colors, Helpers, Images, Metrics } from 'App/Theme'
 import { translate } from '../../../Locales'
 import * as RNLocalize from "react-native-localize";
+import { NavigationEvents } from 'react-navigation';
 
 import {
   ButtonWithBackground
@@ -31,6 +32,8 @@ class AccessScreen extends React.Component {
       switch (this.props.user.role) {
         case 'organizer':
           return this.props.navigation.navigate('MyEventsScreen')
+        case 'owner':
+          return this.props.navigation.navigate('MyPlacesScreen')
         default:
           return this.props.navigation.navigate('AccessScreen')
       }
@@ -50,6 +53,10 @@ class AccessScreen extends React.Component {
   render() {
     return (
       <Container>
+        <NavigationEvents
+          onWillFocus={() => this.redirectIfLogged()}
+          // onDidFocus={() => this.redirectIfLogged()}
+        />
         <Logo
           source={Images.logo}
         />

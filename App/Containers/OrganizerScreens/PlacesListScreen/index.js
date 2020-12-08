@@ -41,7 +41,7 @@ export class PlacesListScreen extends Component {
   }
 
   handleBackButton = () => {
-    this.props.navigation.goBack(null);
+    this.props.navigation.goBack();
     return true;
   }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform, Text, View, Alert, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { Platform, Text, View, Alert, Image, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import axios from 'axios'
@@ -24,9 +24,8 @@ class ProvidersScreen extends React.Component {
   render() {
     return (
       <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('ReserveForm')}>
-          <Text>PlacesScreen</Text>
-        </TouchableOpacity>
+        <Image style= {{width: 300, height: 300,marginTop: 30, marginBottom: 10}}source={Images.coming_soon} />
+        <Text style={{fontFamily: 'Nunito Bold', fontSize: 25}}>Em breve</Text>
       </View>
     )
   }

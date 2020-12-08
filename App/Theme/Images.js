@@ -8,7 +8,7 @@ export default {
   service_provider: require('App/Assets/Images/service_provider.jpg'),
   image_background: require('App/Assets/Images/image-background.png'),
   error: require('App/Assets/Images/error.png'),
-  coming_soon: require('App/Assets/Images/coming-soon.jpg'),
+  coming_soon: require('App/Assets/Images/coming-soon.png'),
   empty: require('App/Assets/Images/empty.png'),
   not_found: require('App/Assets/Images/not-found.png'),
 
@@ -48,6 +48,7 @@ export default {
   coins: require('App/Assets/Images/coins.png'),
   group: require('App/Assets/Images/group.png'),
   group2: require('App/Assets/Images/group-2.png'),
+  confettiWhite: require('App/Assets/Images/confettiWhite.png'),
 
   // SPACE FEATURES ICONS
   allowsLoudSound: require('App/Assets/Images/allowsLoudSound.png'),
@@ -148,5 +149,7 @@ export default {
   eventVenuePartyHallWhite: require('App/Assets/Images/eventVenuePartyHallWhite.png'),
   houseWhite: require('App/Assets/Images/houseWhite.png'),
 
-
+  // USER
+  idCard: require('App/Assets/Images/id-card.png'),
+  logout: require('App/Assets/Images/logout.png'),
 }

@@ -1,6 +1,8 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { persistReducer, persistStore } from 'redux-persist'
+import rootSaga from '../Sagas'
+import rootReducer from '../Stores/reducers'
 
 /**
  * This import defaults to localStorage for web and AsyncStorage for react-native.

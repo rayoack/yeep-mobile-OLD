@@ -23,11 +23,18 @@ import PlaceDetailsScreen from './OrganizerScreens/PlaceDetailsScreen'
 import MyEventsSelectScreen from './OrganizerScreens/MyEventsSelectScreen'
 import ReserveForm from './OrganizerScreens/ReserveForm'
 
+// HOST
+import MyPlacesScreen from './HostScreens/MyPlacesScreen'
+import HostScheduleScreen from './HostScreens/HostScheduleScreen'
+
 // CHAT
 import RoomChat from './RoomChat'
 
 // RESERVES
 import ReservesList from './ReserveScreens/ReservesList'
+
+// USER
+import ProfileScreen from './User/ProfileScreen'
 
 export {
   ExampleScreen,
@@ -42,6 +49,9 @@ export {
   AdressRegisterScreen,
   SuccessRegisterScreen,
 
+  // USER
+  ProfileScreen,
+
   // Organizer
   MyEventsScreen,
   OrganizerNegociations,
@@ -55,6 +65,10 @@ export {
   PlaceDetailsScreen,
   MyEventsSelectScreen,
   ReserveForm,
+
+  // HOST
+  MyPlacesScreen,
+  HostScheduleScreen,
 
   // CHAT
   RoomChat,

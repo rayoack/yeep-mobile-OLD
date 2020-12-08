@@ -103,7 +103,7 @@ export const LeftSubInfoContainer = styled.View`
   border-radius: 20px;
   flex-direction: row;
   align-items: center;
-  background-color: ${Colors.quaternary};
+  background-color: ${Colors.secondary};
   padding-right: 20px;
   justify-content: space-between;
 `
@@ -116,7 +116,7 @@ export const LeftIconContainer = styled.View`
   justify-content: center;
   border-bottom-left-radius: 20px;
   border-top-left-radius: 20px;
-  background-color: ${Colors.nigthPurple};
+  background-color: ${Colors.lightRed};
 `
 
 export const Icon = styled.Image`

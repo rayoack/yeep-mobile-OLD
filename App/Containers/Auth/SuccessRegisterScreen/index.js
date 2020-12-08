@@ -72,11 +72,15 @@ class SuccessRegisterScreen extends React.Component {
   _onDone = async () => {
 
     try {
-      const { data } = await api.put('users', { new_user: false })
+      const { data } = await api.put('/users', { new_user: false }, {
+        authorization: `Bearer ${this.props.user.token}`
+      })
 
       switch (this.props.user.role) {
         case 'organizer':
           return this.props.navigation.navigate('MyEventsScreen')
+        case 'owner':
+          return this.props.navigation.navigate('MyPlacesScreen')
         default:
           return this.props.navigation.navigate('AccessScreen')
       }
