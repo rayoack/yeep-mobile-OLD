@@ -5,9 +5,8 @@
 
 //  LOCAL
 const BaseURL = {
-  api: 'https://f13f9c6d6527.ngrok.io'
+  api: 'https://klub-web.herokuapp.com'
 }
-
 
 // PRODUCTION
 // const BaseURL = {

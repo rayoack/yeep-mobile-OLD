@@ -42,7 +42,7 @@ import {
   RoomChat,
 } from '../Containers'
 
-const AuthNavigator = createSwitchNavigator({
+ const AuthNavigator = createSwitchNavigator({
   AccessScreen,
   LoginScreen,
   RoleSelectorScreen,
@@ -50,7 +50,7 @@ const AuthNavigator = createSwitchNavigator({
   AdressRegisterScreen,
   SuccessRegisterScreen,
 })
-
+ 
 const OrganizerNavigator = createBottomTabNavigator(
   {
     MyEventsScreen: {
@@ -171,7 +171,7 @@ const StackNavigator = createStackNavigator(
       navigationOptions: {
         headerShown: false
       }
-    }, 
+    },  
     tabs: {
       screen: OrganizerNavigator,
       navigationOptions: {

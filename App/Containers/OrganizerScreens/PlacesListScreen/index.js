@@ -59,13 +59,13 @@ export class PlacesListScreen extends Component {
     const { queries } = this.props
     this.setState({ loading: true })
     console.log({queries})
-
+    
     try {
-      const { data } = await api.get(`/spaces/${this.state.page}`, { ...queries }, {
+      const { data } = await api.get(`/spaces/${this.state.page}`, { ...queries}, {
         authorization: `Bearer ${this.props.user.token}`
       })
       const mappedSpaces = this.mapSpaces(data)
-
+       console.log(mappedSpaces)
       this.setState({
         spaces: mappedSpaces,
         loading: false,
@@ -81,7 +81,7 @@ export class PlacesListScreen extends Component {
   mapSpaces = (data) => {
     if(!data.length) return []
 
-    const mappedSpaces = data.map(space => {
+    const mappedSpaces = data.map(space => {//mapear os cards 
       return {
         id: space.id,
         title: space.title,
@@ -150,8 +150,8 @@ export class PlacesListScreen extends Component {
                   activeImageIndex={this.state.activeImageIndex}
                   onCardPress={this.goToPlaceDetails}
                   onSnapToItem={this.onSnapToItem}
-                />
-              )}
+                /> 
+              )} 
               ListHeaderComponent={() => (
                 <HeaderContainer>
                   <ListTitle>

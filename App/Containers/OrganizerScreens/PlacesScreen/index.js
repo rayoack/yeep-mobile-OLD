@@ -1,26 +1,36 @@
-import React from 'react'
-import { Platform, Text, TouchableOpacity, View, Button, ActivityIndicator, Image, TextInput, FlatList, ScrollView } from 'react-native'
-import { connect } from 'react-redux'
-import { Creators as spaceQueriesActions } from '../../../Stores/reducers/spaceQueriesReducer'
-import { ApplicationStyles, Helpers, Images, Colors } from 'App/Theme'
-import { Header, CardWithImage } from '../../../Components'
-import { translate } from '../../../Locales'
+import React from 'react';
+import { Text, View, Image, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
+import { Creators as spaceQueriesActions } from '../../../Stores/reducers/spaceQueriesReducer';
+import {Images, Colors } from 'App/Theme';
+import { Header, CardWithImage, AnimationLoading, Feedback } from '../../../Components';
+import { translate, toNumber } from '../../../Locales';
 import * as RNLocalize from "react-native-localize";
-import {CardList} from '../PlacesListScreen/styles'
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import currencies from '../../../Services/currencies.json'
+import currencies from '../../../Services/currencies.json';
+
 import { 
-  TouchableFilterText, 
+  Category,
+  CardList,
+  HeaderContainer,
   ImageAdress, 
+  ListTitle,
   TextImageAdress, 
   TouchableFilter,
-  Category } from './styles'
+  TouchableFilterText } from './styles';
+  
+import api from '../../../Services/api';
 
 class PlacesScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      loading: false,
+      page:1,
+      refreshing: false,
+      spaces:[],
       activeImageIndex: 0,
+      feedbackType: '',
       categories: [
         {
           name: translate('eventVenuePartyHall'),
@@ -51,20 +61,53 @@ class PlacesScreen extends React.Component {
   }
 
   componentDidMount() {
+    this.loadSpaces()
   }
 
+  loadSpaces = async () => {
+
+    this.setState({loading: true})
+  
+    if(!this.props.user && !this.props.signed && !this.props.user.token) {
+      this.redirectToLoginScreen()
+    }
+    
+    try {
+      const { data } = await api.get(`/spaces/${this.state.page}`, {
+        state: this.props.user.state,
+        country: this.props.user.country
+      }, 
+        {
+        authorization: `Bearer ${this.props.user.token}`
+      })
+
+      const mappedSpaces = this.mapSpaces(data);
+      
+      this.setState({
+        spaces: mappedSpaces,
+        loading: false
+      }) 
+
+    } catch (error) {
+      console.log({error})
+
+      if(error.response && error.response.status == 401) {
+        this.redirectToLoginScreen()
+      }
+    }
+  }
+ 
   navigateToCategory = (category) => {
     console.log(this.props.setSpaceCategoryQuery)
     if(this.props.user && this.props.user.state && this.props.user.country) {
       this.props.setSpaceCategoryQuery(category.value)
       this.props.setSpaceStateQuery(this.props.user.state)
-      
+      this.props.setSpaceCountryQuery(this.props.user.country)
       this.props.navigation.navigate('PlacesListScreen')
     }
   }
-
+    
   navigateToFilters = () => {
-    // console.log(this.props.clearSpaceQueries)
     this.props.clearSpaceQueries();
     this.props.navigation.navigate('PlacesFilterScreen')
   }
@@ -77,34 +120,59 @@ class PlacesScreen extends React.Component {
     })
     
     return symbol[0].symbol
-  }
+  } 
   
-  render() {
-    const { categories } = this.state;
+  goToPlaceDetails = (id) => {
+    this.props.navigation.push('PlaceDetailsScreen', {
+      space_id: id
+    })
+  }
 
-    const cards = [
-      {
-        id: 0,
-        images: [
-          {id:1,
-           url:"https://img.imirante.com.br/oestadoma/2020/02/06/1581014928-455112907-747x429.jpg"},
-           {id:2,
-            url:"https://img.imirante.com.br/oestadoma/2020/02/06/1581014928-455112907-747x429.jpg"}
-        ],
-        title: 'Boca de Fumo',
-        text: 'Espaço bom para fazer sua festinha',
-        leftIcon: Images.coins,
-        leftInfo: 'R$ 400,00/Por dia',
-        rigthIcon: Images.group,
-        rigthInfo: 1233,
-        imageIndex: 0,
-        city: 'Belford Roxo'
+  onSnapToItem = (item, index) => {
+    const { spaces } = this.state
+    let copySpaces = spaces.map(space => space)
+
+    copySpaces.map(space => {
+      if(space.id == item.id) {
+        space.imageIndex = index
       }
-    ]
-    
+      return space
+    })
+
+    this.setState({ spaces: copySpaces })
+  }
+
+  mapSpaces = (data) => {
+    if(!data.length) return []
+
+    const mappedSpaces = data.map(space => {
+      return {
+        id: space.id,
+        title: space.title,
+        text: space.adress,
+        imageIndex: 0,
+        images: space.images,
+        leftIcon: Images.coins,
+        leftInfo: `${this.getCurrencySymbol(space.monetary_unit)}${toNumber(space.price)} / ${translate(space.charge_type)}`,
+        rigthIcon: Images.group,
+        rigthInfo: space.capacity,
+      }
+    })
+    return mappedSpaces
+  }
+
+  render() {
+    const { categories, spaces, loading } = this.state;
+    const { user } = this.props
     return (
       <>
-        <Header navigation={this.props.navigation}/>
+      <Header navigation={this.props.navigation}/>
+      {loading ? (
+        <AnimationLoading
+         loading={loading}
+         />
+      ) : (
+        <>
         <ScrollView style={{ backgroundColor: Colors.backgroundGray }}>
           <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
            <TextImageAdress>
@@ -124,7 +192,8 @@ class PlacesScreen extends React.Component {
           <View style={{flexDirection: 'row', flexWrap: 'wrap', marginBottom: 30, marginLeft: 10, alignItems: 'center'}}>
             {categories.map((category, index) => (  
               <Category
-                onPress={() => this.navigateToCategory(category)}
+                onPress={() => this.navigateToCategory(category)
+              }
                 activeOpacity={0.6}
                 style={{backgroundColor: category.backgroundColor, alignItems: 'center', justifyContent: 'center'}}>
                 <Image style= {{width: 70, height: 70, marginBottom: 10}}source={category.image} />
@@ -138,25 +207,44 @@ class PlacesScreen extends React.Component {
           <View style={{width: 350}}>
           <View style={{marginBottom: 20, marginLeft: 20}}> 
             <Text style={{fontSize:20, fontFamily: 'Nunito Bold', color: Colors.labelBlack}}>{translate('nearbySpaces')}</Text>
-            <Text style={{fontSize: 15, fontFamily: 'Nunito Regular', color: Colors.textDefault}}>{translate('city')}: Belford Roxo</Text>
+            <Text style={{fontSize: 15, fontFamily: 'Nunito Regular', color: Colors.textDefault}}>{translate('spaceState')}: {this.props.user.state} </Text>
           </View>
-        <FlatList
-          data={cards}
+        <CardList
+          data={spaces}
+          onRefresh={() => this.loadSpaces()}
           refreshing={false}
-          style={{ flex: 1, paddingLeft: 20, paddingRight: 20 }}
           renderItem = {({item}) => (
           <CardWithImage
           item={item} 
           activeImageIndex={this.state.activeImageIndex} 
-          />)}
-          />  
-          </View>
-        </View>
-        </ScrollView>
-      </>
-    )
-  }
-
+          onCardPress={this.goToPlaceDetails}
+          onSnapToItem={this.onSnapToItem}
+          />
+          )}
+          ListHeaderComponent={() => (
+            <HeaderContainer>
+              <ListTitle>
+                {this.state.feedbackType != 'error' ?
+                `${translate('spacesInTitle')}  ${user.state}`
+                : ''
+              }
+              </ListTitle>
+            </HeaderContainer>
+          )}
+          ListEmptyComponent={() => {
+            return (
+              <Feedback feedbackType={this.state.feedbackType} />
+            )
+          }}
+        />  
+      </View>
+    </View>
+  </ScrollView>
+  </>
+        )}
+        </>
+     )
+   }
 }
 
 PlacesScreen.propTypes = {
