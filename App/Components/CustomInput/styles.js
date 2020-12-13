@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import TextInputMask from 'react-native-text-input-mask';
 import { Colors } from 'App/Theme'
 
 export const InputLabel = styled.Text`
@@ -6,6 +7,7 @@ export const InputLabel = styled.Text`
   text-align: left;
   font-family: 'Nunito Bold';
   color: ${Colors.labelBlack};
+  margin-bottom: 5px;
 `
 
 export const InputText = styled.Text`
@@ -17,7 +19,23 @@ export const InputText = styled.Text`
 `
 
 export const InputContainer = styled.TextInput`
-  width: ${props => props.width ? props.width : '290px'};
+  width: ${props => props.width ? props.width : '100%'};
+  height: ${props => props.height ? props.height : '50px'};
+  border-radius: 10px;
+  padding: 14px;
+  margin-right: ${props => props.marginRight};
+  margin-left: ${props => props.marginLeft};
+  margin-top: ${props => props.marginTop};
+  margin-bottom: ${props => !props.error ? props.marginBottom : 0};
+  background-color: #ECECEC;
+  color: #999999;
+  text-align-vertical: ${props => props.multiline ? 'top' : 'center'};
+  font-size: 16px;
+  font-family: 'Nunito Regualr';
+`;
+
+export const MaskedInputContainer = styled(TextInputMask)`
+  width: ${props => props.width ? props.width : '100%'};
   height: ${props => props.height ? props.height : '50px'};
   border-radius: 10px;
   padding: 14px;

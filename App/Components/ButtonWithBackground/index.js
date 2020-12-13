@@ -35,7 +35,7 @@ const ButtonWithBackground = ({
 ButtonWithBackground.defaultProps = {
   onPress: () => {},
   text: '',
-  backgroundColor: Colors.primary,
+  backgroundColor: Colors.darkPrimary,
   textColor: '#fff',
   disabled: false,
   loading: false,

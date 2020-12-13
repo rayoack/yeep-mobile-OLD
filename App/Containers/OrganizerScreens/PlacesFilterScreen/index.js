@@ -38,6 +38,7 @@ export class PlacesFilterScreen extends Component {
       selectedCategory: { value: '' },
       selectedParkingOption: { value: '' },
       selectedChargeType: { value: '' },
+      categoriesMapped: [],
       parkingOptions: [
         {
           title: translate('allSpace'),
@@ -76,14 +77,19 @@ export class PlacesFilterScreen extends Component {
   }
 
   componentDidMount() {
-    this.setSpaceCountryQuery('Argentina')
-    this.setUserCurrency()
+    this.configureInititalFilters()
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
 
   handleBackButton = () => {
     this.props.navigation.goBack(null);
     return true;
+  }
+
+  configureInititalFilters = () => {
+    this.mapCategories()
+    this.setSpaceCountryQuery('Argentina')
+    this.setUserCurrency()
   }
 
   setUserCurrency = () => {
@@ -173,10 +179,7 @@ export class PlacesFilterScreen extends Component {
     this.props.navigation.navigate('PlacesListScreen')
   }
 
-  render() {
-    const { spaceQueries } = this.props
-    const countries = this.setCountries()
-
+  mapCategories = () => {
     const categoriesMapped = spaceCategories.map(category => {
       const categorieTranslate = translate(category)
       return {
@@ -186,6 +189,15 @@ export class PlacesFilterScreen extends Component {
         value: category == 'allSpace' ? '' : category
       }
     })
+
+    this.setSpaceCategoryQuery(categoriesMapped[0])
+    this.setState({ categoriesMapped })
+  }
+
+  render() {
+    const { spaceQueries } = this.props
+    const { categoriesMapped } = this.state
+    const countries = this.setCountries()
 
     const currenciesMapped = currenciesList.map(currency => {
       const currencyTranslate = translate(currency.title)

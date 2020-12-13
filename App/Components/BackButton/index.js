@@ -9,7 +9,7 @@ const BackButton = ({
 }) => {
   return (
     <ArrowBack
-      name={'ios-arrow-back'}
+      name={'arrowleft'}
       size={size}
       color={color}
       paddingTop={paddingTop}

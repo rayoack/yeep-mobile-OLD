@@ -45,11 +45,10 @@ const CardsList = ({
           renderItem={({item}) => {
             item.leftIcon = Images.confettiWhite;
             item.leftInfo = translate(item.category);
-            item.text = (item.dates.length || item.dates) && item.dates[0].normalizedDate ?
+            item.text = (item.dates.length && item.dates) && item.dates[0].normalizedDate ?
               `${translate('startDay')} ${translate('in')} ${item.dates[0].normalizedDate}` :
               translate('noDateEventsLabel');
             item.images = [{ url: item.image }]
-            console.log(item.dates)
             return (
               // <CardContainer
               //   onPress={() => onPress(item.id)}

@@ -103,7 +103,6 @@ export class CreationEventSteps extends Component {
 
     if (type == 'single') {
       ImagePicker.showImagePicker(options, (response) => {
-        console.log('Response = ', response);
       
         if (response.didCancel) {
           console.log('User cancelled image picker');
@@ -429,7 +428,7 @@ export class CreationEventSteps extends Component {
   
     const orderDates = _.orderBy(eventDates, ['day'], ['asc'])
     this.props.setEventDates(orderDates)
-    this.props.navigation.goBack()
+    this.props.navigation.navigate('CreationEventSteps')
   }
 
   openTimePicker = (index, hourType) => {

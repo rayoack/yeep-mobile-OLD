@@ -13,6 +13,17 @@ export default {
   empty: require('App/Assets/Images/empty.png'),
   not_found: require('App/Assets/Images/not-found.png'),
 
+  // NO BACKGROUND
+  image_background_1: require('App/Assets/Images/image_background_1.png'),
+  image_background_2: require('App/Assets/Images/image_background_2.png'),
+  image_background_3: require('App/Assets/Images/image_background_3.png'),
+  image_background_4: require('App/Assets/Images/image_background_4.png'),
+  image_background_5: require('App/Assets/Images/image_background_5.png'),
+  image_background_6: require('App/Assets/Images/image_background_6.png'),
+  image_background_7: require('App/Assets/Images/image_background_7.png'),
+  image_background_8: require('App/Assets/Images/image_background_8.png'),
+  image_background_9: require('App/Assets/Images/image_background_9.png'),
+
   // ILLUSTRATIONS
   cityIllustration: require('App/Assets/Images/city.png'),
   calendarIllustration: require('App/Assets/Images/calendar-illustration.png'),

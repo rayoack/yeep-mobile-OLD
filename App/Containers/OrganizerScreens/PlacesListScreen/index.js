@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, BackHandler } from 'react-native'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 import { connect } from 'react-redux'
 import api from '../../../Services/api'
 import currencies from '../../../Services/currencies.json'
@@ -18,7 +19,11 @@ import {
   Container,
   CardList,
   HeaderContainer,
-  ListTitle
+  ListTitle,
+  ActiveFiltersContainer,
+  ActiveFiltersBox,
+  ActiveFiltersText,
+  styles
 } from './styles'
 import { translate, toNumber } from '../../../Locales'
 
@@ -32,6 +37,7 @@ export class PlacesListScreen extends Component {
       spaces: [],
       feedbackType: '',
       activeImageIndex: 0,
+      activeFilters: [],
     }
   }
   
@@ -55,10 +61,30 @@ export class PlacesListScreen extends Component {
     return symbol[0].symbol
   }
 
+  mapQueries = (queries) => {
+    
+    const mappedFilters = _.map(_.pickBy(queries, _.identity), (value, key) => {
+      let translatedKey = translate(key);
+      let translatedValue = value;
+
+      if((key === 'category' || key === 'chargeType') && value.length) {
+        translatedValue = translate(value);
+      }
+
+      return { key: translatedKey, value: translatedValue };
+    })
+
+    return mappedFilters;
+  }
+
   loadSpaces = async () => {
     const { queries } = this.props
-    this.setState({ loading: true })
-    console.log({queries})
+
+    const mappedFilters = this.mapQueries(queries);
+    
+    console.log({mappedFilters})
+
+    this.setState({ loading: true, activeFilters: mappedFilters })
 
     try {
       const { data } = await api.get(`/spaces/${this.state.page}`, { ...queries }, {
@@ -125,6 +151,7 @@ export class PlacesListScreen extends Component {
 
   render() {
     const { queries } = this.props
+    const { activeFilters } = this.state
 
     return (
       <>
@@ -140,6 +167,17 @@ export class PlacesListScreen extends Component {
               title={translate('spacesTabLabel')}
             />
 
+            <ActiveFiltersContainer
+              horizontal={true}
+              contentContainer={styles.contentContainer}
+            >
+              {activeFilters.map((filter, index) => (
+                <ActiveFiltersBox index={index}>
+                  <ActiveFiltersText>{`${filter.key}: ${filter.value}`}</ActiveFiltersText>
+                </ActiveFiltersBox>
+              ))}
+            </ActiveFiltersContainer>
+
             <CardList
               data={this.state.spaces}
               onRefresh={() => this.loadSpaces()} 
@@ -151,16 +189,6 @@ export class PlacesListScreen extends Component {
                   onCardPress={this.goToPlaceDetails}
                   onSnapToItem={this.onSnapToItem}
                 />
-              )}
-              ListHeaderComponent={() => (
-                <HeaderContainer>
-                  <ListTitle>
-                    {this.state.feedbackType != 'error' ?
-                      `${translate('spacesInTitle')} ${queries.state}`
-                      : ''
-                    }
-                  </ListTitle>
-                </HeaderContainer>
               )}
               ListEmptyComponent={() => {
                 return (

@@ -16,7 +16,7 @@ const ScreensHeader = ({
     <HeaderContainer>
       <BackButtonContainer
         onPress={() => onPress()}>
-        <BackButton color={Colors.white} size={20}/>
+        <BackButton color={Colors.primary} size={25}/>
       </BackButtonContainer>
 
       <HeaderTitle>{title}</HeaderTitle>

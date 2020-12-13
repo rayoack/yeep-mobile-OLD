@@ -35,6 +35,9 @@ import ReservesList from './ReserveScreens/ReservesList'
 
 // USER
 import ProfileScreen from './User/ProfileScreen'
+import AccountsScreen from './User/AccountsScreen'
+import RegisterAccountsSteps from './User/RegisterAccountsSteps'
+import EditPFAccountScreen from './User/EditPFAccountScreen'
 
 export {
   ExampleScreen,
@@ -51,6 +54,9 @@ export {
 
   // USER
   ProfileScreen,
+  AccountsScreen,
+  RegisterAccountsSteps,
+  EditPFAccountScreen,
 
   // Organizer
   MyEventsScreen,

@@ -133,7 +133,7 @@ export class EventDetailsScreen extends Component {
           <>
             <EventHeader>
               <BackButtonContainer
-                onPress={() => this.props.navigation.goBack(null)}>
+                onPress={() => this.props.navigation.goBack()}>
                 <BackButton color={Colors.white} size={30}/>
               </BackButtonContainer>
             </EventHeader>
