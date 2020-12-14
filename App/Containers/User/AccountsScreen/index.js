@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, BackHandler } from 'react-native'
 import { connect } from 'react-redux'
+import { NavigationEvents } from 'react-navigation';
 import { HeaderWithBackButton } from '../../../Components'
 import api from '../../../Services/api'
 import { translate } from '../../../Locales'
@@ -9,6 +10,7 @@ import { Colors } from 'App/Theme'
 import { Creators as ManagerAccountActions } from '../../../Stores/reducers/manageAccountReducer'
 
 import {
+    AnimationLoading,
     MiniCard
 } from '../../../Components'
 
@@ -47,7 +49,6 @@ class AccountsScreen extends Component {
             const { data } = await api.get('/accounts', {}, {
                 authorization: `Bearer ${this.props.user.token}`
             })
-            console.log('ACCOUNTS: ', data)
 
             this.setState({ accounts: data, loading: false })
 
@@ -78,46 +79,57 @@ class AccountsScreen extends Component {
     render() {
         return (
             <>
-
-                <HeaderWithBackButton navigation={this.props.navigation}/>
-                <Container contentContainerStyle={{ paddingLeft: 30, paddingRight: 30 }}>
-                    <AccountsList
-                        data={this.state.accounts}
-                        onRefresh={() => this.loadUserAccounts()} 
-                        refreshing={false}
-                        renderItem={({item}) => (
-                            <MiniCard
-                                title={item.legal_representative_name}
-                                description={`${translate('type')}: ${item.account_type}`}
-                                subDescription={`${translate('status')}: ${item.account_status ? translate(item.account_status) : translate('noStatusYet')}`}
-                                onPress={() => this.navigateToEditAccount(item)}
+                <NavigationEvents
+                    onWillFocus={() => this.loadUserAccounts()}
+                    // onDidFocus={() => this.redirectIfLogged()}
+                />
+                {this.state.loading ? (
+                    <AnimationLoading
+                        fullscreen={true}
+                        loading={this.state.loading}/>
+                ) : (
+                    <>
+                        <HeaderWithBackButton navigation={this.props.navigation}/>
+                        <Container contentContainerStyle={{ paddingLeft: 30, paddingRight: 30 }}>
+                            <AccountsList
+                                data={this.state.accounts}
+                                onRefresh={() => this.loadUserAccounts()} 
+                                refreshing={false}
+                                renderItem={({item}) => (
+                                    <MiniCard
+                                        title={item.legal_representative_name}
+                                        description={`${translate('type')}: ${item.account_type}`}
+                                        subDescription={`${translate('status')}: ${item.account_status ? translate(item.account_status) : translate('noStatusYet')}`}
+                                        onPress={() => this.navigateToEditAccount(item)}
+                                    />
+                                )}
+                                ListEmptyComponent={() => {
+                                    return (
+                                        <>
+                                            <AccountTitle>{translate('accountsScreenTitle')}</AccountTitle>
+                                            <AccountDescription>{translate('accountsScreenDescription')}</AccountDescription>
+                                            <AccountsButton
+                                                color={Colors.primary}
+                                                onPress={() => this.navigateToCreationAccount('PF')}
+                                            >
+                                                <Text style={{ fontFamily:'Nunito Bold', fontSize: 18, color: Colors.white }}>
+                                                    {translate('accountsScreenRegisterPFButtonText')}
+                                                </Text>
+                                            </AccountsButton>
+                                            <AccountsButton
+                                                color={Colors.terciary}
+                                            >
+                                                <Text style={{ fontFamily:'Nunito Bold', fontSize: 18, color: Colors.white }}>
+                                                    {translate('accountsScreenRegisterPJButtonText')}
+                                                </Text>
+                                            </AccountsButton>
+                                        </>
+                                    )
+                                }}
                             />
-                        )}
-                        ListEmptyComponent={() => {
-                            return (
-                                <>
-                                    <AccountTitle>{translate('accountsScreenTitle')}</AccountTitle>
-                                    <AccountDescription>{translate('accountsScreenDescription')}</AccountDescription>
-                                    <AccountsButton
-                                        color={Colors.primary}
-                                        onPress={() => this.navigateToCreationAccount('PF')}
-                                    >
-                                        <Text style={{ fontFamily:'Nunito Bold', fontSize: 18, color: Colors.white }}>
-                                            {translate('accountsScreenRegisterPFButtonText')}
-                                        </Text>
-                                    </AccountsButton>
-                                    <AccountsButton
-                                        color={Colors.terciary}
-                                    >
-                                        <Text style={{ fontFamily:'Nunito Bold', fontSize: 18, color: Colors.white }}>
-                                            {translate('accountsScreenRegisterPJButtonText')}
-                                        </Text>
-                                    </AccountsButton>
-                                </>
-                            )
-                        }}
-                    />
-                </Container>
+                        </Container>
+                    </>
+                )}
             </>
         )
     }

@@ -22,6 +22,7 @@ const CustomInput = ({
   height,
   width,
   labelSize,
+  fontSize,
   marginRight,
   marginLeft,
   isMasked,
@@ -43,6 +44,7 @@ const CustomInput = ({
           width={width}
           onChangeText={onChangeText}
           placeholder={placeholder}
+          fontSize={fontSize}
           onBlur={onBlur}
           onFocus={onFocus}      
           marginTop={marginTop}
@@ -63,6 +65,7 @@ const CustomInput = ({
           width={width}
           onChangeText={onChangeText}
           placeholder={placeholder}
+          fontSize={fontSize}
           onBlur={onBlur}
           onFocus={onFocus}      
           marginTop={marginTop}
@@ -92,6 +95,7 @@ CustomInput.defaultProps = {
   text: '',
   onChangeText: () => {},
   placeholder: '',
+  fontSize: '16px',
   onBlur: () => {},
   onFocus: () => {},
   marginTop: 0,

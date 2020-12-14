@@ -49,10 +49,6 @@ const FirstPFAccountScreen = ({
         return setIsTimePickerVisible(true)
     }
 
-    const closeTimePicker = () => {
-        return setIsTimePickerVisible(false)
-    }
-
     return (
         <Container contentContainerStyle={{ paddingLeft: 20, paddingRight: 20 }}>
             <Formik

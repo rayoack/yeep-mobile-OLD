@@ -3,7 +3,7 @@
  */
 
 export default {
-  logo: require('App/Assets/Images/yeep-logo-2.png'),
+  logo: require('App/Assets/Images/klub-logo.png'),
   organizer: require('App/Assets/Images/event_planner.png'),
   service_provider: require('App/Assets/Images/service_provider.png'),
   owner: require('App/Assets/Images/owner.png'),
@@ -32,9 +32,9 @@ export default {
 
   // ANIMATIONS
   editing_animation: require('App/Assets/Images/editing-animation.json'),
-  yeep_loading: require('App/Assets/Images/yeep-loading.json'),
-  yeep_loading_2: require('App/Assets/Images/yeep-loading-2.json'),
-  yeep_loading_3: require('App/Assets/Images/yeep-loading-3.json'),
+  klub_loading: require('App/Assets/Images/klub-loading.json'),
+  klub_loading_2: require('App/Assets/Images/klub-loading-2.json'),
+  klub_loading_3: require('App/Assets/Images/klub-loading-3.json'),
   
   // ICONS
   profile_boy: require('App/Assets/Images/profile-boy.png'),

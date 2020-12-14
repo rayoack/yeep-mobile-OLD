@@ -15,7 +15,9 @@ import { Creators as ManagerAccountActions } from '../../../Stores/reducers/mana
 import {
   SavingLoading,
   CustomToast,
-  FirstPFAccountScreen
+  FirstPFAccountScreen,
+  AdressAccountStep,
+  BankAccountStep
 } from '../../../Components'
 
 export class RegisterAccountsSteps extends Component {
@@ -66,30 +68,47 @@ export class RegisterAccountsSteps extends Component {
       }
 
     // SAVE ACCOUNT CHANGES
-    saveOrUpdateAccount = async (oldStep) => {
-        const { account } = this.props
+    saveOrUpdateAccount = async (oldStep, isBankStep = false) => {
+        const { account, bank } = this.props
         this.setState({ loading: true })
 
         try {
-            let updateEvent
+            let updateAccount
 
-            if(account.id) {
-                let formData = { ...account }
+            if(!isBankStep) {
+                if(account.id) {
+                    let formData = { ...account }
+    
+                    const { data } = await api.put(`/accounts/${account.id}`, formData, {
+                        authorization: `Bearer ${this.props.user.token}`
+                    })
+                    
+                    updateAccount = data
+    
+                } else {
+                    const { data } = await api.post('/accounts', account, {
+                        authorization: `Bearer ${this.props.user.token}`
+                    })
+    
+                    updateAccount = data
+                    console.log({updateAccount})
+                    this.props.setAccountId(data.id)
+                }
+            }
 
-                const { data } = await api.put(`/accounts/${account.id}`, formData, {
+            if(isBankStep && bank && !bank.id) {
+                let formData = {
+                    ...account,
+                    account_holder_name: account.legal_representative_name,
+                    account_holder_document: account.cpf_cnpj,
+                    account_id: account.id,
+                }
+    
+                const { data } = await api.post('/bank-accounts', formData, {
                     authorization: `Bearer ${this.props.user.token}`
                 })
-                
-                updateEvent = data
-
-            } else {
-                const { data } = await api.post('/accounts', account, {
-                    authorization: `Bearer ${this.props.user.token}`
-                })
-
-                updateEvent = data
-                console.log({updateEvent})
-                this.props.setAccountId(data.id)
+            } else if (isBankStep && bank && bank.id) {
+                // CONTINUAR AQUI
             }
 
             this.setState({ loading: false })
@@ -177,7 +196,7 @@ export class RegisterAccountsSteps extends Component {
                         completedStepIconColor={Colors.primary}
                         completedProgressBarColor={Colors.primary}
                     >
-                        {/* STEP 1: INITIAL SETTINGS */}
+                        {/* STEP 1 */}
                         <ProgressStep
                             onNext={onNextFunc}
                             onPrevious={this.goBackStep}
@@ -195,20 +214,58 @@ export class RegisterAccountsSteps extends Component {
                                 />
                             ) : null}
                         </ProgressStep>
+
+                        {/* ADRESS STEP */}
                         <ProgressStep
                             onNext={onNextFunc}
                             onPrevious={this.goBackStep}
-                            label={account.account_type === 'PJ' ? translate('firstPJAccountStepTitle') : translate('firstPFAccountStepTitle')}
+                            label={translate('secondPFAccountStepTitle')}
+                            errors={stepError}
+                            nextBtnText={translate('nextBtnText')}
+                            nextBtnStyle={this.nextButtonStyle}
+                            nextBtnTextStyle={this.nextButtonTextStyle}
+                        >
+                            <AdressAccountStep
+                                setSaveNextStepForm={this.setSaveNextStepForm}
+                                setStepErrors={this.setStepErrors}
+                                saveOrUpdateAccount={this.saveOrUpdateAccount}
+                            />
+                        </ProgressStep>
+
+                        {/* BANK STEP */}
+                        <ProgressStep
+                            onNext={onNextFunc}
+                            onPrevious={this.goBackStep}
+                            label={translate('bankAccountStepTitle')}
+                            errors={stepError}
+                            nextBtnText={translate('nextBtnText')}
+                            nextBtnStyle={this.nextButtonStyle}
+                            nextBtnTextStyle={this.nextButtonTextStyle}
+                        >
+                            <BankAccountStep
+                                setSaveNextStepForm={this.setSaveNextStepForm}
+                                setStepErrors={this.setStepErrors}
+                                saveOrUpdateAccount={this.saveOrUpdateAccount}
+                                navigation={this.props.navigation}
+                            />
+                        </ProgressStep>
+
+                        {/* DOCUMENTS STEP */}
+                        <ProgressStep
+                            onNext={onNextFunc}
+                            onPrevious={this.goBackStep}
+                            label={translate('documentAccountStepTitle')}
                             errors={stepError}
                             nextBtnText={translate('nextBtnText')}
                             nextBtnStyle={this.nextButtonStyle}
                             nextBtnTextStyle={this.nextButtonTextStyle}
                         >
                             <View>
-                                <Text>OLÁ</Text>
+                                <Text>Olá</Text>
                             </View>
+
                             {/* {account.account_type === 'PF' ? (
-                                <FirstPFAccountScreen
+                                <AdressAccountStep
                                     setSaveNextStepForm={this.setSaveNextStepForm}
                                     setStepErrors={this.setStepErrors}
                                     saveOrUpdateAccount={this.saveOrUpdateAccount}
@@ -224,6 +281,7 @@ export class RegisterAccountsSteps extends Component {
 
 const mapStateToProps = (state) => ({
     account: state.manageAccountReducer.account,
+    bank: state.manageAccountReducer.bank,
     user: state.auth.user
 })
 

@@ -33,6 +33,8 @@ import {
 
 import {
   FirstPFAccountScreen,
+  AdressAccountStep,
+  BankAccountStep,
 } from './AccountsSteps'
 
 export {
@@ -65,5 +67,7 @@ export {
   HeaderWithBackButton,
   TabBar,
   MiniCard,
-  FirstPFAccountScreen
+  FirstPFAccountScreen,
+  AdressAccountStep,
+  BankAccountStep
 }

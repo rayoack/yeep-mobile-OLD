@@ -47,7 +47,11 @@ class EditPFAccountScreen extends Component {
     const account = this.props.navigation.getParam('account')
     
     if(account && account.id) {
-      return this.props.setAccountFormData(account)
+      this.props.setAccountFormData(account)
+    
+      if(account.bank && account.bank.id) {
+        this.props.setBankForm(account.bank)
+      }
     }
 
     return null
@@ -88,7 +92,7 @@ class EditPFAccountScreen extends Component {
           <CardRegisterStep
             title={step.title}
             text={step.text}
-            completed={account.register_step >= index ? true : false}
+            completed={account.register_step > index ? true : false}
             final={(steps.length - 1) == index}
             onPress={() => this.navigateToStep(index)}
           />

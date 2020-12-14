@@ -21,6 +21,7 @@ import {
   AccountsScreen,
   RegisterAccountsSteps,
   EditPFAccountScreen,
+  BankList,
   // ORGANIZER
   MyEventsScreen,
   OrganizerNegociations,
@@ -203,6 +204,7 @@ const StackNavigator = createStackNavigator(
     AccountsScreen: { screen: AccountsScreen },
     RegisterAccountsSteps: { screen: RegisterAccountsSteps },
     EditPFAccountScreen: { screen: EditPFAccountScreen },
+    BankList: { screen: BankList },
   },
   {
     initialRouteName: 'auth',

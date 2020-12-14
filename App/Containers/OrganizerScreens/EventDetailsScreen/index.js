@@ -7,6 +7,7 @@ import IconIO from 'react-native-vector-icons/Ionicons'
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons'
 import { connect } from 'react-redux'
 import Shimmer from 'react-native-shimmer';
+import { NavigationEvents } from 'react-navigation';
 
 import { Images, Colors } from 'App/Theme'
 import { translate } from '../../../Locales'
@@ -123,6 +124,11 @@ export class EventDetailsScreen extends Component {
 
     return (
       <Container>
+        <NavigationEvents
+          onWillFocus={() => this.loadEventDetails()}
+          // onDidFocus={() => this.redirectIfLogged()}
+        />
+        
         <StatusBar translucent backgroundColor="transparent" barStyle="light-content"/>
 
         {loading ? (

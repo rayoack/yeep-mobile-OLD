@@ -38,6 +38,7 @@ import ProfileScreen from './User/ProfileScreen'
 import AccountsScreen from './User/AccountsScreen'
 import RegisterAccountsSteps from './User/RegisterAccountsSteps'
 import EditPFAccountScreen from './User/EditPFAccountScreen'
+import BankList from './BankList'
 
 export {
   ExampleScreen,
@@ -57,6 +58,7 @@ export {
   AccountsScreen,
   RegisterAccountsSteps,
   EditPFAccountScreen,
+  BankList,
 
   // Organizer
   MyEventsScreen,

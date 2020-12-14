@@ -11,9 +11,11 @@ export const SelectPicker = styled(Picker)`
   font-family: 'Nunito Bold';
   color: ${Colors.labelBlack};
   padding: 14px;
-  width: ${props => props.fullWidth ? '100%' : '290'};
+  width: ${props => props.fullWidth ? '100%' : props.width};
   margin-top: ${props => props.marginTop};
   margin-bottom: ${props => !props.error ? props.marginBottom : 0};
+  margin-left: ${props => props.marginLeft};
+  margin-right: ${props => props.marginRight};
   background-color: ${Colors.ligthGray};
 `
 

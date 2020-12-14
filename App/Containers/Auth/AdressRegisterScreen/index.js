@@ -69,7 +69,6 @@ class AdressRegisterScreen extends React.Component {
   saveUserAndNavigate = async (values) => {
     this.setState({ loading: true })
     const user = { ...this.props.user, ...values }
-    console.log({user});
 
     try {
       const { data: newUser } = await api.post('/users', { ...user })

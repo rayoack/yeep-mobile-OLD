@@ -14,6 +14,7 @@ export const Types = {
     SET_PJ_ADRESS_STEP: 'manageAccountReducer/SET_PJ_ADRESS_STEP',
     SET_BANK_ACCOUNT_STEP: 'manageAccountReducer/SET_BANK_ACCOUNT_STEP',
     SET_BANK_ID: 'manageAccountReducer/SET_BANK_ID',
+    SET_BANK_NUMBER: 'manageAccountReducer/SET_BANK_NUMBER',
     SET_BANK_FORM: 'manageAccountReducer/SET_BANK_FORM',
   }
   
@@ -70,6 +71,10 @@ export const Types = {
       type: Types.SET_BANK_ID,
       payload
     }),
+    setBankNumber: (payload) => ({
+      type: Types.SET_BANK_NUMBER,
+      payload
+    }),
     setBankForm: (payload) => ({
       type: Types.SET_BANK_FORM,
       payload
@@ -102,18 +107,18 @@ export const Types = {
         account_status: '',
         default: false,
         register_step: 0,
-        bank: {
-            id: null,
-            bank_number: null,
-            agency_number: null,
-            account_number: null,
-            account_complement_number: null,
-            account_type: null,
-            account_holder_name: null,
-            account_holder_document: null,
-            account_id: null,
-        }
     },
+    bank: {
+        id: null,
+        bank_number: null,
+        agency_number: null,
+        account_number: null,
+        account_complement_number: null,
+        account_type: null,
+        account_holder_name: null,
+        account_holder_document: null,
+        account_id: null,
+    }
   }
   
   export default function manageAccountReducer(state = INITIAL_STATE, action) {
@@ -173,23 +178,26 @@ export const Types = {
   
       case Types.SET_BANK_ID:
         return {
-          ...state,
-          account: {
-            ...account,
+            ...state,
             bank: {
-              ...bank,
-              id: action.payload
+                ...bank,
+                id: action.payload
             }
-          }
+        }
+  
+      case Types.SET_BANK_NUMBER:
+        return {
+            ...state,
+            bank: {
+                ...bank,
+                bank_number: action.payload
+            }
         }
         
       case Types.SET_BANK_FORM:
         return {
           ...state,
-          account: {
-            ...account,
-            bank: action.payload
-          }
+          bank: action.payload
         }
   
       case Types.SET_PF_ACCOUNT_FIRST_STEP:

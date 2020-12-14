@@ -9,9 +9,9 @@ import { translate } from '../../Locales'
 import { ModalContainer, LoadingLabel, AnimationContainer } from './styles';
 
 const randomAnimation = [
-  Images.yeep_loading,
-  Images.yeep_loading_2,
-  Images.yeep_loading_3,
+  Images.klub_loading,
+  Images.klub_loading_2,
+  Images.klub_loading_3,
 ]
 
 const AnimationLoading = ({
@@ -42,7 +42,7 @@ const AnimationLoading = ({
         <>
           <ModalContainer>
             <LottieView
-              source={Images.yeep_loading}
+              source={Images.klub_loading}
               style={{ marginBottom: 100 }}
               autoPlay
               loop
