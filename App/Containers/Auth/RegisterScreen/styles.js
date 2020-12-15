@@ -8,10 +8,11 @@ export const KeyboardAvoiding = styled.KeyboardAvoidingView`
 
 export const Container = styled.View`
   align-items: center;
-  padding-left: 60px;
-  padding-right: 60px;
+  padding-left: 40px;
+  padding-right: 40px;
   flex: 1;
   justify-content: flex-end;
+  width: 100%;
 `;
 
 export const TopContainer = styled.View`

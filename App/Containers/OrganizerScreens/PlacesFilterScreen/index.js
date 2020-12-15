@@ -88,7 +88,7 @@ export class PlacesFilterScreen extends Component {
 
   configureInititalFilters = () => {
     this.mapCategories()
-    this.setSpaceCountryQuery('Argentina')
+    this.setSpaceCountryQuery('Brazil')
     this.setUserCurrency()
   }
 

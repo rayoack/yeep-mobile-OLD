@@ -41,7 +41,7 @@ class AdressRegisterScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.setCountryStates('Argentina')
+    this.setCountryStates('Brazil')
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
 
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
@@ -104,7 +104,7 @@ class AdressRegisterScreen extends React.Component {
     const actualCountry = countriesList.filter(country => country.name == countryName)
     const countryStates = actualCountry[0].states.map(state => {
       return {
-        title: translate(state.name),
+        title: state.name,
         value: state.code
       }
     })
@@ -115,7 +115,7 @@ class AdressRegisterScreen extends React.Component {
   setCountries = () => {
     const countries = countriesList.map(country => {
       return {
-        title: country.name,
+        title: translate(country.name),
         value: country.name
       }
     })
@@ -172,7 +172,7 @@ class AdressRegisterScreen extends React.Component {
               touched,
               setFieldValue
             }) => (
-              <>
+              <View style={{ width: '100%' }}>
                 <CustomInput
                   value={values.adress}
                   onChangeText={handleChange('adress')}
@@ -226,7 +226,7 @@ class AdressRegisterScreen extends React.Component {
                   loadingSize={'small'}
                   loadingColor={'#fff'}
                 />
-              </>
+              </View>
             )}
           </Formik>
 
