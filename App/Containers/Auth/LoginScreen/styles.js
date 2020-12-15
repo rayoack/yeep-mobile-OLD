@@ -9,9 +9,10 @@ export const KeyboardAvoiding = styled.KeyboardAvoidingView`
 
 export const Container = styled.View`
   align-items: center;
-  padding-left: 60px;
-  padding-right: 60px;
+  padding-left: 30px;
+  padding-right: 30px;
   flex: 1;
+  width: 100%;
   justify-content: flex-end;
 `;
 

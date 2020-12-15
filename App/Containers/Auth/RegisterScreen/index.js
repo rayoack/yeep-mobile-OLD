@@ -116,7 +116,7 @@ class RegisterScreen extends React.Component {
               setFieldTouched,
               touched
             }) => (
-              <>
+              <View style={{ width: '100%' }}>
                 <CustomInput
                   value={values.name}
                   onChangeText={handleChange('name')}
@@ -158,8 +158,9 @@ class RegisterScreen extends React.Component {
                   loading={loading}
                   loadingSize={'small'}
                   loadingColor={'#fff'}
+                  width={"100%"}
                 />
-              </>
+              </View>
             )}
           </Formik>
 

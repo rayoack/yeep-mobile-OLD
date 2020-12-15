@@ -7,7 +7,6 @@ export const BackButtonContainer = styled.TouchableOpacity`
   border-radius: 20px;
   align-items: center;
   justify-content: center;
-  background-color: ${Colors.blackTransparent};
 `
 
 export const HeaderContainer = styled.View`

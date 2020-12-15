@@ -148,7 +148,7 @@ class LoginScreen extends React.Component {
               setFieldTouched,
               touched
             }) => (
-              <>
+              <View style={{ width: '100%' }}>
                 <CustomInput
                   value={values.email}
                   onChangeText={handleChange('email')}
@@ -174,14 +174,15 @@ class LoginScreen extends React.Component {
                 <ButtonWithBackground
                   onPress={handleSubmit}
                   text={translate('signIn')}
-                  backgroundColor={Colors.secondary}
+                  backgroundColor={Colors.primary}
                   textColor={Colors.white}
                   disabled={loading}
                   loading={loading}
                   loadingSize={'small'}
                   loadingColor={'#fff'}
+                  width={"100%"}
                 />
-              </>
+              </View>
             )}
           </Formik>
 

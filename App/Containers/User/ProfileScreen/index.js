@@ -43,7 +43,7 @@ class ProfileScreen extends React.Component {
 
   render() {
     const optionsList = [
-        { image: Images.idCard, text: translate('personalInformation') }
+        { image: Images.idCard, text: translate('accounts'), navigateTo: () => this.props.navigation.navigate('AccountsScreen') }
     ];
 
     return (
@@ -79,7 +79,7 @@ class ProfileScreen extends React.Component {
                         // contentContainerStyle={styles.listContentContainerStyle}
                         data={optionsList}
                         renderItem={({ item, index }) => (
-                            <OptionsListContainer onPress={() => null}>
+                            <OptionsListContainer onPress={item.navigateTo}>
                                 <OptionsListIcon source={item.image}/>
                                 <OptionsListText>{item.text}</OptionsListText>
                             </OptionsListContainer>

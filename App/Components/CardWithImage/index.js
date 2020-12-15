@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Dimensions } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { Images } from 'App/Theme'
+import { getRandomBackgroundImage } from '../../Services/imagesHelpers'
 
 import {
   CardContainer,
@@ -63,7 +64,7 @@ const CardWithImage = ({
               : null}
             </CarouselContainer>
           ) : (
-            <CardImage source={Images.image_background} />
+            <CardImage source={getRandomBackgroundImage()} />
           )}
 
           <CardInfoContainer>

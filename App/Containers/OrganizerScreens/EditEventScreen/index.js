@@ -90,7 +90,7 @@ class EditEventScreen extends Component {
             text={step.text}
             completed={event.register_step >= index ? true : false}
             final={(steps.length - 1) == index}
-            onPress={() => this.navigateToStep(index)}
+            onPress={event.register_step >= index ? () => this.navigateToStep(index) : () => null}
           />
         ))}
 

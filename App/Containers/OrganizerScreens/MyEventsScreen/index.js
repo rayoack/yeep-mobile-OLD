@@ -5,6 +5,8 @@ import { parseISO, isBefore, isAfter } from 'date-fns';
 import isFuture from 'date-fns/isFuture'
 import isPast from 'date-fns/isPast'
 
+import { NavigationEvents } from 'react-navigation';
+
 import { Creators as ManagerEventActions } from '../../../Stores/reducers/manageEventReducer'
 
 import { translate } from '../../../Locales'
@@ -95,6 +97,11 @@ class MyEventsScreen extends React.Component {
     
     return (
       <>
+        <NavigationEvents
+          onWillFocus={() => this.loadMyEvents()}
+          // onDidFocus={() => this.redirectIfLogged()}
+        />
+
         <ViewComponent
           events={events}
           pastEvents={pastEvents}

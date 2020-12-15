@@ -1,12 +1,13 @@
 //STAGING
-// const BaseURL = {
-//   api: 'https://yeep-web.herokuapp.com/'
-// }
-
-//  LOCAL
 const BaseURL = {
   api: 'https://klub-web.herokuapp.com'
 }
+
+//  LOCAL
+// const BaseURL = {
+//   api: 'https://230a449844da.ngrok.io'
+// }
+
 
 // PRODUCTION
 // const BaseURL = {

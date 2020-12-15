@@ -18,6 +18,10 @@ import {
   AdressRegisterScreen,
   // USER
   ProfileScreen,
+  AccountsScreen,
+  RegisterAccountsSteps,
+  EditPFAccountScreen,
+  BankList,
   // ORGANIZER
   MyEventsScreen,
   OrganizerNegociations,
@@ -196,7 +200,11 @@ const StackNavigator = createStackNavigator(
     ReserveForm: { screen: ReserveForm },
     ReservesList: { screen: ReservesList },
     RoomChat: { screen: RoomChat },
-    ProfileScreen: { screen: ProfileScreen }
+    ProfileScreen: { screen: ProfileScreen },
+    AccountsScreen: { screen: AccountsScreen },
+    RegisterAccountsSteps: { screen: RegisterAccountsSteps },
+    EditPFAccountScreen: { screen: EditPFAccountScreen },
+    BankList: { screen: BankList },
   },
   {
     initialRouteName: 'auth',
@@ -211,4 +219,4 @@ const AppContainer = createSwitchNavigator({
   Stack: { screen: StackNavigator }
 })
 
-export default createAppContainer(AppContainer)
+export default createAppContainer(StackNavigator)

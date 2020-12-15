@@ -27,6 +27,7 @@ export default {
   labelGray: '#373A42',
   textDefault: '#616368',
   primary: '#FF0077',
+  darkPrimary: '#FF3558',
   secondary: '#F9B0C3',
   terciary: '#407FC8',
   lightSecondary: '#FFDDED',

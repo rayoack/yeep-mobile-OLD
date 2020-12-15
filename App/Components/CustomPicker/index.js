@@ -7,10 +7,13 @@ const CustomPicker = ({
   onValueChange,
   values,
   fullWidth,
+  width,
   labelSize,
   label,
   marginTop,
   marginBottom,
+  marginLeft,
+  marginRight,
   error,
   errorText,
   text,
@@ -30,6 +33,9 @@ const CustomPicker = ({
         fullWidth={fullWidth}
         marginTop={marginTop}
         marginBottom={marginBottom}
+        marginLeft={marginLeft}
+        marginRight={marginRight}
+        width={width}
       >
         {values.map(item => (
           <SelectPicker.Item label={item.title} value={item.value} />
@@ -56,7 +62,10 @@ CustomPicker.defaultProps = {
   fullWidth: false,
   marginTop: 0,
   marginBottom: 0,
-  labelSize: 20
+  labelSize: 20,
+  marginRight: 0,
+  marginLeft: 0,
+  width: '290'
 }
 
 export default CustomPicker;

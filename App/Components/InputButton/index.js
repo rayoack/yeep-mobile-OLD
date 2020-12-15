@@ -32,6 +32,8 @@ const InputButton = ({
   marginLeft
 }) => {
   const valueAsLabel = formatValue(value)
+  const onPressFunction = editable ? navigateTolist : () => {}
+  
   return (
     <SelectionInputContainer
       marginLeft={marginLeft}
@@ -44,13 +46,13 @@ const InputButton = ({
         </InputLabel>
       ) : null}
       <ContainerButton 
-        onPress={editable ? navigateTolist : () => {}}>
+        onPress={onPressFunction}>
         <Container>
           <TextInput 
             onChangeText={text => onChangeText(text)}
             value={valueAsLabel}
             placeholder={placeholder}
-            placeholderTextColor={error ? Colors.error : Colors.textDefault }
+            placeholderTextColor={'#999999'}
             editable={false}
             pointerEvents="none"
           />

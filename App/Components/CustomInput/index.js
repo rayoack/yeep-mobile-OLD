@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { InputLabel, InputContainer, ErrorText, InputText } from './styles';
+import { InputLabel, InputContainer, ErrorText, InputText, MaskedInputContainer } from './styles';
 
 const CustomInput = ({
   label,
@@ -22,8 +22,11 @@ const CustomInput = ({
   height,
   width,
   labelSize,
+  fontSize,
   marginRight,
-  marginLeft
+  marginLeft,
+  isMasked,
+  mask
 }) => {
   return (
     <View>
@@ -33,24 +36,49 @@ const CustomInput = ({
       {text ?
         <InputText>{text}</InputText>
       : null}
-      <InputContainer
-        // value={value}
-        height={height}
-        width={width}
-        onChangeText={onChangeText}
-        placeholder={placeholder}
-        onBlur={onBlur}
-        onFocus={onFocus}      
-        marginTop={marginTop}
-        marginBottom={marginBottom}
-        marginRight={marginRight}
-        marginLeft={marginLeft}
-        keyboardType={keyboardType}
-        secureTextEntry={secureTextEntry}
-        multiline={multiline}
-        error={error}
-        autoCapitalize={autoCapitalize }
-      >{value}</InputContainer>
+
+      {isMasked ? (
+        <MaskedInputContainer
+          // value={value}
+          height={height}
+          width={width}
+          onChangeText={onChangeText}
+          placeholder={placeholder}
+          fontSize={fontSize}
+          onBlur={onBlur}
+          onFocus={onFocus}      
+          marginTop={marginTop}
+          marginBottom={marginBottom}
+          marginRight={marginRight}
+          marginLeft={marginLeft}
+          keyboardType={keyboardType}
+          secureTextEntry={secureTextEntry}
+          multiline={multiline}
+          error={error}
+          autoCapitalize={autoCapitalize}
+          mask={mask}
+        >{value}</MaskedInputContainer>
+      ) : (
+        <InputContainer
+          // value={value}
+          height={height}
+          width={width}
+          onChangeText={onChangeText}
+          placeholder={placeholder}
+          fontSize={fontSize}
+          onBlur={onBlur}
+          onFocus={onFocus}      
+          marginTop={marginTop}
+          marginBottom={marginBottom}
+          marginRight={marginRight}
+          marginLeft={marginLeft}
+          keyboardType={keyboardType}
+          secureTextEntry={secureTextEntry}
+          multiline={multiline}
+          error={error}
+          autoCapitalize={autoCapitalize }
+        >{value}</InputContainer>
+      )}
 
       {error ?
         <ErrorText
@@ -67,6 +95,7 @@ CustomInput.defaultProps = {
   text: '',
   onChangeText: () => {},
   placeholder: '',
+  fontSize: '16px',
   onBlur: () => {},
   onFocus: () => {},
   marginTop: 0,
@@ -82,6 +111,8 @@ CustomInput.defaultProps = {
   labelSize: 20,
   marginRight: 0,
   marginLeft: 0,
+  isMasked: false,
+  mask: null
 }
 
 export default CustomInput;

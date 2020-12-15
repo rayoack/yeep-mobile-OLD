@@ -3,7 +3,7 @@
  */
 
 export default {
-  logo: require('App/Assets/Images/yeep-logo-2.png'),
+  logo: require('App/Assets/Images/klub-logo.png'),
   organizer: require('App/Assets/Images/event_planner.png'),
   service_provider: require('App/Assets/Images/service_provider.png'),
   owner: require('App/Assets/Images/owner.png'),
@@ -13,6 +13,17 @@ export default {
   empty: require('App/Assets/Images/empty.png'),
   not_found: require('App/Assets/Images/not-found.png'),
 
+  // NO BACKGROUND
+  image_background_1: require('App/Assets/Images/image_background_1.png'),
+  image_background_2: require('App/Assets/Images/image_background_2.png'),
+  image_background_3: require('App/Assets/Images/image_background_3.png'),
+  image_background_4: require('App/Assets/Images/image_background_4.png'),
+  image_background_5: require('App/Assets/Images/image_background_5.png'),
+  image_background_6: require('App/Assets/Images/image_background_6.png'),
+  image_background_7: require('App/Assets/Images/image_background_7.png'),
+  image_background_8: require('App/Assets/Images/image_background_8.png'),
+  image_background_9: require('App/Assets/Images/image_background_9.png'),
+
   // ILLUSTRATIONS
   cityIllustration: require('App/Assets/Images/city.png'),
   calendarIllustration: require('App/Assets/Images/calendar-illustration.png'),
@@ -21,9 +32,9 @@ export default {
 
   // ANIMATIONS
   editing_animation: require('App/Assets/Images/editing-animation.json'),
-  yeep_loading: require('App/Assets/Images/yeep-loading.json'),
-  yeep_loading_2: require('App/Assets/Images/yeep-loading-2.json'),
-  yeep_loading_3: require('App/Assets/Images/yeep-loading-3.json'),
+  klub_loading: require('App/Assets/Images/klub-loading.json'),
+  klub_loading_2: require('App/Assets/Images/klub-loading-2.json'),
+  klub_loading_3: require('App/Assets/Images/klub-loading-3.json'),
   
   // ICONS
   profile_boy: require('App/Assets/Images/profile-boy.png'),
