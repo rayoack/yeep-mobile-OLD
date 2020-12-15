@@ -35,6 +35,7 @@ import {
   FirstPFAccountScreen,
   AdressAccountStep,
   BankAccountStep,
+  DigitalAccountStep,
 } from './AccountsSteps'
 
 export {
@@ -69,5 +70,6 @@ export {
   MiniCard,
   FirstPFAccountScreen,
   AdressAccountStep,
-  BankAccountStep
+  BankAccountStep,
+  DigitalAccountStep
 }

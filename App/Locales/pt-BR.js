@@ -148,6 +148,7 @@ export default {
   postCodeRequired: 'CEP é obrigatório',
   postCodeMinMessage: 'CEP deve ter pelo menos 8 caracteres',
   complementLabel: 'Complemento (Opcional)',
+  complementLabelNotOptional: 'Complemento',
   complementPlaceholder: 'ex: Apt 20, bloco 5',
   bankSearch: 'Digite aqui para procurar o banco pelo nome',
   bankNumberLabel: 'Número do banco',

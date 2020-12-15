@@ -146,6 +146,7 @@ export default {
   postCodeRequired: 'Zip code is required',
   postCodeMinMessage: 'Zip code must be at least 8 characters',
   complementLabel: 'Address complement (Optional)',
+  complementLabelNotOptional: 'Address complement',
   complementPlaceholder: 'ex: Apt 20, block 5',
   bankSearch: 'Type here to search for the bank by name',
   bankNumberLabel: 'Bank number',

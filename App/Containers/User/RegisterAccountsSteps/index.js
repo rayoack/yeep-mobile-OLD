@@ -17,7 +17,8 @@ import {
   CustomToast,
   FirstPFAccountScreen,
   AdressAccountStep,
-  BankAccountStep
+  BankAccountStep,
+  DigitalAccountStep
 } from '../../../Components'
 
 export class RegisterAccountsSteps extends Component {
@@ -255,17 +256,11 @@ export class RegisterAccountsSteps extends Component {
                             nextBtnStyle={this.nextButtonStyle}
                             nextBtnTextStyle={this.nextButtonTextStyle}
                         >
-                            <View>
-                                <Text>Olá</Text>
-                            </View>
-
-                            {/* {account.account_type === 'PF' ? (
-                                <AdressAccountStep
-                                    setSaveNextStepForm={this.setSaveNextStepForm}
-                                    setStepErrors={this.setStepErrors}
-                                    saveOrUpdateAccount={this.saveOrUpdateAccount}
-                                />
-                            ) : null} */}
+                            <DigitalAccountStep
+                                setSaveNextStepForm={this.setSaveNextStepForm}
+                                setStepErrors={this.setStepErrors}
+                                saveOrUpdateAccount={this.saveOrUpdateAccount}
+                            />
                         </ProgressStep>
 
                         {/* DOCUMENTS STEP */}

@@ -51,7 +51,6 @@ const BankAccountStep = ({
         await setBankForm(formData)
 
         if(account.register_step < newRegisterStep) {
-            console.log('ATUALIZANDO ACCOUNT STEP', newRegisterStep)
             await setAccountRegisterStep(newRegisterStep)
         }
         saveOrUpdateAccount(oldStep, true)

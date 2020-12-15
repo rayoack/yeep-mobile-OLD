@@ -85,7 +85,7 @@ export const Types = {
     account: {
         id: null,
         user_id: null,
-        account_type: 0,
+        account_type: null,
         cpf_cnpj: '',
         date_of_birth: '',
         phone_number: '',
