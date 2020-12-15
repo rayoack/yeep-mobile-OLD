@@ -16,6 +16,7 @@ export const Types = {
     SET_BANK_ID: 'manageAccountReducer/SET_BANK_ID',
     SET_BANK_NUMBER: 'manageAccountReducer/SET_BANK_NUMBER',
     SET_BANK_FORM: 'manageAccountReducer/SET_BANK_FORM',
+    SET_JUNO_FORM: 'manageAccountReducer/SET_JUNO_FORM',
   }
   
   export const Creators = {
@@ -79,6 +80,10 @@ export const Types = {
       type: Types.SET_BANK_FORM,
       payload
     }),
+    setJunoForm: (payload) => ({
+      type: Types.SET_JUNO_FORM,
+      payload
+    }),
   }
   
   const INITIAL_STATE = {
@@ -118,6 +123,13 @@ export const Types = {
         account_holder_name: null,
         account_holder_document: null,
         account_id: null,
+    },
+    JunoAccount: {
+      id: null,
+      account_id: null,
+      juno_id: null,
+      account_type: null,
+      account_status: null
     }
   }
   
@@ -270,6 +282,13 @@ export const Types = {
               complement: action.payload.complement,
               register_step: account.register_step >= 3 ? account.register_step : 3
             }
+        }
+
+        
+      case Types.SET_JUNO_FORM:
+        return {
+          ...state,
+          JunoAccount: action.payload
         }
   
       case Types.CLEAR_ACCOUNT_FORM:

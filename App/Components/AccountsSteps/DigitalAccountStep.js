@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 
@@ -20,16 +20,35 @@ const DigitalAccountStep = ({
     setSaveNextStepForm,
     setStepErrors,
     saveOrUpdateAccount,
+    setAccountRegisterStep,
     account,
     bank
 }) => {
+
+    const saveDigitalAccountStep = async () => {
+
+        const newRegisterStep = account.account_type === 'PJ' ? 5 : 4;
+        const oldStep = newRegisterStep - 1; 
+
+        if(account.register_step < newRegisterStep) {
+            await setAccountRegisterStep(newRegisterStep)
+        }
+
+        saveOrUpdateAccount(oldStep, 'digitalAccount')
+    }
+    
+    useEffect(() => {
+        setSaveNextStepForm(saveDigitalAccountStep)
+    }, [])
+
+
   return (
     <Container contentContainerStyle={{ paddingLeft: 20, paddingRight: 20 }}>
         <StepTitle>{translate('digitalAccountStepTitle')}</StepTitle>
         <StepDescription>{translate('digitalAccountStepDescription')}</StepDescription>
 
         {account.account_type === 'PF' ? (
-            // ACCOUNT TYPE PF
+            // PERSONAL DATA
             <AccountDataSessionContainer>
                 <AccountDataSessionTitle>{translate('firstPFAccountTitle')}</AccountDataSessionTitle>
                 <AccountDataContainer>

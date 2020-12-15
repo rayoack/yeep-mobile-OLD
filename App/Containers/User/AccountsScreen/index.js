@@ -99,7 +99,7 @@ class AccountsScreen extends Component {
                                     <MiniCard
                                         title={item.legal_representative_name}
                                         description={`${translate('type')}: ${item.account_type}`}
-                                        subDescription={`${translate('status')}: ${item.account_status ? translate(item.account_status) : translate('noStatusYet')}`}
+                                        subDescription={`${translate('status')}: ${(item.JunoAccount && item.JunoAccount.account_status) ? translate(item.JunoAccount.account_status) : translate('noStatusYet')}`}
                                         onPress={() => this.navigateToEditAccount(item)}
                                     />
                                 )}

@@ -53,7 +53,7 @@ const BankAccountStep = ({
         if(account.register_step < newRegisterStep) {
             await setAccountRegisterStep(newRegisterStep)
         }
-        saveOrUpdateAccount(oldStep, true)
+        saveOrUpdateAccount(oldStep, 'bank')
     }
 
     const bankAccountTypes = [

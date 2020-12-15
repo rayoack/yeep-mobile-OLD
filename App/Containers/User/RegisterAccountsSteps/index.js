@@ -69,23 +69,40 @@ export class RegisterAccountsSteps extends Component {
       }
 
     // SAVE ACCOUNT CHANGES
-    saveOrUpdateAccount = async (oldStep, isBankStep = false) => {
+    saveOrUpdateAccount = async (oldStepIndex, actualStep = 'account') => {
         const { account, bank } = this.props
         this.setState({ loading: true })
 
         try {
             let updateAccount
 
-            if(isBankStep && bank && !bank.id) {
+            if(actualStep === 'bank' && bank && !bank.id) {
     
                 const { data } = await api.post('/bank-accounts', bank, {
                     authorization: `Bearer ${this.props.user.token}`
                 })
 
-            } else if (isBankStep && bank && bank.id) {
+            } else if (actualStep === 'bank' && bank && bank.id) {
                 const { data } = await api.put(`/bank-accounts/${bank.id}`, bank, {
                     authorization: `Bearer ${this.props.user.token}`
                 })
+            }
+
+            if(actualStep === 'digitalAccount') {
+                this.setState({ toastText: translate('errorOnCreateDigitalAccount') })
+    
+                const { data } = await api.post('/payments/digital-account', { accountId: account.id }, {
+                    authorization: `Bearer ${this.props.user.token}`
+                })
+
+                console.log({data})
+
+                if(data && data.juno_id) {
+                    this.props.setJunoForm(data)
+                }
+
+            } else {
+                // CRIAR ATUALIZAÇÃO DE CONTAS DIGITAIS
             }
 
             if(account.id) {
@@ -121,6 +138,14 @@ export class RegisterAccountsSteps extends Component {
         } catch (error) {
             console.log({error})
             this.setState({ loading: false, stepError: true })
+
+            if(this.state.toastText.length) { 
+                this.setState({ showToast: true })
+
+                setTimeout(() => {
+                    this.setState({ showToast: false, toastText: '' })
+                }, 3000);
+            }
         }
     }
     

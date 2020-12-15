@@ -41,7 +41,7 @@ class AdressRegisterScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.setCountryStates('Brazil')
+    this.setCountryStates('')
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
 
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
@@ -115,7 +115,7 @@ class AdressRegisterScreen extends React.Component {
   setCountries = () => {
     const countries = countriesList.map(country => {
       return {
-        title: translate(country.name),
+        title: country.name.length ? translate(country.name) : '',
         value: country.name
       }
     })
@@ -202,8 +202,8 @@ class AdressRegisterScreen extends React.Component {
                   }}
                   label={translate('yourCountry')}
                   marginBottom={30}
-                  // error={errors.country}
-                  // errorText={errors.country}
+                  error={errors.country}
+                  errorText={errors.country}
                 />
 
                 <CustomPicker
@@ -212,8 +212,8 @@ class AdressRegisterScreen extends React.Component {
                   onValueChange={handleChange('state')}
                   label={translate('yourState')}
                   marginBottom={30}
-                  // error={errors.state}
-                  // errorText={errors.state}
+                  error={errors.state}
+                  errorText={errors.state}
                 />
 
                 <ButtonWithBackground

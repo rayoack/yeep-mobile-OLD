@@ -43,7 +43,7 @@ const AdressAccountStep = ({
     const getCountries = () => {
         const countries = countriesList.map(country => {
             return {
-                title: translate(country.name),
+                title: country.name.length ? translate(country.name) : '',
                 value: country.name
             }
         })
@@ -52,7 +52,7 @@ const AdressAccountStep = ({
     }
 
     useEffect(() => {
-        configureCountryStates('Brazil')
+        configureCountryStates('')
         getCountries()
     }, [])
     

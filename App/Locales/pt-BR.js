@@ -173,6 +173,7 @@ export default {
   digitalAccountStepDescription: 'Verifique se os dados abaixo estão corretos para podermos criar a sua conta digital. Por meio dela que você irá poder fazer pagamentos e transferências.',
   verificationDocumentsStepTitle: 'Precisamos verificar alguns documentos',
   verificationDocumentsStepTitle: 'Agora precisamos que você envie alguns documentos, isso nos ajuda a confirmar que você é quem afirma ser. A verificação de identidade é mais uma das maneiras que usamos para tornar a klub um ambiente mais seguro para todos.',
+  errorOnCreateDigitalAccount: 'Desculpe, tivemos um erro ao tentar criar a sua conta digital, verifique seus dados e tente novamente.',
 
   // CHAT
   errorOnSendMessage: 'Desculpe, tivemos um erro, ao tentar enviar sua mensagem.',

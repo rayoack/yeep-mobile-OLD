@@ -53,6 +53,11 @@ class EditPFAccountScreen extends Component {
         await this.props.setBankForm(account.BankAccount)
         delete account.BankAccount
       }
+      
+      if(account.JunoAccount && account.JunoAccount.id) {
+        await this.props.setJunoForm(account.JunoAccount)
+        delete account.JunoAccount
+      }
 
       this.props.setAccountFormData(account)
     }
