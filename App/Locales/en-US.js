@@ -161,6 +161,15 @@ export default {
   accountTypeRequired: 'Account type is required.',
   SAVINGS: 'Savings account',
   CHECKING: 'Checking account',
+  firstPFAccountTitle: 'Personal data',
+  firstPFAccountDescription: 'Before saving check that the data is correct, transfers can only be made to bank accounts of the same CPF registered below.',
+  adressAccountStepTitle: 'Now let\'s register the address of this account.',
+  bankAccountStepTitle: 'Transfer account',
+  bankAccountDescription: 'We are almost done, now enter the account data where the values ​​of your digital account will be transferred. (Organizer in the future we will provide ways for you to monetize within klub, because of that this step is necessary for everyone).',
+  digitalAccountStepTitle: 'Digital account',
+  digitalAccountStepDescription: 'Check if the data below is correct so that we can create your digital account. Through it you will be able to make payments and transfers.',
+  verificationDocumentsStepTitle: 'We need to check some documents',
+  verificationDocumentsStepTitle: 'Now we need you to send some documents, it helps us to confirm that you are who you claim to be. Identity verification is another way we make klub a safer environment for everyone.',
 
   // CHAT
   errorOnSendMessage: 'Sorry, we had an error when trying to send your message.',

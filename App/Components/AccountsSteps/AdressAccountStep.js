@@ -12,7 +12,8 @@ import countriesList from '../../Services/countries.json'
 import { Creators as ManagerAccountActions } from '../../Stores/reducers/manageAccountReducer'
 
 import {
-    Container
+    Container,
+    StepTitle
 } from './styles'
 
 const AdressAccountStep = ({
@@ -63,6 +64,8 @@ const AdressAccountStep = ({
 
     return (
         <Container contentContainerStyle={{ paddingLeft: 20, paddingRight: 20 }}>
+            <StepTitle>{translate('adressAccountStepTitle')}</StepTitle>
+            
             <Formik
                 initialValues={{
                     adress: adress,

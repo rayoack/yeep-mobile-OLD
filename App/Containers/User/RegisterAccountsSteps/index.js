@@ -75,40 +75,35 @@ export class RegisterAccountsSteps extends Component {
         try {
             let updateAccount
 
-            if(!isBankStep) {
-                if(account.id) {
-                    let formData = { ...account }
-    
-                    const { data } = await api.put(`/accounts/${account.id}`, formData, {
-                        authorization: `Bearer ${this.props.user.token}`
-                    })
-                    
-                    updateAccount = data
-    
-                } else {
-                    const { data } = await api.post('/accounts', account, {
-                        authorization: `Bearer ${this.props.user.token}`
-                    })
-    
-                    updateAccount = data
-                    console.log({updateAccount})
-                    this.props.setAccountId(data.id)
-                }
-            }
-
             if(isBankStep && bank && !bank.id) {
-                let formData = {
-                    ...account,
-                    account_holder_name: account.legal_representative_name,
-                    account_holder_document: account.cpf_cnpj,
-                    account_id: account.id,
-                }
     
-                const { data } = await api.post('/bank-accounts', formData, {
+                const { data } = await api.post('/bank-accounts', bank, {
                     authorization: `Bearer ${this.props.user.token}`
                 })
+
             } else if (isBankStep && bank && bank.id) {
-                // CONTINUAR AQUI
+                const { data } = await api.put(`/bank-accounts/${bank.id}`, bank, {
+                    authorization: `Bearer ${this.props.user.token}`
+                })
+            }
+
+            if(account.id) {
+                let formData = { ...account }
+
+                const { data } = await api.put(`/accounts/${account.id}`, formData, {
+                    authorization: `Bearer ${this.props.user.token}`
+                })
+                
+                updateAccount = data
+
+            } else {
+
+                const { data } = await api.post('/accounts', account, {
+                    authorization: `Bearer ${this.props.user.token}`
+                })
+
+                updateAccount = data
+                this.props.setAccountId(data.id)
             }
 
             this.setState({ loading: false })
@@ -248,6 +243,29 @@ export class RegisterAccountsSteps extends Component {
                                 saveOrUpdateAccount={this.saveOrUpdateAccount}
                                 navigation={this.props.navigation}
                             />
+                        </ProgressStep>
+
+                        {/* DIGITAL ACCOUNT STEP */}
+                        <ProgressStep
+                            onNext={onNextFunc}
+                            onPrevious={this.goBackStep}
+                            label={translate('digitalAccountStepTitle')}
+                            errors={stepError}
+                            nextBtnText={translate('nextBtnText')}
+                            nextBtnStyle={this.nextButtonStyle}
+                            nextBtnTextStyle={this.nextButtonTextStyle}
+                        >
+                            <View>
+                                <Text>Olá</Text>
+                            </View>
+
+                            {/* {account.account_type === 'PF' ? (
+                                <AdressAccountStep
+                                    setSaveNextStepForm={this.setSaveNextStepForm}
+                                    setStepErrors={this.setStepErrors}
+                                    saveOrUpdateAccount={this.saveOrUpdateAccount}
+                                />
+                            ) : null} */}
                         </ProgressStep>
 
                         {/* DOCUMENTS STEP */}

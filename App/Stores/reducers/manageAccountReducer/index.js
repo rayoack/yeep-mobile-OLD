@@ -85,7 +85,7 @@ export const Types = {
     account: {
         id: null,
         user_id: null,
-        account_type: '',
+        account_type: 0,
         cpf_cnpj: '',
         date_of_birth: '',
         phone_number: '',
@@ -163,7 +163,7 @@ export const Types = {
           ...state,
             account: {
               ...account,
-              date_of_birth: action.payload
+              register_step: action.payload
             }
         }
   
@@ -172,7 +172,7 @@ export const Types = {
           ...state,
             account: {
               ...account,
-              register_step: action.payload
+              date_of_birth: action.payload
             }
         }
   

@@ -10,7 +10,7 @@ import CustomPicker from '../CustomPicker'
 import { translate } from '../../Locales'
 import { Creators as ManagerAccountActions } from '../../Stores/reducers/manageAccountReducer'
 
-import { Container } from './styles';
+import { Container, StepTitle, StepDescription } from './styles';
 
 const BankAccountStep = ({
     account,
@@ -18,11 +18,14 @@ const BankAccountStep = ({
     setSaveNextStepForm,
     setStepErrors,
     saveOrUpdateAccount,
+    setBankForm,
+    setAccountRegisterStep,
     user,
     navigation
 }) => {
     
     const { bank_number, agency_number, account_number, account_complement_number, account_type } = bank
+    console.log({bank})
 
     const navigateToBankList = (setFieldValue) => {
         navigation.push('BankList', {
@@ -30,11 +33,28 @@ const BankAccountStep = ({
         })
     }
 
-    const saveBankAccountStep = (newData) => {
-        console.log({newData})
-        // newData.post_code = newData.post_code.replace(/[^A-Z0-9]/ig, '')
-        // setPFAccountSecondStep(newData)
-        // saveOrUpdateAccount(1)
+    const saveBankAccountStep = async (newData) => {        
+        let formData = {
+            ...newData,
+            account_holder_name: account.legal_representative_name,
+            account_holder_document: account.cpf_cnpj,
+            account_id: account.id,
+        }
+
+        if(bank.id) {
+            formData.id = bank.id
+        }
+
+        const newRegisterStep = account.account_type === 'PJ' ? 4 : 3;
+        const oldStep = newRegisterStep - 1; 
+
+        await setBankForm(formData)
+
+        if(account.register_step < newRegisterStep) {
+            console.log('ATUALIZANDO ACCOUNT STEP', newRegisterStep)
+            await setAccountRegisterStep(newRegisterStep)
+        }
+        saveOrUpdateAccount(oldStep, true)
     }
 
     const bankAccountTypes = [
@@ -45,6 +65,9 @@ const BankAccountStep = ({
 
     return (
         <Container contentContainerStyle={{ paddingLeft: 20, paddingRight: 20 }}>
+            <StepTitle>{translate('bankAccountStepTitle')}</StepTitle>
+            <StepDescription>{translate('bankAccountDescription')}</StepDescription>
+            
             <Formik
                     initialValues={{
                         bank_number: bank_number,

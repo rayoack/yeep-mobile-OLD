@@ -62,7 +62,6 @@ class BankList extends Component {
 
     selectBank = async (bank) => {
         const setFieldValue = this.props.navigation.getParam('setFieldValue', () => null)
-        console.log(this.props.setBankNumber)
         await this.props.setBankNumber(bank.number)
         await setFieldValue('bank_number', bank.number)
         this.props.navigation.goBack()

@@ -26,6 +26,7 @@ class EditPFAccountScreen extends Component {
         { title: translate('firstPFAccountStepTitle'), text: '' },
         { title: translate('secondPFAccountStepTitle'), text: '' },
         { title: translate('bankAccountStepTitle'), text: '' },
+        { title: translate('digitalAccountStepTitle'), text: '' },
         { title: translate('documentAccountStepTitle'), text: '' },
       ],
       loading: false,
@@ -43,15 +44,17 @@ class EditPFAccountScreen extends Component {
     return true;
   }
 
-  setAccountFormData = () => {
-    const account = this.props.navigation.getParam('account')
+  setAccountFormData = async () => {
+    let account = this.props.navigation.getParam('account')
     
     if(account && account.id) {
-      this.props.setAccountFormData(account)
-    
-      if(account.bank && account.bank.id) {
-        this.props.setBankForm(account.bank)
+      
+      if(account.BankAccount && account.BankAccount.id) {
+        await this.props.setBankForm(account.BankAccount)
+        delete account.BankAccount
       }
+
+      this.props.setAccountFormData(account)
     }
 
     return null
@@ -94,7 +97,7 @@ class EditPFAccountScreen extends Component {
             text={step.text}
             completed={account.register_step > index ? true : false}
             final={(steps.length - 1) == index}
-            onPress={() => this.navigateToStep(index)}
+            onPress={account.register_step >= index ? () => this.navigateToStep(index) : () => null}
           />
         ))}
 

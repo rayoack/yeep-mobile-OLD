@@ -13,7 +13,9 @@ import { translate } from '../../Locales'
 import { Creators as ManagerAccountActions } from '../../Stores/reducers/manageAccountReducer'
 
 import {
-    Container
+    Container,
+    StepTitle,
+    StepDescription
 } from './styles'
 
 const FirstPFAccountScreen = ({
@@ -51,6 +53,9 @@ const FirstPFAccountScreen = ({
 
     return (
         <Container contentContainerStyle={{ paddingLeft: 20, paddingRight: 20 }}>
+            <StepTitle>{translate('firstPFAccountTitle')}</StepTitle>
+            <StepDescription>{translate('firstPFAccountDescription')}</StepDescription>
+            
             <Formik
                 initialValues={{
                     legal_representative_name: legal_representative_name,

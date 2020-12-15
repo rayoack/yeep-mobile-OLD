@@ -163,6 +163,15 @@ export default {
   accountTypeRequired: 'Tipo da conta é obrigatório.',
   SAVINGS: 'Conta poupança',
   CHECKING: 'Conta corrente',
+  firstPFAccountTitle: 'Dados pessoais',
+  firstPFAccountDescription: 'Antes de salvar verifique se os dados estão corretos, tranferências só podem ser feitas para contas bancárias do mesmo CPF cadastrado abaixo.',
+  adressAccountStepTitle: 'Agora vamos cadastrar o endereço desta conta.',
+  bankAccountStepTitle: 'Conta de repasse',
+  bankAccountDescription: 'Estamos quase terminando, agora digite os dados da conta para onde será repassado os valores da sua conta digital. (Organizador no futuro disponibilizaremos formas de você rentabilizar dentro da klub, por causa disso essa etapa é necessária para todos).',
+  digitalAccountStepTitle: 'Conta digital',
+  digitalAccountStepDescription: 'Verifique se os dados abaixo estão corretos para podermos criar a sua conta digital. Por meio dela que você irá poder fazer pagamentos e transferências.',
+  verificationDocumentsStepTitle: 'Precisamos verificar alguns documentos',
+  verificationDocumentsStepTitle: 'Agora precisamos que você envie alguns documentos, isso nos ajuda a confirmar que você é quem afirma ser. A verificação de identidade é mais uma das maneiras que usamos para tornar a klub um ambiente mais seguro para todos.',
 
   // CHAT
   errorOnSendMessage: 'Desculpe, tivemos um erro, ao tentar enviar sua mensagem.',
