@@ -10,7 +10,13 @@ import CustomPicker from '../CustomPicker'
 import { translate } from '../../Locales'
 import { Creators as ManagerAccountActions } from '../../Stores/reducers/manageAccountReducer'
 
-import { Container, StepTitle, StepDescription } from './styles';
+import {
+    Container,
+    StepTitle,
+    StepDescription,
+    AccountAlertContainer,
+    AccountAlertText
+} from './styles';
 
 const BankAccountStep = ({
     account,
@@ -20,6 +26,7 @@ const BankAccountStep = ({
     saveOrUpdateAccount,
     setBankForm,
     setAccountRegisterStep,
+    JunoAccount,
     user,
     navigation
 }) => {
@@ -64,6 +71,12 @@ const BankAccountStep = ({
 
     return (
         <Container contentContainerStyle={{ paddingLeft: 20, paddingRight: 20 }}>
+            {JunoAccount.id ? (
+                <AccountAlertContainer>
+                    <AccountAlertText>{translate('notUpdateAccountAlert')}</AccountAlertText>
+                </AccountAlertContainer>
+            ) : null}
+
             <StepTitle>{translate('bankAccountStepTitle')}</StepTitle>
             <StepDescription>{translate('bankAccountDescription')}</StepDescription>
             
@@ -124,6 +137,7 @@ const BankAccountStep = ({
                                 error={touched.bank_number && errors.bank_number}
                                 placeholder={translate('bankNumberPlaceholder')}
                                 errorMessage={errors.bank_number}
+                                editable={JunoAccount.id ? false : true}
                             />
                             
                             <CustomInput
@@ -134,6 +148,7 @@ const BankAccountStep = ({
                                 error={touched.agency_number && errors.agency_number}
                                 onBlur={() => setFieldTouched('agency_number')}
                                 errorText={errors.agency_number}
+                                editable={JunoAccount.id ? false : true}
                             />
                             
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -149,6 +164,7 @@ const BankAccountStep = ({
                                     marginBottom={20}
                                     width={'150px'}
                                     errorText={errors.account_number}
+                                    editable={JunoAccount.id ? false : true}
                                 />
 
                                 <CustomInput
@@ -162,10 +178,10 @@ const BankAccountStep = ({
                                     marginBottom={20}
                                     width={'150px'}
                                     errorText={errors.account_complement_number}
+                                    editable={JunoAccount.id ? false : true}
                                 />
                             </View>
 
-                            
                             <CustomPicker
                                 actualValue={values.account_type}
                                 values={bankAccountTypes}
@@ -177,6 +193,7 @@ const BankAccountStep = ({
                                 error={errors.account_type}
                                 errorText={errors.account_type}
                                 marginRight={10}
+                                editable={JunoAccount.id ? false : true}
                             />
                         </>
                     )
@@ -190,6 +207,7 @@ const mapStateToProps = (state) => ({
     user: state.auth.user,
     account: state.manageAccountReducer.account,
     bank: state.manageAccountReducer.bank,
+    JunoAccount: state.manageAccountReducer.JunoAccount,
 })
   
 export default connect(

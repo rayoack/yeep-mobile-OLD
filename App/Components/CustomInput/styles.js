@@ -32,6 +32,7 @@ export const InputContainer = styled.TextInput`
   text-align-vertical: ${props => props.multiline ? 'top' : 'center'};
   font-size: ${props => props.fontSize ? props.fontSize : '16px'};
   font-family: 'Nunito Regualr';
+  opacity: ${props => props.editable ? 1 : 0.4};
 `;
 
 export const MaskedInputContainer = styled(TextInputMask)`
@@ -48,6 +49,7 @@ export const MaskedInputContainer = styled(TextInputMask)`
   text-align-vertical: ${props => props.multiline ? 'top' : 'center'};
   font-size: ${props => props.fontSize ? props.fontSize : '16px'};
   font-family: 'Nunito Regualr';
+  opacity: ${props => props.editable ? 1 : 0.4};
 `;
 
 export const ErrorText = styled.Text`

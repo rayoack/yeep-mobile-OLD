@@ -170,8 +170,12 @@ export default {
   digitalAccountStepTitle: 'Digital account',
   digitalAccountStepDescription: 'Check if the data below is correct so that we can create your digital account. Through it you will be able to make payments and transfers.',
   verificationDocumentsStepTitle: 'We need to check some documents',
-  verificationDocumentsStepTitle: 'Now we need you to send some documents, it helps us to confirm that you are who you claim to be. Identity verification is another way we make klub a safer environment for everyone.',
+  verificationDocumentsStepDescription: 'Now we need you to send some documents, it helps us to confirm that you are who you claim to be. Identity verification is another way we make klub a safer environment for everyone.',
   errorOnCreateDigitalAccount: 'Sorry, we had an error when trying to create your digital account, check your data and try again.',
+  notUpdateAccountAlert: 'In this version after creating the digital account, you cannot edit your data.',
+  ID: 'ID',
+  MEI_DOC: 'MEI',
+  Selfie: 'Selfie holding your identity',
 
   // CHAT
   errorOnSendMessage: 'Sorry, we had an error when trying to send your message.',

@@ -10,6 +10,7 @@ export const StepTitle = styled.Text`
     font-size: 18px;
     color: ${Colors.labelBlack};
     margin-bottom: 10px;
+    text-align: center;
 `
 
 export const StepDescription = styled.Text`
@@ -49,3 +50,23 @@ export const AccountDataFieldValue = styled.Text`
     font-size: 14px;
     color: ${Colors.textDefault};
 `
+
+export const AccountAlertContainer = styled.View`
+    width: 100%;
+    height: 105px;
+    border-radius: 5px;
+    background-color: ${Colors.terciary};
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+`
+
+export const AccountAlertText = styled.Text`
+    font-family: 'Nunito Regular';
+    font-size: 18px;
+    text-align: center;
+    color: ${Colors.white};
+`
+
+export const DocumentsList = styled.FlatList``

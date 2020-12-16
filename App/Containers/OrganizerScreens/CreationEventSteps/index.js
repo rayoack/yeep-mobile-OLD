@@ -26,6 +26,7 @@ import api from '../../../Services/api'
 import { translate } from '../../../Locales'
 import {
   SavingLoading,
+  HeaderWithBackButton,
   InitialStep,
   AddImagesToEvent,
   EventDescription,
@@ -146,7 +147,7 @@ export class CreationEventSteps extends Component {
     const { event } = this.props
     this.setState({ loading: true })
 
-    let isLocalImageUri = uri => !uri.includes('http')
+    let isLocalImageUri = uri =>  !uri.includes('http')
     let oldStep = event.register_step;
 
     try {
@@ -177,8 +178,13 @@ export class CreationEventSteps extends Component {
         this.props.setEventId(data.id)
       }
 
+      console.log('event_logo', Object.keys(event.event_logo).length == 0)
+
       if(step == 0 &&
         event.event_logo &&
+        event.event_logo !== undefined &&
+        Object.keys(event.event_logo).length &&
+        event.event_log.url &&
         isLocalImageUri(event.event_logo.url)) {
         this.uploadCover(event.event_logo.url, updateEvent.id)
       }
@@ -568,6 +574,8 @@ export class CreationEventSteps extends Component {
         />
 
         <Container style={{flex: 1}}>
+          <HeaderWithBackButton navigation={this.props.navigation}/>
+
             <ProgressSteps
               activeStep={activeStep}
               labelColor={Colors.primary}

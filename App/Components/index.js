@@ -36,6 +36,7 @@ import {
   AdressAccountStep,
   BankAccountStep,
   DigitalAccountStep,
+  DocumentsAccountStep,
 } from './AccountsSteps'
 
 export {
@@ -71,5 +72,6 @@ export {
   FirstPFAccountScreen,
   AdressAccountStep,
   BankAccountStep,
-  DigitalAccountStep
+  DigitalAccountStep,
+  DocumentsAccountStep
 }

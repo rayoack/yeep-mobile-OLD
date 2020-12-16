@@ -26,6 +26,7 @@ const CustomInput = ({
   marginRight,
   marginLeft,
   isMasked,
+  editable,
   mask
 }) => {
   return (
@@ -57,6 +58,7 @@ const CustomInput = ({
           error={error}
           autoCapitalize={autoCapitalize}
           mask={mask}
+          editable={editable}
         >{value}</MaskedInputContainer>
       ) : (
         <InputContainer
@@ -76,7 +78,8 @@ const CustomInput = ({
           secureTextEntry={secureTextEntry}
           multiline={multiline}
           error={error}
-          autoCapitalize={autoCapitalize }
+          autoCapitalize={autoCapitalize}
+          editable={editable}
         >{value}</InputContainer>
       )}
 
@@ -112,7 +115,8 @@ CustomInput.defaultProps = {
   marginRight: 0,
   marginLeft: 0,
   isMasked: false,
-  mask: null
+  mask: null,
+  editable: true
 }
 
 export default CustomInput;

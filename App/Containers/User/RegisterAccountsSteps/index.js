@@ -15,10 +15,12 @@ import { Creators as ManagerAccountActions } from '../../../Stores/reducers/mana
 import {
   SavingLoading,
   CustomToast,
+  HeaderWithBackButton,
   FirstPFAccountScreen,
   AdressAccountStep,
   BankAccountStep,
-  DigitalAccountStep
+  DigitalAccountStep,
+  DocumentsAccountStep
 } from '../../../Components'
 
 export class RegisterAccountsSteps extends Component {
@@ -70,7 +72,18 @@ export class RegisterAccountsSteps extends Component {
 
     // SAVE ACCOUNT CHANGES
     saveOrUpdateAccount = async (oldStepIndex, actualStep = 'account') => {
-        const { account, bank } = this.props
+        const { account, bank, JunoAccount } = this.props
+
+        if(JunoAccount.id) {
+            this.setState({ toastText: translate('notUpdateAccountAlert'), showToast: true })
+
+            setTimeout(() => {
+                this.setState({ showToast: false, toastText: '' })
+            }, 3000);
+
+            return
+        }
+
         this.setState({ loading: true })
 
         try {
@@ -205,6 +218,7 @@ export class RegisterAccountsSteps extends Component {
                 />
 
                 <Container>
+                    <HeaderWithBackButton navigation={this.props.navigation}/>
                     <ProgressSteps
                         activeStep={activeStep}
                         labelColor={Colors.secondary}
@@ -298,17 +312,11 @@ export class RegisterAccountsSteps extends Component {
                             nextBtnStyle={this.nextButtonStyle}
                             nextBtnTextStyle={this.nextButtonTextStyle}
                         >
-                            <View>
-                                <Text>Olá</Text>
-                            </View>
-
-                            {/* {account.account_type === 'PF' ? (
-                                <AdressAccountStep
-                                    setSaveNextStepForm={this.setSaveNextStepForm}
-                                    setStepErrors={this.setStepErrors}
-                                    saveOrUpdateAccount={this.saveOrUpdateAccount}
-                                />
-                            ) : null} */}
+                            <DocumentsAccountStep
+                                setSaveNextStepForm={this.setSaveNextStepForm}
+                                setStepErrors={this.setStepErrors}
+                                saveOrUpdateAccount={this.saveOrUpdateAccount}
+                            />
                         </ProgressStep>
                     </ProgressSteps>
                 </Container>
@@ -319,6 +327,7 @@ export class RegisterAccountsSteps extends Component {
 
 const mapStateToProps = (state) => ({
     account: state.manageAccountReducer.account,
+    JunoAccount: state.manageAccountReducer.JunoAccount,
     bank: state.manageAccountReducer.bank,
     user: state.auth.user
 })

@@ -13,7 +13,9 @@ import { Creators as ManagerAccountActions } from '../../Stores/reducers/manageA
 
 import {
     Container,
-    StepTitle
+    StepTitle,
+    AccountAlertContainer,
+    AccountAlertText
 } from './styles'
 
 const AdressAccountStep = ({
@@ -21,6 +23,7 @@ const AdressAccountStep = ({
     setSaveNextStepForm,
     setStepErrors,
     setPFAccountSecondStep,
+    JunoAccount,
     saveOrUpdateAccount,
 }) => {
     const { adress, country, state, city, adress_number, post_code, complement } = account
@@ -64,6 +67,12 @@ const AdressAccountStep = ({
 
     return (
         <Container contentContainerStyle={{ paddingLeft: 20, paddingRight: 20 }}>
+            {JunoAccount.id ? (
+                <AccountAlertContainer>
+                    <AccountAlertText>{translate('notUpdateAccountAlert')}</AccountAlertText>
+                </AccountAlertContainer>
+            ) : null}
+            
             <StepTitle>{translate('adressAccountStepTitle')}</StepTitle>
             
             <Formik
@@ -126,6 +135,7 @@ const AdressAccountStep = ({
                             error={touched.adress && errors.adress}
                             onBlur={() => setFieldTouched('adress')}
                             errorText={errors.adress}
+                            editable={JunoAccount.id ? false : true}
                         />
 
 
@@ -143,6 +153,7 @@ const AdressAccountStep = ({
                                 width={'150px'}
                                 errorText={errors.country}
                                 marginRight={10}
+                                editable={JunoAccount.id ? false : true}
                             />
 
                             <CustomPicker
@@ -154,6 +165,7 @@ const AdressAccountStep = ({
                                 error={errors.state}
                                 width={'150px'}
                                 errorText={errors.state}
+                                editable={JunoAccount.id ? false : true}
                             />
                         </View>
 
@@ -166,6 +178,7 @@ const AdressAccountStep = ({
                             error={touched.city && errors.city}
                             onBlur={() => setFieldTouched('city')}
                             errorText={errors.city}
+                            editable={JunoAccount.id ? false : true}
                         />
 
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -182,6 +195,7 @@ const AdressAccountStep = ({
                                 marginBottom={20}
                                 width={'150px'}
                                 errorText={errors.adress_number}
+                                editable={JunoAccount.id ? false : true}
                             />
 
                             <CustomInput
@@ -198,6 +212,7 @@ const AdressAccountStep = ({
                                 errorText={errors.post_code}
                                 isMasked={true}
                                 mask={"[00000]-[000]"}
+                                editable={JunoAccount.id ? false : true}
                             />
                         </View>
                         
@@ -210,6 +225,7 @@ const AdressAccountStep = ({
                             error={touched.complement && errors.complement}
                             onBlur={() => setFieldTouched('complement')}
                             errorText={errors.complement}
+                            editable={JunoAccount.id ? false : true}
                         />
                     </>
                 )
@@ -221,7 +237,8 @@ const AdressAccountStep = ({
 
 const mapStateToProps = (state) => ({
     user: state.auth.user,
-    account: state.manageAccountReducer.account
+    account: state.manageAccountReducer.account,
+    JunoAccount: state.manageAccountReducer.JunoAccount,
 })
   
 export default connect(

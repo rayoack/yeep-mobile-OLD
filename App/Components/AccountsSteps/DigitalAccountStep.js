@@ -13,7 +13,9 @@ import {
     AccountDataSessionTitle,
     AccountDataContainer,
     AccountDataField,
-    AccountDataFieldValue
+    AccountDataFieldValue,
+    AccountAlertContainer,
+    AccountAlertText
 } from './styles'
 
 const DigitalAccountStep = ({
@@ -22,6 +24,7 @@ const DigitalAccountStep = ({
     saveOrUpdateAccount,
     setAccountRegisterStep,
     account,
+    JunoAccount,
     bank
 }) => {
 
@@ -44,6 +47,12 @@ const DigitalAccountStep = ({
 
   return (
     <Container contentContainerStyle={{ paddingLeft: 20, paddingRight: 20 }}>
+        {JunoAccount.id ? (
+            <AccountAlertContainer>
+                <AccountAlertText>{translate('notUpdateAccountAlert')}</AccountAlertText>
+            </AccountAlertContainer>
+        ) : null}
+
         <StepTitle>{translate('digitalAccountStepTitle')}</StepTitle>
         <StepDescription>{translate('digitalAccountStepDescription')}</StepDescription>
 
@@ -147,7 +156,8 @@ const DigitalAccountStep = ({
 const mapStateToProps = (state) => ({
     user: state.auth.user,
     account: state.manageAccountReducer.account,
-    bank: state.manageAccountReducer.bank
+    bank: state.manageAccountReducer.bank,
+    JunoAccount: state.manageAccountReducer.JunoAccount,
 })
   
 export default connect(

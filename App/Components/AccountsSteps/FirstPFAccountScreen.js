@@ -15,7 +15,9 @@ import { Creators as ManagerAccountActions } from '../../Stores/reducers/manageA
 import {
     Container,
     StepTitle,
-    StepDescription
+    StepDescription,
+    AccountAlertContainer,
+    AccountAlertText
 } from './styles'
 
 const FirstPFAccountScreen = ({
@@ -25,6 +27,7 @@ const FirstPFAccountScreen = ({
     setPFAccountFirstStep,
     saveOrUpdateAccount,
     setAccountUserId,
+    JunoAccount,
     user
 }) => {
     const [isTimePickerVisible, setIsTimePickerVisible] = useState(false)
@@ -53,6 +56,12 @@ const FirstPFAccountScreen = ({
 
     return (
         <Container contentContainerStyle={{ paddingLeft: 20, paddingRight: 20 }}>
+            {JunoAccount.id ? (
+                <AccountAlertContainer>
+                    <AccountAlertText>{translate('notUpdateAccountAlert')}</AccountAlertText>
+                </AccountAlertContainer>
+            ) : null}
+
             <StepTitle>{translate('firstPFAccountTitle')}</StepTitle>
             <StepDescription>{translate('firstPFAccountDescription')}</StepDescription>
             
@@ -107,6 +116,7 @@ const FirstPFAccountScreen = ({
                         error={touched.legal_representative_name && errors.legal_representative_name}
                         onBlur={() => setFieldTouched('legal_representative_name')}
                         errorText={errors.legal_representative_name}
+                        editable={JunoAccount.id ? false : true}
                     />
 
                     <CustomInput
@@ -121,6 +131,7 @@ const FirstPFAccountScreen = ({
                         errorText={errors.cpf_cnpj}
                         isMasked={true}
                         mask={"[000].[000].[000]-[00]"}
+                        editable={JunoAccount.id ? false : true}
                     />
 
                     
@@ -133,6 +144,7 @@ const FirstPFAccountScreen = ({
                         error={touched.date_of_birth && errors.date_of_birth}
                         placeholder={translate('dateOfBirthPlaceholder')}
                         errorMessage={errors.date_of_birth}
+                        editable={JunoAccount.id ? false : true}
                     />
 
                     <CustomInput
@@ -148,6 +160,7 @@ const FirstPFAccountScreen = ({
                         mask={"([00]) [00000]-[0000]"}
                         error={touched.phone_number && errors.phone_number}
                         errorText={errors.phone_number}
+                        editable={JunoAccount.id ? false : true}
                     />
                     
                     {isTimePickerVisible ? (
@@ -172,7 +185,8 @@ const FirstPFAccountScreen = ({
 
 const mapStateToProps = (state) => ({
     user: state.auth.user,
-    account: state.manageAccountReducer.account
+    account: state.manageAccountReducer.account,
+    JunoAccount: state.manageAccountReducer.JunoAccount,
 })
   
 export default connect(

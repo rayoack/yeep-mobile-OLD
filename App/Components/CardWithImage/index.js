@@ -29,13 +29,14 @@ const CardWithImage = ({
   onSnapToItem,
   onCardPress
 }) => {
+  console.log({item})
   return (
     <>
       {item ? (
         <CardContainer
           activeOpacity={0.9}
           onPress={() => onCardPress(item.id)}>
-          {item.images ? (
+          {item.images && item.images.url ? (
             <CarouselContainer>
 
               <Carousel

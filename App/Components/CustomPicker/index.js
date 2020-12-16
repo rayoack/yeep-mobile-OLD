@@ -17,6 +17,7 @@ const CustomPicker = ({
   error,
   errorText,
   text,
+  editable,
 }) => {
   return (
     <Container>
@@ -36,6 +37,7 @@ const CustomPicker = ({
         marginLeft={marginLeft}
         marginRight={marginRight}
         width={width}
+        enabled={editable}
       >
         {values.map(item => (
           <SelectPicker.Item label={item.title} value={item.value} />
@@ -65,7 +67,8 @@ CustomPicker.defaultProps = {
   labelSize: 20,
   marginRight: 0,
   marginLeft: 0,
-  width: '290'
+  width: '290',
+  editable: true
 }
 
 export default CustomPicker;

@@ -116,6 +116,7 @@ export default {
   status: 'Status',
   ACTIVE: 'Ativa',
   AWAITING_DOCUMENTS: 'Aguardando documentos',
+  AWAITING: 'Aguardando',
   VERIFIYING: 'Verificando',
   VERIFIED: 'Verificada',  
   BLOCKED: 'Bloqueada',  
@@ -172,8 +173,12 @@ export default {
   digitalAccountStepTitle: 'Conta digital',
   digitalAccountStepDescription: 'Verifique se os dados abaixo estão corretos para podermos criar a sua conta digital. Por meio dela que você irá poder fazer pagamentos e transferências.',
   verificationDocumentsStepTitle: 'Precisamos verificar alguns documentos',
-  verificationDocumentsStepTitle: 'Agora precisamos que você envie alguns documentos, isso nos ajuda a confirmar que você é quem afirma ser. A verificação de identidade é mais uma das maneiras que usamos para tornar a klub um ambiente mais seguro para todos.',
+  verificationDocumentsStepDescription: 'Agora precisamos que você envie alguns documentos, isso nos ajuda a confirmar que você é quem afirma ser. A verificação de identidade é mais uma das maneiras que usamos para tornar a klub um ambiente mais seguro para todos.',
   errorOnCreateDigitalAccount: 'Desculpe, tivemos um erro ao tentar criar a sua conta digital, verifique seus dados e tente novamente.',
+  notUpdateAccountAlert: 'Nesta versão após a criação da conta digital, você não pode editar seus dados.',
+  ID: 'IDENTIDADE',
+  MEI_DOC: 'MEI',
+  Selfie: 'Selfie segurando sua identidade',
 
   // CHAT
   errorOnSendMessage: 'Desculpe, tivemos um erro, ao tentar enviar sua mensagem.',

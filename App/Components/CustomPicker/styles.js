@@ -17,6 +17,7 @@ export const SelectPicker = styled(Picker)`
   margin-left: ${props => props.marginLeft};
   margin-right: ${props => props.marginRight};
   background-color: ${Colors.ligthGray};
+  opacity: ${props => props.enabled ? 1 : 0.4};
 `
 
 export const PickerLabel = styled.Text`
