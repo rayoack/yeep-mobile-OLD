@@ -114,7 +114,7 @@ export default {
   status: 'Status',
   ACTIVE: 'Active',
   AWAITING_DOCUMENTS: 'Awaiting documents',
-  VERIFIYING: 'Verifiying',
+  VERIFYING: 'Verifying',
   VERIFIED: 'Verified',  
   BLOCKED: 'Blocked',  
   INACTIVE: 'Inactive',
@@ -176,6 +176,11 @@ export default {
   ID: 'ID',
   MEI_DOC: 'MEI',
   Selfie: 'Selfie holding your identity',
+  uploadDocumenteTitle: 'Verifying your identity',
+  uploadDocumentsDescription: 'Please upload the document below.',
+  uploadDocumentsButtonText: 'Choose a file',
+  acceptedDocumentExtensions: 'Supported file extensions: pdf, doc, docx, jpg, jpeg, png, bpm, tiff.',
+  errorOnUploadDocument: 'Sorry, we had an error while trying to upload your document, please try again.',
 
   // CHAT
   errorOnSendMessage: 'Sorry, we had an error when trying to send your message.',

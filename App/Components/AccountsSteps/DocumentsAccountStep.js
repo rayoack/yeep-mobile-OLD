@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux'
+import { NavigationEvents } from 'react-navigation';
 
 import {
     AnimationLoading,
@@ -20,7 +21,8 @@ import {
 
 const DocumentsAccountStep = ({
     user,
-    JunoAccount
+    JunoAccount,
+    navigation
 }) => {
     const [loading, setLoading] = useState(false)
     const [documents, setDocuments] = useState([])
@@ -42,14 +44,22 @@ const DocumentsAccountStep = ({
                 if(document.type === 'SELFIE') {
                     document.description = translate(document.description)
                 }
+
+                return document
             })
 
             setLoading(false)
-            setDocuments(data)
+            setDocuments(documentsMapped)
         } catch (error) {
             console.log({error})
             setLoading(false)
         } 
+    }
+
+    navigateToUpload = (document) => {
+        navigation.push('UploadDocumentScreen', {
+            document
+        })
     }
 
     useEffect(() => {
@@ -58,6 +68,10 @@ const DocumentsAccountStep = ({
 
   return (
     <Container contentContainerStyle={{ paddingLeft: 20, paddingRight: 20, marginBottom: 30 }}>
+        <NavigationEvents
+          onWillFocus={() => loadDocumentsList()}
+        />
+
         <StepTitle>{translate('verificationDocumentsStepTitle')}</StepTitle>
         <StepDescription>{translate('verificationDocumentsStepDescription')}</StepDescription>
 
@@ -76,7 +90,9 @@ const DocumentsAccountStep = ({
                             title={item.type}
                             description={item.description}
                             subDescription={`${translate('status')}: ${translate(item.approvalStatus)}`}
-                            // onPress={() => this.navigateToEditAccount(item)}
+                            onPress={(item.approvalStatus !== 'VERIFYING' && item.approvalStatus !== 'APPROVED') ?
+                                () => navigateToUpload(item) :
+                                () => null}
                         />
                     )}
                 />

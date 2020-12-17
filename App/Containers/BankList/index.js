@@ -46,12 +46,12 @@ class BankList extends Component {
             }
 
             const junoUrlBase = data.environment === 'development' ?
-                'https://sandbox.boletobancario.com' :
+                'https://sandbox.boletobancario.com/api-integration' :
                 'https://api.juno.com.br'
 
             
                 
-            const response = await axios.get(`${junoUrlBase}/api-integration/data/banks`, config)
+            const response = await axios.get(`${junoUrlBase}/data/banks`, config)
 
             this.setState({ banks: response.data._embedded.banks, loading: false })
         } catch (error) {

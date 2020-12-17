@@ -117,7 +117,7 @@ export default {
   ACTIVE: 'Ativa',
   AWAITING_DOCUMENTS: 'Aguardando documentos',
   AWAITING: 'Aguardando',
-  VERIFIYING: 'Verificando',
+  VERIFYING: 'Verificando',
   VERIFIED: 'Verificada',  
   BLOCKED: 'Bloqueada',  
   INACTIVE: 'Inativa',
@@ -179,6 +179,11 @@ export default {
   ID: 'IDENTIDADE',
   MEI_DOC: 'MEI',
   Selfie: 'Selfie segurando sua identidade',
+  uploadDocumenteTitle: 'Verificando sua identidade',
+  uploadDocumentsDescription: 'Por favor carregue o documento abaixo.',
+  uploadDocumentsButtonText: 'Escolha um arquivo',
+  acceptedDocumentExtensions: 'Extensões de arquivos aceitas: pdf, doc, docx, jpg, jpeg, png, bpm, tiff.',
+  errorOnUploadDocument: 'Desculpe, ocorreu um erro ao tentar carregar seu documento, tente novamente.',
 
   // CHAT
   errorOnSendMessage: 'Desculpe, tivemos um erro, ao tentar enviar sua mensagem.',

@@ -316,6 +316,7 @@ export class RegisterAccountsSteps extends Component {
                                 setSaveNextStepForm={this.setSaveNextStepForm}
                                 setStepErrors={this.setStepErrors}
                                 saveOrUpdateAccount={this.saveOrUpdateAccount}
+                                navigation={this.props.navigation}
                             />
                         </ProgressStep>
                     </ProgressSteps>
