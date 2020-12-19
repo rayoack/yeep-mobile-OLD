@@ -178,13 +178,13 @@ export class CreationEventSteps extends Component {
         this.props.setEventId(data.id)
       }
 
-      console.log('event_logo', Object.keys(event.event_logo).length == 0)
+      console.log('event', event)
 
       if(step == 0 &&
         event.event_logo &&
         event.event_logo !== undefined &&
         Object.keys(event.event_logo).length &&
-        event.event_log.url &&
+        event.event_logo.url &&
         isLocalImageUri(event.event_logo.url)) {
         this.uploadCover(event.event_logo.url, updateEvent.id)
       }

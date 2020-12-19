@@ -26,7 +26,7 @@ const persistConfig = {
   ],
 }
 
-export default (rootReducer, rootSaga) => {
+// export default (rootReducer, rootSaga) => {
   const middleware = []
   const enhancers = []
 
@@ -44,6 +44,6 @@ export default (rootReducer, rootSaga) => {
 
   // Kick off the root saga
   sagaMiddleware.run(rootSaga)
-
-  return { store, persistor }
-}
+  
+  export { store, persistor }
+// }

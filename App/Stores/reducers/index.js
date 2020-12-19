@@ -5,6 +5,7 @@ import manageUserReducer from './manageUserReducer'
 import manageEventReducer from './manageEventReducer'
 import spaceQueriesReducer from './spaceQueriesReducer'
 import manageAccountReducer from './manageAccountReducer'
+import manageReserveReducer from './manageReserveReducer'
 
 const reducers = combineReducers({
   auth,
@@ -12,6 +13,7 @@ const reducers = combineReducers({
   manageEventReducer,
   spaceQueriesReducer,
   manageAccountReducer,
+  manageReserveReducer,
 });
 
 export default reducers;

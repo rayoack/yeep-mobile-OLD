@@ -29,6 +29,7 @@ export default {
   calendarIllustration: require('App/Assets/Images/calendar-illustration.png'),
   conversationIllustration: require('App/Assets/Images/conversation-feedback.png'),
   AdressIllustration: require('App/Assets/Images/Address-pana.png'),
+  profile_interface: require('App/Assets/Images/profile_interface.png'),
 
   // ANIMATIONS
   editing_animation: require('App/Assets/Images/editing-animation.json'),
@@ -62,6 +63,7 @@ export default {
   group2: require('App/Assets/Images/group-2.png'),
   confettiWhite: require('App/Assets/Images/confettiWhite.png'),
   settings: require('App/Assets/Images/settings.png'),
+  push_rectangle: require('App/Assets/Images/push_rectangle.png'),
 
   // SPACE FEATURES ICONS
   allowsLoudSound: require('App/Assets/Images/allowsLoudSound.png'),

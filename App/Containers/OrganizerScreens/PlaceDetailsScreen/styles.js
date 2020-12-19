@@ -174,8 +174,9 @@ export const CheckButton = styled.TouchableOpacity`
   height: 50px;
   width: 150px;
   padding: 10px;
-  background-color: ${Colors.secondary};
+  background-color: ${Colors.primary};
   border-radius: 10px;
   align-items: center;
   justify-content: center;
+  /* opacity: ${props => props.disable ? 1 : 0.4}; */
 `

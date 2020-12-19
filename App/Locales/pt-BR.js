@@ -184,6 +184,8 @@ export default {
   uploadDocumentsButtonText: 'Escolha um arquivo',
   acceptedDocumentExtensions: 'Extensões de arquivos aceitas: pdf, doc, docx, jpg, jpeg, png, bpm, tiff.',
   errorOnUploadDocument: 'Desculpe, ocorreu um erro ao tentar carregar seu documento, tente novamente.',
+  bottomModalRegisterAccount: 'Termine seu cadastro para aproveitar todas as funcionalidades que a klub oferece.',
+  bottomModalRegisterAccountButtonText: 'Cadastrar',
 
   // CHAT
   errorOnSendMessage: 'Desculpe, tivemos um erro, ao tentar enviar sua mensagem.',
@@ -208,6 +210,9 @@ export default {
   completed: 'Concluída',
   saveReserveError: 'Desculpe tivemos um problema ao tentar salvar sua reserva.',
   loadReserveError: 'Desculpe não conseguimos carregar os detalhes da reserva.',
+  spaceBottomModalTitle: 'Quer vincular a reserva desse espaço há algum dos seus eventos?',
+  yesKey: 'Sim',
+  noKey: 'Não',
 
   // Organizer
   selectEventInfo: 'Somente eventos com datas aparecerão na lista.',

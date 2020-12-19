@@ -1,15 +1,20 @@
 import React, { PureComponent } from 'react'
-import { View, BackHandler, Dimensions, StatusBar } from 'react-native'
+import { View, Text, BackHandler, Dimensions, TouchableOpacity, StatusBar, Image } from 'react-native'
+
 // import { MAPBOX_KEY } from 'react-native-dotenv'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import FastImage from 'react-native-fast-image'
 import { connect } from 'react-redux'
+import Animated from 'react-native-reanimated';
+import BottomSheet from 'reanimated-bottom-sheet';
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 
 import api from '../../../Services/api'
 import { translate, toNumber } from '../../../Locales'
 import { getCurrencySymbol } from '../../../Services/currenciesHelpers'
 import { Images, Colors } from 'App/Theme'
+
+import { Creators as ManagerReserveActions } from '../../../Stores/reducers/manageReserveReducer'
 
 import {
   CarrouselFullScreen,
@@ -46,7 +51,7 @@ import {
   CheckButton
 } from './styles'
 
-export class PlaceDetailsScreen extends PureComponent {
+class PlaceDetailsScreen extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -58,6 +63,7 @@ export class PlaceDetailsScreen extends PureComponent {
       amenitiesButtonText: translate('viewMoreAmenities'),
       restrictionsButtonText: translate('viewMoreRestrictions'),
     }
+    this.sheetRef = React.createRef();
   }
 
   componentDidMount() {
@@ -155,13 +161,76 @@ export class PlaceDetailsScreen extends PureComponent {
     return restrictionsArr
   }
 
+  navigateToReserveForm = () => {
+    if(this.state.space) {
+      this.props.clearReserveForm()
+      this.props.setSpaceOfReserve(this.state.space)
+      this.props.setReserveSpaceId(this.state.space.id)
+
+      this.props.navigation.push('ReserveForm')
+    }
+
+  }
+
   navigateToEventsSelectScreen = () => {
+    this.props.clearReserveForm()
+
     if(this.state.space) {
       this.props.navigation.push('MyEventsSelectScreen', {
         space: this.state.space
       })
     }
   }
+
+  renderContent = () => (
+    <>
+      <View
+          style={{
+              backgroundColor: Colors.white,
+              padding: 16,
+              height: 300,
+          }}
+      >
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <Image style={{ width: 60, height: 6, marginBottom: 30 }} source={Images.push_rectangle}/>
+          
+          <Text style={{ textAlign: 'center', fontSize: 16, fontFamily: 'Nunito Semi Bold', marginBottom: 30, color: Colors.labelGray }}>
+            {translate('spaceBottomModalTitle')}
+          </Text>
+      
+          <TouchableOpacity
+            onPressOut={this.navigateToEventsSelectScreen}
+            style={{
+                height: 45,
+                width: 200,
+                marginBottom: 20,
+                borderRadius: 10,
+                backgroundColor: Colors.primary,
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}
+          >
+            <Text style={{ color: Colors.white }}>{translate('yesKey')}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPressOut={this.navigateToReserveForm}
+            style={{
+                height: 45,
+                width: 200,
+                borderRadius: 10,
+                backgroundColor: Colors.terciary,
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}
+          >
+            <Text style={{ color: Colors.white }}>{translate('noKey')}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </>
+  );
+
 
   setButtonAmenitiesText = (text) => this.setState({ amenitiesButtonText: text })
   setButtonRestrictionsText = (text) => this.setState({ restrictionsButtonText: text })
@@ -417,6 +486,14 @@ export class PlaceDetailsScreen extends PureComponent {
             ) : null}
           </>
         )}
+        
+        <BottomSheet
+          ref={this.sheetRef}
+          snapPoints={[350, 0]}
+          borderRadius={30}
+          initialSnap={0}
+          renderContent={this.renderContent}
+        />
       </>
     )
   }
@@ -426,8 +503,4 @@ const mapStateToProps = (state) => ({
   user: state.auth.user
 })
 
-const mapDispatchToProps = {
-  
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlaceDetailsScreen)
+export default connect(mapStateToProps, { ...ManagerReserveActions })(PlaceDetailsScreen)

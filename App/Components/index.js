@@ -23,6 +23,7 @@ import ChatList from './ChatList'
 import HeaderWithBackButton from './HeaderWithBackButton'
 import TabBar from './TabBar'
 import MiniCard from './MiniCard'
+import BottomModal from './BottomModal'
 
 import {
   InitialStep,
@@ -73,5 +74,6 @@ export {
   AdressAccountStep,
   BankAccountStep,
   DigitalAccountStep,
-  DocumentsAccountStep
+  DocumentsAccountStep,
+  BottomModal
 }

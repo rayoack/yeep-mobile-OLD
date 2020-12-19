@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, BackHandler } from 'react-native'
+import { Chip } from 'react-native-paper';
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { connect } from 'react-redux'
@@ -169,13 +170,15 @@ export class PlacesListScreen extends Component {
 
             <ActiveFiltersContainer
               horizontal={true}
-              contentContainer={styles.contentContainer}
+              contentContainerStyle={styles.contentContainer}
             >
               {activeFilters.map((filter, index) => (
-                <ActiveFiltersBox index={index}>
-                  <ActiveFiltersText>{`${filter.key}: ${filter.value}`}</ActiveFiltersText>
-                </ActiveFiltersBox>
+                // <ActiveFiltersBox index={index}>
+                //   <ActiveFiltersText>{`${filter.key}: ${filter.value}`}</ActiveFiltersText>
+                // </ActiveFiltersBox>
+                <Chip style={{ marginRight: 10 }}>{`${filter.key}: ${filter.value}`}</Chip>
               ))}
+
             </ActiveFiltersContainer>
 
             <CardList

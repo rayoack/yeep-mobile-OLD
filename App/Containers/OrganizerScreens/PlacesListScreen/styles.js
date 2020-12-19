@@ -50,6 +50,8 @@ export const ActiveFiltersText = styled.Text`
 
 export const styles = StyleSheet.create({
   contentContainer: {
-    paddingHorizontal: 20
+    paddingLeft: 20,
+    paddingRight: 20,
+    marginBottom: 10
   }
 });

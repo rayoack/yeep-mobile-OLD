@@ -4,23 +4,35 @@ import { Colors } from 'App/Theme';
 
 import {
     Container,
-    ArrowBackContainer,
-    ArrowBack
+    IconContainer,
+    ArrowBack,
+    EditIcon,
+    onPressEdit
 } from './styles';
 
 const HeaderWithBackButton = ({
-    navigation
+    navigation,
+    edit
 }) => {
   return (
     <Container>
-        <ArrowBackContainer onPress={() => navigation.goBack()}>
+        <IconContainer onPress={() => navigation.goBack()}>
             <ArrowBack
                 name={'arrowleft'}
                 size={25}
                 color={Colors.primary}
             />
-        </ArrowBackContainer>
+        </IconContainer>
 
+        {edit ? (
+            <IconContainer onPress={() => onPressEdit()}>
+                <EditIcon
+                    name={'edit-3'}
+                    size={25}
+                    color={Colors.primary}
+                />
+            </IconContainer>
+        ) : null}
     </Container>
   );
 }
@@ -28,7 +40,9 @@ const HeaderWithBackButton = ({
 HeaderWithBackButton.defaultProps = {
     navigation: {
         goBack: () => null
-    }
+    },
+    edit: false,
+    onPressEdit: () => null
 }
 
 export default HeaderWithBackButton;

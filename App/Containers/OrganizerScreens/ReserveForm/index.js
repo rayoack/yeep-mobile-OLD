@@ -4,23 +4,35 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { connect } from 'react-redux'
 import differenceInHours from 'date-fns/differenceInHours'
 
-import { parseISO, isBefore, isAfter, formatISO } from 'date-fns';
+
+import { format, parseISO, isBefore, isAfter, parse } from 'date-fns';
 import setHours from 'date-fns/setHours'
 import setMinutes from 'date-fns/setMinutes'
 import setSeconds from 'date-fns/setSeconds'
+import setDate from 'date-fns/setDate'
+import setMonth from 'date-fns/setMonth'
+import setYear from 'date-fns/setYear'
+import getTime from 'date-fns/getTime'
+import addDays from 'date-fns/addDays'
+import addHours from 'date-fns/addHours'
+import formatISO from 'date-fns/formatISO'
+import isSameDay from 'date-fns/isSameDay'
 
+import { Creators as ManagerReserveActions } from '../../../Stores/reducers/manageReserveReducer'
 import { translate, toNumber } from '../../../Locales'
 import currencies from '../../../Services/currencies.json'
 import { Images, Colors } from '../../../Theme'
 import { normalizedDates } from '../../../Services/datesHelpers'
 import api from '../../../Services/api'
+import { navigateToCalendar } from '../../../Services/datesHelpers'
 
 import {
   CustomInput,
   InputButton,
   CustomToast,
   SavingLoading,
-  AnimationLoading
+  AnimationLoading,
+  ButtonWithBackground
 } from '../../../Components'
 
 import {
@@ -120,31 +132,52 @@ export class ReserveForm extends Component {
   }
 
   setNewReserve = () => {
+    const { reserve, eventOfReserve, spaceOfReserve } = this.props
 
-    const space = this.props.navigation.getParam('space', null)
-    const event = this.props.navigation.getParam('event', null)
+    const reserveWithFormatedDates = normalizedDates(reserve)
 
-    let newReserve = {
-      start_date: event.dates[0].full_date,
-      end_date: this.setEndDate(
-        parseISO(event.dates[event.dates.length - 1].day),
-        event.dates[event.dates.length - 1].end_hour),
-      amount: 0,
-      quantity: 0,
-      space_id: space.id,
-      event_id: event.id,
-      status: "waitingForApproval",
-    }
+    this.props.setReserveDates(reserveWithFormatedDates)
 
-    this.setState(prevState => {
-      return {
-        reserve: newReserve,
-        space,
-        event
-      }
-    }, () => space.charge_type == 'perDay' ?
+    spaceOfReserve.charge_type === 'perDay' ?
       this.setAmountPerDay()
-      : this.setAmountPerHour())
+      : this.setAmountPerHour()
+
+    // let newReserve
+
+    // if(eventOfReserve) {
+    //   newReserve = {
+    //     // start_date: event.dates[0].full_date,
+    //     dates: event.dates,
+    //     // end_date: this.setEndDate(
+    //     //   parseISO(event.dates[event.dates.length - 1].day),
+    //     //   event.dates[event.dates.length - 1].end_hour),
+    //     amount: 0,
+    //     quantity: 0,
+    //     space_id: space.id,
+    //     event_id: event.id,
+    //     status: "waitingForApproval",
+    //   }
+
+    // } else {
+    //   newReserve = {
+    //     dates: selectDates,
+    //     amount: 0,
+    //     quantity: 0,
+    //     space_id: space.id,
+    //     event_id: event.id,
+    //     status: "waitingForApproval",
+    //   }
+    // }
+
+    // this.setState(prevState => {
+    //   return {
+    //     reserve: newReserve,
+    //     space,
+    //     event
+    //   }
+    // }, () => space.charge_type == 'perDay' ?
+    //   this.setAmountPerDay()
+    //   : this.setAmountPerHour())
   }
 
   calculateTotalHours = (startTime, day, endHourTime) => {
@@ -167,26 +200,27 @@ export class ReserveForm extends Component {
   }
 
   setAmountPerDay = () => {
-    const { reserve, event, space } = this.state
-    if(reserve && event && space) {
+    const { reserve, spaceOfReserve } = this.props
+
+    if(reserve && spaceOfReserve) {
       let reserveCopy = { ...reserve }
   
-      reserveCopy.quantity = event.dates.length
-      reserveCopy.amount = event.dates.length * space.price
+      reserveCopy.quantity = reserve.dates.length
+      reserveCopy.amount = reserve.dates.length * spaceOfReserve.price
 
-      this.setState({ reserve: reserveCopy })
+      this.props.setReserveFormData(reserveCopy)
     }
 
   }
 
   setAmountPerHour = () => {
-    const { reserve, event, space } = this.state
+    const { reserve, eventOfReserve, spaceOfReserve } = this.props
 
-    if(reserve && event && space) {
+    if(reserve && spaceOfReserve) {
       let reserveCopy = { ...reserve }
       let quantityTotal = 0
 
-      event.dates.map(date => {
+      reserve.dates.map(date => {
         const totalDateHours = this.calculateTotalHours(
           date.start_hour,
           parseISO(date.day),
@@ -196,9 +230,9 @@ export class ReserveForm extends Component {
       })
   
       reserveCopy.quantity = quantityTotal
-      reserveCopy.amount = quantityTotal * space.price
+      reserveCopy.amount = quantityTotal * spaceOfReserve.price
 
-      this.setState({ reserve: reserveCopy })
+      this.props.setReserveFormData(reserveCopy)
     }
 
   }
@@ -217,35 +251,36 @@ export class ReserveForm extends Component {
     return symbol[0].symbol
   }
 
-  setMessage = (message) => this.setState({ message })
+  setMessage = (message) => this.props.setReserveMessage(message)
 
   setDatesListText = (text) => this.setState({ datesListText: text })
 
   saveReserve = async () => {
-    const { reserve, message, space, event } = this.state
+    // const { reserve, message, space, event } = this.state
+    const { reserve, eventOfReserve, spaceOfReserve } = this.props
 
-    let reserveData = {
-      ...reserve,
-      message
-    }
+    // let reserveData = {
+    //   ...reserve,
+    //   message
+    // }
 
     this.setState({ saveLoading: true })
 
     try {
       
-      const { data } = await api.post('/reserve', { ...reserveData }, {
+      const { data } = await api.post('/reserve', { ...reserve }, {
         authorization: `Bearer ${this.props.user.token}`
       })
       
       let room = {
         id: data.id,
-        name: space && space.name ? space.name : '',
-        title: space && space.name ? space.name : '',
+        name: spaceOfReserve && spaceOfReserve.name ? spaceOfReserve.name : '',
+        title: spaceOfReserve && spaceOfReserve.name ? spaceOfReserve.name : '',
         last_message_target_id: data.last_message_target_id,
         read: data.last_message_target_id == this.props.user.id ?
           data.last_message_target_read
           : true,
-        image: space.Images.length ? space.Images[0].url : Images.image_background,
+        image: spaceOfReserve.Images.length ? spaceOfReserve.Images[0].url : Images.image_background,
         status: data.status,
         updatedAt: data.updatedAt
       }
@@ -285,12 +320,75 @@ export class ReserveForm extends Component {
     }
   }
 
+  insertNewDate = async () => {
+    const { dates } = this.props.reserve
+    
+    let datesCopy = dates ? dates.map(date => date) : []
+    
+    if(datesCopy.length) {
+      let newDate = {...datesCopy[datesCopy.length - 1]}
+      let newFullDate = formatISO(addDays(parseISO(newDate.full_date), 1))
+      let newDay = format(parseISO(newFullDate), 'yyyy-MM-dd')
+
+      newDate = {
+        ...newDate,
+        day: newDay,
+        full_date: newFullDate
+      }
+      
+      datesCopy = [...datesCopy, newDate]
+
+    } else {
+      
+      let firstNewFullDate = formatISO(new Date())
+      let firstNewDay = format(parseISO(firstNewFullDate), 'yyyy-MM-dd')
+      let firstStartHour = format(parseISO(firstNewFullDate), 'HH:mm')
+
+      let endDay = addHours(parseISO(firstNewFullDate), 1)
+
+      if(isSameDay(endDay, parseISO(firstNewFullDate))) {
+        let firstEndHour = format(addHours(parseISO(firstNewFullDate), 1), 'HH:mm')
+        
+        const newDate = {
+          full_date: firstNewFullDate,
+          day: firstNewDay,
+          start_hour: firstStartHour,
+          end_hour: firstEndHour,
+        }
+
+        datesCopy = [ newDate ]
+      } else {
+
+        const firstNewDate = {
+          full_date: firstNewFullDate,
+          day: firstNewDay,
+          start_hour: firstStartHour,
+          end_hour: firstStartHour,
+        }
+
+        const secondNewDate = {
+          start_hour: format(parseISO(formatISO(endDay)), 'HH:mm'),
+          end_hour: addHours(parseISO(formatISO(endDay)), 1),
+          day: format(parseISO(formatISO(endDay)), 'yyyy-MM-dd'),
+          full_date: formatISO(endDay)
+        }
+
+        datesCopy = [ firstNewDate, secondNewDate ]
+      }
+      
+    }
+
+    const reserveWithFormatedDates = normalizedDates({ dates: datesCopy })
+    await this.props.setReserveDates(reserveWithFormatedDates.dates)
+
+    this.props.spaceOfReserve.charge_type === 'perDay' ?
+      this.setAmountPerDay()
+      : this.setAmountPerHour()
+  }
+
   render() {
     const {
-      reserve,
       message,
-      event,
-      space,
       datesListText,
       loading,
       saveLoading,
@@ -299,7 +397,9 @@ export class ReserveForm extends Component {
       isEditing,
       hostId
     } = this.state
-    const eventsWithFormatedDates = normalizedDates(event)
+    
+    
+    const { reserve, eventOfReserve, spaceOfReserve } = this.props
 
     return (
       <>
@@ -332,7 +432,7 @@ export class ReserveForm extends Component {
                     fontFamily={'Nunito Bold'}
                     fontColor={Colors.labelBlack}
                   >
-                    {space.name}
+                    {spaceOfReserve.name}
                   </StyledText>
                 {/* </StyledView> */}
 
@@ -346,25 +446,25 @@ export class ReserveForm extends Component {
                         fontFamily={'Nunito Semi Bold'}
                         fontColor={Colors.labelBlack}
                       >
-                        {translate(space.category)}
+                        {translate(spaceOfReserve.category)}
                       </StyledText>
 
                       <StyledText
                         numberOfLines={2}
                       >
-                        {`${this.getCurrencySymbol(space.monetary_unit)}${toNumber(space.price)} / ${translate(space.charge_type)}`}
+                        {`${this.getCurrencySymbol(spaceOfReserve.monetary_unit)}${toNumber(spaceOfReserve.price)} / ${translate(spaceOfReserve.charge_type)}`}
                       </StyledText>
                     </StyledView>
 
-                    <StyledText>{space.description}</StyledText>
+                    <StyledText>{spaceOfReserve.description}</StyledText>
                   </View>
 
                   {/* SPACE IMAGE */}
                   <View style={{ flex: 1, alignItems: 'flex-end' }} >
-                    {space.Images.length ? (
+                    {spaceOfReserve.Images.length ? (
                       <StyledImage
                         borderRadius={10}
-                        source={{ uri: space.Images[0].url }}
+                        source={{ uri: spaceOfReserve.Images[0].url }}
                       />
                     ) : (
                       <StyledImage
@@ -389,7 +489,7 @@ export class ReserveForm extends Component {
               </StyledText>
 
 
-              <StyledCollapsibleList
+              {/* <StyledCollapsibleList
                 numberOfVisibleItems={1}
                 onToggle={collapsed =>
                   collapsed
@@ -397,67 +497,83 @@ export class ReserveForm extends Component {
                     : this.setDatesListText(translate('showMore'))
                 }
                 buttonContent={
-                  <ViewMoreButton>
-                    <StyledText
-                      fontColor={Colors.secondary}
-                      fontFamily={'Nunito Bold'}
-                      fontSize={'15px'}
-                    >
-                      {datesListText}
-                    </StyledText>
-                  </ViewMoreButton>
+                  <>
+                    {reserve && reserve.dates.length > 1 ? (
+                      <ViewMoreButton>
+                        <StyledText
+                          fontColor={Colors.secondary}
+                          fontFamily={'Nunito Bold'}
+                          fontSize={'15px'}
+                        >
+                          {datesListText}
+                        </StyledText>
+                      </ViewMoreButton>
+                    ) : null}
+                  </>
                 }
-              >
-                {eventsWithFormatedDates && eventsWithFormatedDates.dates.map((date, index) => (
-                  <DateContainer>
-                    <InsertDayContainer>
-                      <InputButton
-                        label={translate('dayLabel')}
-                        iconSize={24}
-                        editable={false}
-                        value={date.normalizedDate}
-                        navigateTolist={() => null}
-                      />
+              > */}
+                {reserve && reserve.dates.length ? reserve.dates.map((date, index) => (
+                  <>
+                    <DateContainer>
+                      <InsertDayContainer>
+                        <InputButton
+                          label={translate('dayLabel')}
+                          iconSize={24}
+                          editable={(reserve.status !== 'awaitingPayment' || reserve.status !== 'completed') ? true : false}
+                          value={date.normalizedDate}
+                          navigateTolist={() => navigateToCalendar(index, reserve.dates, this.props.navigation)}
+                        />
 
-                      {/* <DeleteDateContainer
-                        activeOpacity={0.8}
-                        onPress={() => removeDate(index)}
-                      >
-                        <DeleteDateIcon source={Images.cancel}/>
-                      </DeleteDateContainer> */}
-                    </InsertDayContainer>
+                        {/* <DeleteDateContainer
+                          activeOpacity={0.8}
+                          onPress={() => removeDate(index)}
+                        >
+                          <DeleteDateIcon source={Images.cancel}/>
+                        </DeleteDateContainer> */}
+                      </InsertDayContainer>
 
-                    <HoursContainer>
-                      <InputButton
-                        label={translate('startHourLabel')}
-                        iconSize={24}
-                        editable={false}
-                        value={date.start_hour}
-                        navigateTolist={() => null}
-                        marginRigth={'5px'}
-                      />
+                      <HoursContainer>
+                        <InputButton
+                          label={translate('startHourLabel')}
+                          iconSize={24}
+                          editable={(reserve.status !== 'awaitingPayment' || reserve.status !== 'completed') ? true : false}
+                          value={date.start_hour}
+                          navigateTolist={() => null}
+                          marginRigth={'5px'}
+                        />
 
-                      <InputButton
-                        label={translate('endHourLabel')}
-                        iconSize={24}
-                        editable={false}
-                        value={date.end_hour}
-                        navigateTolist={() => null}
-                        marginLeft={'5px'}
-                      />
-                    </HoursContainer>
+                        <InputButton
+                          label={translate('endHourLabel')}
+                          iconSize={24}
+                          editable={(reserve.status !== 'awaitingPayment' || reserve.status !== 'completed') ? true : false}
+                          value={date.end_hour}
+                          navigateTolist={() => null}
+                          marginLeft={'5px'}
+                        />
+                      </HoursContainer>
 
-                    {/* <DateTimePickerModal
-                      isVisible={isTimePickerVisible}
-                      mode="time"
-                      date={parseISO(date.full_date)}
-                      onConfirm={setDayTime}
-                      onCancel={closeTimePicker}
-                    /> */}
+                      {/* <DateTimePickerModal
+                        isVisible={isTimePickerVisible}
+                        mode="time"
+                        date={parseISO(date.full_date)}
+                        onConfirm={setDayTime}
+                        onCancel={closeTimePicker}
+                      /> */}
 
-                  </DateContainer>
-                ))}
-              </StyledCollapsibleList>
+                    </DateContainer>
+
+                    <View style={{ marginTop: 40 }} />
+                  </>
+                )) : null}
+
+                {(reserve.status !== 'awaitingPayment' || reserve.status !== 'completed') ? (
+                  <ButtonWithBackground
+                    onPress={() => this.insertNewDate()}
+                    backgroundColor={Colors.terciary}
+                    width={'200px'}
+                    text={translate('inserDateButton')}/>
+                ) : null}
+              {/* </StyledCollapsibleList> */}
               <Divider marginBottom={'15px'}/>
               {/* EVENT DATES */}
 
@@ -478,7 +594,7 @@ export class ReserveForm extends Component {
                     fontFamily={'Nunito Regular'}
                     fontSize={'14px'}
                   >
-                    {translate(space.charge_type)}
+                    {translate(spaceOfReserve.charge_type)}
                   </StyledText>
                 </PriceInfoContainer>
 
@@ -496,7 +612,7 @@ export class ReserveForm extends Component {
                     fontFamily={'Nunito Regular'}
                     fontSize={'14px'}
                   >
-                    {`${reserve.quantity} ${translate(space.charge_type == 'perDay' ? 'daysText' : 'hoursText')}`}
+                    {`${reserve.quantity} ${translate(spaceOfReserve.charge_type == 'perDay' ? 'daysText' : 'hoursText')}`}
                   </StyledText>
                 </PriceInfoContainer>
 
@@ -514,7 +630,7 @@ export class ReserveForm extends Component {
                     fontFamily={'Nunito Regular'}
                     fontSize={'14px'}
                   >
-                    {`${this.getCurrencySymbol(space.monetary_unit)}${toNumber(reserve.amount * 0.10)}`}
+                    {`${this.getCurrencySymbol(spaceOfReserve.monetary_unit)}${toNumber(reserve.amount * 0.10)}`}
                   </StyledText>
                 </PriceInfoContainer>
                 
@@ -524,7 +640,7 @@ export class ReserveForm extends Component {
                     fontFamily={'Nunito Bold'}
                     fontSize={'20px'}
                   >
-                    {`${translate('totalLabel')} (${space.monetary_unit})`}
+                    {`${translate('totalLabel')} (${spaceOfReserve.monetary_unit})`}
                   </StyledText>
 
                   <StyledText
@@ -532,7 +648,7 @@ export class ReserveForm extends Component {
                     fontFamily={'Nunito Bold'}
                     fontSize={'20px'}
                   >
-                    {`${this.getCurrencySymbol(space.monetary_unit)}${toNumber(reserve.amount)}`}
+                    {`${this.getCurrencySymbol(spaceOfReserve.monetary_unit)}${toNumber(reserve.amount)}`}
                   </StyledText>
                 </PriceInfoContainer>
               </View>
@@ -587,12 +703,13 @@ export class ReserveForm extends Component {
                 fontFamily={'Nunito Bold'}
                 fontSize={'15px'}
               >
-                {`${this.getCurrencySymbol(space.monetary_unit)}${toNumber(reserve.amount)}`}
+                {`${this.getCurrencySymbol(spaceOfReserve.monetary_unit)}${toNumber(reserve.amount)}`}
               </StyledText>
 
               <CheckButton
                 activeOpacity={0.8}
                 onPress={() => this.confirmFunction()}
+                disabled={reserve && reserve.dates.length ? false : true}
               >
                 <StyledText
                   fontColor={Colors.white}
@@ -614,11 +731,10 @@ export class ReserveForm extends Component {
 
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user
+  user: state.auth.user,
+  reserve: state.manageReserveReducer.reserve,
+  eventOfReserve: state.manageReserveReducer.eventOfReserve,
+  spaceOfReserve: state.manageReserveReducer.spaceOfReserve,
 })
 
-const mapDispatchToProps = {
-  
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ReserveForm)
+export default connect(mapStateToProps, { ...ManagerReserveActions })(ReserveForm)
