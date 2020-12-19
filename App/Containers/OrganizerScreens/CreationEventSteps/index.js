@@ -474,6 +474,7 @@ export class CreationEventSteps extends Component {
   }
 
   setDayTime = (time) => {
+    this.setState({ isTimePickerVisible: false })
     const { dates } = this.props.event
     const { selectedDayIndex, hourType } = this.state
 
@@ -513,7 +514,6 @@ export class CreationEventSteps extends Component {
     })
 
     this.props.setEventDates(eventDates)
-    this.setState({ isTimePickerVisible: false })
   }
 
   // STEPS FUNCTIONS

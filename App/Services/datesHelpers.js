@@ -18,7 +18,9 @@ import isSameDay from 'date-fns/isSameDay'
 import { Creators as ManagerReserveActions } from '../../App/Stores/reducers/manageReserveReducer'
 import { getLanguageToDateFNS } from '../Locales/normalizeLanguage'
 import { store } from '../Stores/CreateStore'
+import { translate } from '../Locales'
 
+// DATES
 export const normalizedDates = (dataToNormalize) => {
   let dataToNormalizeCopy = { ...dataToNormalize }
 
@@ -85,7 +87,97 @@ export const setReserveDay = (selectedDay) => {
 
   const orderDates = _.orderBy(datesFormatted.dates, ['day'], ['asc'])
   store.dispatch(ManagerReserveActions.setReserveDates(orderDates))
-  // this.props.navigation.navigate('CreationEventSteps')
   
   actualNavigation.navigate('ReserveForm')
+}
+
+// TIME
+
+const startHourAvailable = (startTime, day, endHourTime) => {
+
+  const [startHour, startMinute] = startTime.split(':');
+  const [endHour, endMinute] = endHourTime.split(':');
+
+  const fullStart = setSeconds(setMinutes(setHours(day, startHour), startMinute), 0)
+  const fullEnd = setSeconds(setMinutes(setHours(day, endHour), endMinute), 0)
+  const available = isBefore(fullStart, fullEnd)
+  
+  return available
+}
+
+const endHourAvailable = (endTime, day, startHourTime) => {
+
+  const [endHour, endMinute] = endTime.split(':');
+  const [startHour, startMinute] = startHourTime.split(':');
+
+  const fullStart = setSeconds(setMinutes(setHours(day, startHour), startMinute), 0)
+  const fullEnd = setSeconds(setMinutes(setHours(day, endHour), endMinute), 0)
+  const available = isAfter(fullEnd, fullStart)
+  
+  return available
+}
+
+export const setDayTime = (time) => {
+  
+  store.dispatch(ManagerReserveActions.setTimePickerVisible(false))
+  const state = store.getState();
+
+  const reserve = state.manageReserveReducer.reserve;
+  const selectedDayIndex = state.manageReserveReducer.selectedDayIndex;
+  const hourType = state.manageReserveReducer.hourType;
+
+  const selectedHour = format(getTime(time), 'HH:mm')
+
+  let reserveDates = [ ...reserve.dates ]
+
+  reserveDates.map((date, index) => {
+    if(index == selectedDayIndex) {
+
+      if(hourType == 'start_hour') {
+        const available = startHourAvailable(
+          selectedHour,
+          parseISO(date.day),
+          date.end_hour)
+
+          // TOAST
+          if(!available) {
+            store.dispatch(ManagerReserveActions.setTimePickerVisible(false))
+            store.dispatch(ManagerReserveActions.setToastText(translate('startHourError')))
+            store.dispatch(ManagerReserveActions.setShowToast(true))
+
+            return setTimeout(() => {
+              store.dispatch(ManagerReserveActions.setShowToast(false))
+              store.dispatch(ManagerReserveActions.setToastText(''))
+            }, 3000);
+          }
+
+          const [startHour, startMinute] = selectedHour.split(':')
+          date.full_date = formatISO(setSeconds(setMinutes(setHours(parseISO(date.full_date), startHour), startMinute), 0))
+
+      } else {
+        const available = endHourAvailable(
+          selectedHour,
+          parseISO(date.day),
+          date.start_hour)
+
+          // TOAST
+          if(!available) {
+            store.dispatch(ManagerReserveActions.setTimePickerVisible(false))
+            store.dispatch(ManagerReserveActions.setToastText(translate('endHourError')))
+            store.dispatch(ManagerReserveActions.setShowToast(true))
+
+            return setTimeout(() => {
+              store.dispatch(ManagerReserveActions.setShowToast(false))
+              store.dispatch(ManagerReserveActions.setToastText(''))
+            }, 3000);
+          }
+      }
+
+      date[hourType] = selectedHour
+    }
+
+    return date
+  })
+
+  store.dispatch(ManagerReserveActions.setReserveDates(reserveDates))
 }

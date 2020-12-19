@@ -11,6 +11,10 @@ export const Types = {
     SET_EVENT_OF_RESERVE: 'manageReserveReducer/SET_EVENT_OF_RESERVE',
     SET_SPACE_OF_RESERVE: 'manageReserveReducer/SET_SPACE_OF_RESERVE',
     SET_SELECTED_DAY_INDEX: 'manageReserveReducer/SET_SELECTED_DAY_INDEX',
+    SET_HOUR_TYPE: 'manageReserveReducer/SET_HOUR_TYPE',
+    SET_SHOW_TOAST: 'manageReserveReducer/SET_SHOW_TOAST',
+    SET_TOAST_TEXT: 'manageReserveReducer/SET_TOAST_TEXT',
+    SET_TIME_PICKER_VISIBLE: 'manageReserveReducer/SET_TIME_PICKER_VISIBLE',
     CLEAR_RESERVE_FORM: 'manageReserveReducer/CLEAR_RESERVE_FORM',
   }
   
@@ -59,6 +63,22 @@ export const Types = {
       type: Types.SET_SELECTED_DAY_INDEX,
       payload
     }),
+    setHourType: (payload) => ({
+      type: Types.SET_HOUR_TYPE,
+      payload
+    }),
+    setShowToast: (payload) => ({
+      type: Types.SET_SHOW_TOAST,
+      payload
+    }),
+    setToastText: (payload) => ({
+      type: Types.SET_TOAST_TEXT,
+      payload
+    }),
+    setTimePickerVisible: (payload) => ({
+      type: Types.SET_TIME_PICKER_VISIBLE,
+      payload
+    }),
     clearReserveForm: (payload) => ({
       type: Types.CLEAR_RESERVE_FORM,
       payload
@@ -79,7 +99,11 @@ export const Types = {
     },
     eventOfReserve: null,
     spaceOfReserve: null,
-    selectedDayIndex: null
+    selectedDayIndex: null,
+    hourType: null,
+    showToast: false,
+    toastText: '',
+    isTimePickerVisible: false
   }
   
   export default function manageReserveReducer(state = INITIAL_STATE, action) {
@@ -171,6 +195,30 @@ export const Types = {
         return {
           ...state,
           selectedDayIndex: action.payload
+        }
+  
+      case Types.SET_HOUR_TYPE:
+        return {
+          ...state,
+          hourType: action.payload
+        }
+  
+      case Types.SET_SHOW_TOAST:
+        return {
+          ...state,
+          showToast: action.payload
+        }
+  
+      case Types.SET_TOAST_TEXT:
+        return {
+          ...state,
+          toastText: action.payload
+        }
+  
+      case Types.SET_TIME_PICKER_VISIBLE:
+        return {
+          ...state,
+          isTimePickerVisible: action.payload
         }
 
       case Types.CLEAR_RESERVE_FORM:

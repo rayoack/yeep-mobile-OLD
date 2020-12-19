@@ -24,7 +24,7 @@ import currencies from '../../../Services/currencies.json'
 import { Images, Colors } from '../../../Theme'
 import { normalizedDates } from '../../../Services/datesHelpers'
 import api from '../../../Services/api'
-import { navigateToCalendar } from '../../../Services/datesHelpers'
+import { navigateToCalendar, setDayTime } from '../../../Services/datesHelpers'
 
 import {
   CustomInput,
@@ -67,15 +67,9 @@ export class ReserveForm extends Component {
     this.state = {
       loading: false,
       service_charge: '',
-      message: translate('reserveSpacesMessage'),
-      reserve: null,
-      space: null,
-      event: null,
       datesListText: translate('showMore'),
       restrictionsButtonText: translate('showLess'),
       saveLoading: false,
-      showToast: false,
-      toastText: '',
       isEditing: false,
       hostId: null
     }
@@ -85,6 +79,7 @@ export class ReserveForm extends Component {
     const reserveId = this.props.navigation.getParam('reserveId', false)
     
     if(!reserveId) {
+      // this.setMessage(translate('reserveSpacesMessage'))
       this.setNewReserve()
     } else {
       this.loadActualReserve()
@@ -118,12 +113,15 @@ export class ReserveForm extends Component {
       console.log('error', {error})
       this.setState({
         loading: false,
-        toastText: translate('loadReserveError'),
-        showToast: true
       })
+      
+      store.dispatch(ManagerReserveActions.setToastText(translate('loadReserveError')))
+      store.dispatch(ManagerReserveActions.setShowToast(true))
 
       this.interval = setInterval(() => {
-        this.setState({ showToast: false })
+        store.dispatch(ManagerReserveActions.setToastText(translate('')))
+        store.dispatch(ManagerReserveActions.setShowToast(false))
+
         clearInterval(this.interval)
         this.props.navigation.goBack()
       }, 2000);
@@ -256,13 +254,7 @@ export class ReserveForm extends Component {
   setDatesListText = (text) => this.setState({ datesListText: text })
 
   saveReserve = async () => {
-    // const { reserve, message, space, event } = this.state
     const { reserve, eventOfReserve, spaceOfReserve } = this.props
-
-    // let reserveData = {
-    //   ...reserve,
-    //   message
-    // }
 
     this.setState({ saveLoading: true })
 
@@ -299,10 +291,12 @@ export class ReserveForm extends Component {
   }
 
   setShowToast = (text) => {
-    this.setState({ toastText: text, showToast: true })
+    store.dispatch(ManagerReserveActions.setToastText(text))
+    store.dispatch(ManagerReserveActions.setShowToast(true))
 
     this.interval = setInterval(() => {
-      this.setState({ showToast: false })
+      store.dispatch(ManagerReserveActions.setToastText(translate('')))
+      store.dispatch(ManagerReserveActions.setShowToast(false))
       clearInterval(this.interval)
     }, 2000);
   }
@@ -386,20 +380,28 @@ export class ReserveForm extends Component {
       : this.setAmountPerHour()
   }
 
+  openTimePicker = (index, hourType) => {
+    this.props.setHourType(hourType)
+    this.props.setSelectedDayIndex(index)
+    this.props.setTimePickerVisible(true)
+  }
+
+  closeTimePicker = () => {
+    this.props.setTimePickerVisible(false)
+  }
+
   render() {
     const {
-      message,
       datesListText,
       loading,
       saveLoading,
-      showToast,
-      toastText,
       isEditing,
       hostId
     } = this.state
     
     
-    const { reserve, eventOfReserve, spaceOfReserve } = this.props
+    const { reserve, eventOfReserve, spaceOfReserve, isTimePickerVisible, showToast, toastText } = this.props
+    console.log({showToast})
 
     return (
       <>
@@ -538,7 +540,7 @@ export class ReserveForm extends Component {
                           iconSize={24}
                           editable={(reserve.status !== 'awaitingPayment' || reserve.status !== 'completed') ? true : false}
                           value={date.start_hour}
-                          navigateTolist={() => null}
+                          navigateTolist={() => this.openTimePicker(index, 'start_hour')}
                           marginRigth={'5px'}
                         />
 
@@ -547,18 +549,18 @@ export class ReserveForm extends Component {
                           iconSize={24}
                           editable={(reserve.status !== 'awaitingPayment' || reserve.status !== 'completed') ? true : false}
                           value={date.end_hour}
-                          navigateTolist={() => null}
+                          navigateTolist={() => this.openTimePicker(index, 'end_hour')}
                           marginLeft={'5px'}
                         />
                       </HoursContainer>
 
-                      {/* <DateTimePickerModal
+                      <DateTimePickerModal
                         isVisible={isTimePickerVisible}
                         mode="time"
                         date={parseISO(date.full_date)}
                         onConfirm={setDayTime}
-                        onCancel={closeTimePicker}
-                      /> */}
+                        onCancel={this.closeTimePicker}
+                      />
 
                     </DateContainer>
 
@@ -683,8 +685,8 @@ export class ReserveForm extends Component {
 
                   <CustomInput
                     label={translate('messageLabel')}
-                    placeholder={message}
-                    value={message}
+                    placeholder={translate('reserveSpacesMessage')}
+                    value={reserve.message}
                     onChangeText={this.setMessage}
                     marginBottom={20}
                     // onBlur={() => setFieldTouched('description')}
@@ -735,6 +737,9 @@ const mapStateToProps = (state) => ({
   reserve: state.manageReserveReducer.reserve,
   eventOfReserve: state.manageReserveReducer.eventOfReserve,
   spaceOfReserve: state.manageReserveReducer.spaceOfReserve,
+  isTimePickerVisible: state.manageReserveReducer.isTimePickerVisible,
+  showToast: state.manageReserveReducer.showToast,
+  toastText: state.manageReserveReducer.toastText,
 })
 
 export default connect(mapStateToProps, { ...ManagerReserveActions })(ReserveForm)
