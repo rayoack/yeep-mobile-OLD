@@ -31,6 +31,7 @@ import {
 const ProfileScreen = ({
     user,
     setSignOut,
+    signOutRequest,
     navigation
 }) => {
 
@@ -72,8 +73,9 @@ const ProfileScreen = ({
         }
     }
 
-    const logout = () => {
-        setSignOut()
+    const logout = async () => {
+        await signOutRequest()
+        await setSignOut()
         navigation.navigate('AccessScreen');
     }
 

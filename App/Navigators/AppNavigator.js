@@ -38,6 +38,7 @@ import {
   PlaceDetailsScreen,
   MyEventsSelectScreen,
   ReserveForm,
+  ChatListScreen,
   // HOST
   MyPlacesScreen,
   HostScheduleScreen,
@@ -65,9 +66,9 @@ const OrganizerNavigator = createBottomTabNavigator(
           return (
             <>
               {focused ? (
-                <Image style={{ height: 30, width: 30 }} source={Images.my_event_active}/>
+                <Image style={{ height: 25, width: 25 }} source={Images.my_event_active}/>
               ) : (
-                <Image style={{ height: 30, width: 30 }} source={Images.my_event_inactive}/>
+                <Image style={{ height: 25, width: 25 }} source={Images.my_event_inactive}/>
               )}
             </>
           )
@@ -82,9 +83,9 @@ const OrganizerNavigator = createBottomTabNavigator(
           return (
             <>
               {focused ? (
-                <Image style={{ height: 30, width: 30 }} source={Images.place_active}/>
+                <Image style={{ height: 25, width: 25 }} source={Images.place_active}/>
               ) : (
-                <Image style={{ height: 30, width: 30 }} source={Images.place_inactive}/>
+                <Image style={{ height: 25, width: 25 }} source={Images.place_inactive}/>
               )}
             </>
           )
@@ -99,14 +100,31 @@ const OrganizerNavigator = createBottomTabNavigator(
           return (
             <>
               {focused ? (
-                <Image style={{ height: 30, width: 30 }} source={Images.dj_active}/>
+                <Image style={{ height: 25, width: 25 }} source={Images.dj_active}/>
               ) : (
-                <Image style={{ height: 30, width: 30 }} source={Images.dj_inactive}/>
+                <Image style={{ height: 25, width: 25 }} source={Images.dj_inactive}/>
               )}
             </>
           )
         },
         title: translate('servicesTabLabel')
+      }
+    },
+    ChatListScreen: {
+      screen: ChatListScreen,
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => {
+          return (
+            <>
+              {focused ? (
+                <Image style={{ height: 25, width: 25 }} source={Images.conversation_active}/>
+              ) : (
+                <Image style={{ height: 25, width: 25 }} source={Images.conversation_inactive}/>
+              )}
+            </>
+          )
+        },
+        title: translate('messagesTabLabel')
       }
     },
   },

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
+import { connectToSocket, connectedSocket } from '../../Sagas/SocketSaga'
 import { GiftedChat, Bubble, Send } from 'react-native-gifted-chat'
 import * as RNLocalize from "react-native-localize";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -14,6 +15,8 @@ import {
   AnimationLoading,
   CustomToast
 } from '../../Components'
+
+import { Creators as MessageActions } from '../../Stores/reducers/messagesReducer'
 
 import BaseURL from '../../Config/BaseURL'
 import api from '../../Services/api'
@@ -47,21 +50,16 @@ export class RoomChat extends Component {
       room_id: null,
     }
 
+    this.socket = {}
   }
   
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const room = this.props.navigation.getParam('room', null)
 
-    this.socket = io(BaseURL.api,
-      {
-        forceNode: true,
-        query: {
-          user_id: this.props.user.id
-        }
-      }
-    )
+    this.socket = await connectToSocket()
+    console.log('SOCKET', this.socket)
 
-    this.socket.emit('joinRoom', `reserve${room.id}`)
+    await this.socket.emit('joinRoom', `reserve${room.id}`)
 
     this.socket.on('message', newMessage => {
       this.insertNewMessage(newMessage)
@@ -72,8 +70,8 @@ export class RoomChat extends Component {
     }, () => this.loadMessages())
   }
 
-  componentWillUnmount = () => {
-    this.socket.emit('leavesRoom', `reserve${this.state.room_id}`)
+  componentWillUnmount = async () => {
+    await this.socket.emit('leavesRoom', `reserve${this.state.room_id}`)
   }
 
   getLanguageByDevice = () => {
@@ -114,8 +112,10 @@ export class RoomChat extends Component {
 
       const mappedMessages = this.mapMessages(data)
 
+      await this.props.setMessages(mappedMessages)
+
       this.setState({
-        messages: mappedMessages,
+        // messages: mappedMessages,
         loading: false,
         reserveName: room && room.name ? room.name : '',
         reserveStatus: translate(room.status),
@@ -154,7 +154,9 @@ export class RoomChat extends Component {
 
   }
 
-  insertNewMessage = (message) => {
+  insertNewMessage = async (message) => {
+    const { messages } = this.props
+
     console.log(message)
     const mappedMessage = {
       _id: message.id,
@@ -168,7 +170,9 @@ export class RoomChat extends Component {
       Image: message.Image
     }
 
-    this.setState(prevState => ({ messages: [mappedMessage, ...prevState.messages] }))
+    const updatedMessages = [mappedMessage, ...messages]
+
+    await this.props.setMessages(updatedMessages)
   }
 
   mapMessages = (messages) => {
@@ -302,7 +306,6 @@ export class RoomChat extends Component {
 
   render() {
     const {
-      messages,
       loading,
       showToast,
       toastText,
@@ -311,6 +314,8 @@ export class RoomChat extends Component {
       reserveImage
      } = this.state
 
+     const { messages } = this.props
+     
      const pattern = new RegExp('^(https?:\\/\\/)?'+
      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ 
      '((\\d{1,3}\\.){3}\\d{1,3}))'+ 
@@ -364,7 +369,7 @@ export class RoomChat extends Component {
             <GiftedChat
               messages={messages}
               renderUsernameOnMessage={true}
-              onSend={messages => this.onSend(messages)}
+              onSend={message => this.onSend(message)}
               renderBubble={this.renderBubble}
               locale={this.getLanguageByDevice()}
               placeholder={translate('messageInputLabel')}
@@ -385,11 +390,10 @@ export class RoomChat extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user
+  user: state.auth.user,
+  messages: state.messagesReducer.messages
 })
 
-const mapDispatchToProps = {
-  
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(RoomChat)
+export default connect(mapStateToProps, {
+  ...MessageActions
+})(RoomChat)

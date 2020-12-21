@@ -221,6 +221,7 @@ export default {
   myEventsTabLabel: 'Meus eventos',
   spacesTabLabel: 'Espaços',
   servicesTabLabel: 'Serviços',
+  messagesTabLabel: 'Mensagens',
   organizerStepOnetitle: 'Bem-vindo',
   organizerStepTwotitle: 'Venda de ingressos',
   organizerStepThreetitle: 'Contratar',

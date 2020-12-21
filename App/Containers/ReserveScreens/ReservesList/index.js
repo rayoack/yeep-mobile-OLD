@@ -43,7 +43,7 @@ class ReservesList extends Component {
   }
 
   loadMyReserves = async () => {
-    const { page, forApproval, awaitingPayment, completed } = this.state
+    const { page } = this.state
     const targetId = this.props.navigation.getParam('targetId', null)
     const request_type = this.props.navigation.getParam('request_type', null)
 
@@ -102,14 +102,24 @@ class ReservesList extends Component {
     this.props.navigation.goBack(null)
   }
 
+  getRoomImage = (reserve, request_type) => {
+
+    if(request_type === 'event') {
+      return reserve.Space.Images && reserve.Space.Images.length ? reserve.Space.Images[0].url : Images.image_background;
+    }
+
+    if(request_type === 'space') {
+      return reserve.Event.event_logo ? reserve.Event.event_logo.url : Images.image_background;
+    }
+  }
+
   mapReserves = (reserves = [], request_type = 'event') => {
     if(!reserves.length) return []
 
     const mappedReserves = reserves.map(reserve => {
+      console.log({reserve})
       let subInfo = ''
-      let image = request_type == 'event' ?
-        reserve.Space.Images ? reserve.Space.Images[0].url : Images.image_background
-        : reserve.Event.event_logo ? reserve.Space.event_logo.url : Images.image_background
+      let image = this.getRoomImage(reserve, request_type)
 
       if(request_type == 'event' && reserve.Space.adress != null) {
         subInfo = `${reserve.Space.adress}, ${reserve.Space.city}, ${reserve.Space.state}, ${reserve.Space.country}`
@@ -140,8 +150,8 @@ class ReservesList extends Component {
     const { loading, refreshing, reserves } = this.state
 
     const forApproval = reserves.length ? reserves.filter(reserve => reserve.status == 'waitingForApproval') : []
-    const awaitingPayment = reserves.length ? reserves.filter(reserve => reserve.status == 'awaitingPayment') : []
-    const completed = reserves.length ? reserves.filter(reserve => reserve.status == 'completed') : []
+    const awaitingPayment = reserves.length ? reserves.filter(reserve => reserve.status == 'ACTIVE') : []
+    const completed = reserves.length ? reserves.filter(reserve => reserve.status == 'PAID') : []
 
     return (
       <>

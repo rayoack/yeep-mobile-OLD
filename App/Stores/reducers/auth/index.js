@@ -1,10 +1,12 @@
 
 export const Types = {
   SIGN_IN_REQUEST: 'auth/SIGN_IN_REQUEST',
+  SUBSCRIBE_USER_REQUEST: 'auth/SUBSCRIBE_USER_REQUEST',
   SET_AUTH_LOADING: 'auth/SET_AUTH_LOADING',
   SET_SIGNED: 'auth/SET_SIGNED',
   SET_AUTH_ERROR: 'auth/SET_AUTH_ERROR',
-  SET_SIGNOUT: 'auth/SET_SIGNOUT'
+  SET_SIGNOUT: 'auth/SET_SIGNOUT',
+  SIGN_OUT_REQUEST: 'auth/SIGN_OUT_REQUEST',
 }
 
 export const Creators = {
@@ -14,6 +16,11 @@ export const Creators = {
         email,
         password
       }
+    }),
+
+  subscribeUserRequest: (payload) => ({
+      type: Types.SUBSCRIBE_USER_REQUEST,
+      payload
     }),
 
     setAuthLoading: (payload) => ({
@@ -33,6 +40,11 @@ export const Creators = {
 
   setSignOut: (payload) => ({
     type: Types.SET_SIGNOUT,
+    payload
+  }),
+
+  signOutRequest: (payload) => ({
+    type: Types.SIGN_OUT_REQUEST,
     payload
   }),
 }

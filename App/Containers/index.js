@@ -22,6 +22,7 @@ import PlacesListScreen from './OrganizerScreens/PlacesListScreen'
 import PlaceDetailsScreen from './OrganizerScreens/PlaceDetailsScreen'
 import MyEventsSelectScreen from './OrganizerScreens/MyEventsSelectScreen'
 import ReserveForm from './OrganizerScreens/ReserveForm'
+import ChatListScreen from './OrganizerScreens/ChatListScreen'
 
 // HOST
 import MyPlacesScreen from './HostScreens/MyPlacesScreen'
@@ -75,6 +76,7 @@ export {
   PlaceDetailsScreen,
   MyEventsSelectScreen,
   ReserveForm,
+  ChatListScreen,
 
   // HOST
   MyPlacesScreen,

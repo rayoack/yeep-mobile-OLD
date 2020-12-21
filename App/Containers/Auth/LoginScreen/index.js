@@ -69,7 +69,7 @@ class LoginScreen extends React.Component {
     try {
       const { data } = await api.post('/sessions', { email, password } )
 
-      this.props.setSigned({ ...data.user, token: data.token })
+      await this.props.setSigned({ ...data.user, token: data.token })
 
       this.redirectAfterSignIn(data)
 

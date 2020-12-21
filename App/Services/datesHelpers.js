@@ -39,8 +39,6 @@ export const normalizedDates = (dataToNormalize) => {
     return date
   })
 
-  console.log({dataToNormalizeCopy})
-
   return dataToNormalizeCopy
 }
 
@@ -64,7 +62,6 @@ export const navigateToCalendar = (index = 0, dates = [], navigation) => {
 }
 
 export const setReserveDay = (selectedDay) => {
-  console.log({selectedDay})
   const state = store.getState();
 
   const reserve = state.manageReserveReducer.reserve;

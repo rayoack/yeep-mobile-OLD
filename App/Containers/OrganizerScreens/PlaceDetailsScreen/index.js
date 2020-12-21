@@ -167,7 +167,7 @@ class PlaceDetailsScreen extends PureComponent {
       this.props.setSpaceOfReserve(this.state.space)
       this.props.setReserveSpaceId(this.state.space.id)
 
-      this.props.navigation.push('ReserveForm')
+      this.props.navigation.navigate('ReserveForm')
     }
 
   }
@@ -176,7 +176,7 @@ class PlaceDetailsScreen extends PureComponent {
     this.props.clearReserveForm()
 
     if(this.state.space) {
-      this.props.navigation.push('MyEventsSelectScreen', {
+      this.props.navigation.navigate('MyEventsSelectScreen', {
         space: this.state.space
       })
     }
@@ -465,7 +465,7 @@ class PlaceDetailsScreen extends PureComponent {
 
               <CheckButton
                 activeOpacity={0.8}
-                onPress={() => this.navigateToEventsSelectScreen()}
+                onPress={() => this.sheetRef.current.snapTo(0)}
               >
                 <PlaceText
                   fontColor={Colors.white}
@@ -491,7 +491,7 @@ class PlaceDetailsScreen extends PureComponent {
           ref={this.sheetRef}
           snapPoints={[350, 0]}
           borderRadius={30}
-          initialSnap={0}
+          initialSnap={1}
           renderContent={this.renderContent}
         />
       </>

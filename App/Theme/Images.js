@@ -64,6 +64,8 @@ export default {
   confettiWhite: require('App/Assets/Images/confettiWhite.png'),
   settings: require('App/Assets/Images/settings.png'),
   push_rectangle: require('App/Assets/Images/push_rectangle.png'),
+  conversation_active: require('App/Assets/Images/conversation-active.png'),
+  conversation_inactive: require('App/Assets/Images/conversation-inactive.png'),
 
   // SPACE FEATURES ICONS
   allowsLoudSound: require('App/Assets/Images/allowsLoudSound.png'),

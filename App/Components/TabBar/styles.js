@@ -34,7 +34,7 @@ export const TabButton = styled.TouchableOpacity`
 
 export const TabNavText = styled.Text`
   font-family: 'Nunito Bold';
-  font-size: 12px;
+  font-size: 10px;
   line-height: 12px;
   margin-top: ${Platform.OS === 'ios' ? 10 : 10};
   margin-bottom: ${Platform.OS === 'ios' ? 15 : 15};

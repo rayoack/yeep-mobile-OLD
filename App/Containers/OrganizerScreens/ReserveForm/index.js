@@ -129,12 +129,20 @@ export class ReserveForm extends Component {
 
   }
 
-  setNewReserve = () => {
+  setNewReserve = async () => {
     const { reserve, eventOfReserve, spaceOfReserve } = this.props
-
-    const reserveWithFormatedDates = normalizedDates(reserve)
-
-    this.props.setReserveDates(reserveWithFormatedDates)
+    if(eventOfReserve && eventOfReserve.id) {
+      const reserveWithFormatedDates = normalizedDates(eventOfReserve)
+      await this.props.setReserveDates(reserveWithFormatedDates.dates)
+      await this.props.setReserveEstimatedAudience(eventOfReserve.estimated_audience)
+      await this.props.setReserveEventId(eventOfReserve.id)
+    } else {
+      const reserveWithFormatedDates = normalizedDates(reserve)
+      console.log({reserveWithFormatedDates})
+      await this.props.setReserveDates(reserveWithFormatedDates.dates)
+    }
+    
+    await this.props.setReserveSpaceId(spaceOfReserve.id)
 
     spaceOfReserve.charge_type === 'perDay' ?
       this.setAmountPerDay()
@@ -236,7 +244,7 @@ export class ReserveForm extends Component {
   }
 
   cancelReservation = () => {
-    return this.props.navigation.goBack()
+    this.props.navigation.goBack()
   }
 
   getCurrencySymbol = (actualCurrency) => {
@@ -389,6 +397,22 @@ export class ReserveForm extends Component {
   closeTimePicker = () => {
     this.props.setTimePickerVisible(false)
   }
+  
+  removeDate = async (indexToRemove) => {
+    const { dates } = this.props.reserve
+
+    let datesCopy = dates.filter((date, index) => index != indexToRemove)
+
+    await this.props.setReserveDates(datesCopy)
+    
+    this.props.spaceOfReserve.charge_type === 'perDay' ?
+      this.setAmountPerDay()
+      : this.setAmountPerHour()
+  }
+
+  setEstimatedAudience = (value) => {
+    return this.props.setReserveEstimatedAudience(value)
+  }
 
   render() {
     const {
@@ -401,7 +425,8 @@ export class ReserveForm extends Component {
     
     
     const { reserve, eventOfReserve, spaceOfReserve, isTimePickerVisible, showToast, toastText } = this.props
-    console.log({showToast})
+
+    console.log({reserve})
 
     return (
       <>
@@ -521,24 +546,24 @@ export class ReserveForm extends Component {
                         <InputButton
                           label={translate('dayLabel')}
                           iconSize={24}
-                          editable={(reserve.status !== 'awaitingPayment' || reserve.status !== 'completed') ? true : false}
+                          editable={(reserve.status !== 'ACTIVE' || reserve.status !== 'PAID') ? true : false}
                           value={date.normalizedDate}
                           navigateTolist={() => navigateToCalendar(index, reserve.dates, this.props.navigation)}
                         />
 
-                        {/* <DeleteDateContainer
+                        <DeleteDateContainer
                           activeOpacity={0.8}
-                          onPress={() => removeDate(index)}
+                          onPress={() => this.removeDate(index)}
                         >
                           <DeleteDateIcon source={Images.cancel}/>
-                        </DeleteDateContainer> */}
+                        </DeleteDateContainer>
                       </InsertDayContainer>
 
                       <HoursContainer>
                         <InputButton
                           label={translate('startHourLabel')}
                           iconSize={24}
-                          editable={(reserve.status !== 'awaitingPayment' || reserve.status !== 'completed') ? true : false}
+                          editable={(reserve.status !== 'ACTIVE' || reserve.status !== 'PAID') ? true : false}
                           value={date.start_hour}
                           navigateTolist={() => this.openTimePicker(index, 'start_hour')}
                           marginRigth={'5px'}
@@ -547,7 +572,7 @@ export class ReserveForm extends Component {
                         <InputButton
                           label={translate('endHourLabel')}
                           iconSize={24}
-                          editable={(reserve.status !== 'awaitingPayment' || reserve.status !== 'completed') ? true : false}
+                          editable={(reserve.status !== 'ACTIVE' || reserve.status !== 'PAID') ? true : false}
                           value={date.end_hour}
                           navigateTolist={() => this.openTimePicker(index, 'end_hour')}
                           marginLeft={'5px'}
@@ -568,7 +593,7 @@ export class ReserveForm extends Component {
                   </>
                 )) : null}
 
-                {(reserve.status !== 'awaitingPayment' || reserve.status !== 'completed') ? (
+                {(reserve.status !== 'ACTIVE' || reserve.status !== 'PAID') ? (
                   <ButtonWithBackground
                     onPress={() => this.insertNewDate()}
                     backgroundColor={Colors.terciary}
@@ -578,6 +603,16 @@ export class ReserveForm extends Component {
               {/* </StyledCollapsibleList> */}
               <Divider marginBottom={'15px'}/>
               {/* EVENT DATES */}
+
+              {/* ESTIMATED AUDIENCE */}
+              <CustomInput
+                label={translate('audienceLabel')}
+                placeholder={translate('audiencePlaceholder')}
+                value={reserve.estimated_audience}
+                onChangeText={this.setEstimatedAudience}
+                marginBottom={20}
+              />
+              {/* ESTIMATED AUDIENCE */}
 
               {/* PRICES INFO */}
               <View style={{ marginTop: 20 }}>
@@ -670,7 +705,6 @@ export class ReserveForm extends Component {
                     {translate('youWontBeChargedYet')}
                   </StyledText>
 
-
                   <StyledText
                     fontColor={Colors.textDefault}
                     fontFamily={'Nunito Regular'}
@@ -708,20 +742,22 @@ export class ReserveForm extends Component {
                 {`${this.getCurrencySymbol(spaceOfReserve.monetary_unit)}${toNumber(reserve.amount)}`}
               </StyledText>
 
-              <CheckButton
-                activeOpacity={0.8}
-                onPress={() => this.confirmFunction()}
-                disabled={reserve && reserve.dates.length ? false : true}
-              >
-                <StyledText
-                  fontColor={Colors.white}
-                  fontFamily={'Nunito Bold'}
-                  fontSize={'12px'}
-                  textAlign={'center'}
+              {!isEditing ? (
+                <CheckButton
+                  activeOpacity={0.8}
+                  onPress={() => this.confirmFunction()}
+                  disabled={reserve && reserve.dates.length ? false : true}
                 >
-                  {translate('goToNegotiation')}
-                </StyledText>
-              </CheckButton>
+                  <StyledText
+                    fontColor={Colors.white}
+                    fontFamily={'Nunito Bold'}
+                    fontSize={'12px'}
+                    textAlign={'center'}
+                  >
+                    {translate('goToNegotiation')}
+                  </StyledText>
+                </CheckButton>
+              ) : null}
               
             </FooterContainer>
           </>

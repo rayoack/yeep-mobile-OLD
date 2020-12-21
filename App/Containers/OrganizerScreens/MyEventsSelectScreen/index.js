@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { parseISO } from 'date-fns';
 import isFuture from 'date-fns/isFuture'
 import api from '../../../Services/api'
+import { Creators as ManagerReserveActions } from '../../../Stores/reducers/manageReserveReducer'
 import {
   SelectionList,
   ScreensHeader,
@@ -63,14 +64,12 @@ export class MyEventsSelectScreen extends Component {
 
   onItemPress = (item) => {
     const space = this.props.navigation.getParam('space', null)
-    const service = this.props.navigation.getParam('service', null)
 
-    this.props.navigation.push('ReserveForm', {
-      event: item,
-      space,
-      service,
-    })
+    this.props.clearReserveForm()
+    this.props.setEventOfReserve(item)
+    this.props.setSpaceOfReserve(space)
 
+    this.props.navigation.navigate('ReserveForm')
   }
 
   goBack = () => {
@@ -122,5 +121,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  {
+    ...ManagerReserveActions
+  }
 )(MyEventsSelectScreen)

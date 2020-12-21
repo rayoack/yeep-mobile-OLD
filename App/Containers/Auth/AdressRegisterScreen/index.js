@@ -78,7 +78,7 @@ class AdressRegisterScreen extends React.Component {
         
         const { data } = await api.post('/sessions', { email, password } )
         
-        this.props.setSigned({ ...data.user, token: data.token })
+        await this.props.setSigned({ ...data.user, token: data.token })
         
         this.setState({ loading: false })
         return this.props.navigation.navigate('SuccessRegisterScreen')
