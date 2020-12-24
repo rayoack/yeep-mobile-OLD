@@ -5,6 +5,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Images, Colors } from 'App/Theme'
 import { translate } from '../Locales'
+import { store } from '../Stores/CreateStore'
 
 import { TabBar } from '../Components'
 
@@ -187,6 +188,21 @@ const HostNavigator = createBottomTabNavigator(
   }
 )
 
+const getInitialRoute = () => {
+  const state = store.getState();
+  const user = state.auth.user;
+
+  if(!user && !user.token) return 'auth'
+
+  if(user.role === 'organizer') {
+    return 'tabs'
+  } else if (user.role === 'owner') {
+    return 'hostTabs'
+  } else {
+    return 'auth'
+  }
+}
+
 const StackNavigator = createStackNavigator(
   {
      auth:{
@@ -227,7 +243,7 @@ const StackNavigator = createStackNavigator(
     UploadDocumentScreen: { screen: UploadDocumentScreen },
   },
   {
-    initialRouteName: 'auth',
+    initialRouteName: getInitialRoute(),
     headerMode: 'none',
   }
 )

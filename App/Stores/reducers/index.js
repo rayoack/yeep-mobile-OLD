@@ -7,6 +7,7 @@ import spaceQueriesReducer from './spaceQueriesReducer'
 import manageAccountReducer from './manageAccountReducer'
 import manageReserveReducer from './manageReserveReducer'
 import messagesReducer from './messagesReducer'
+import chatRoomsReducer from './chatRoomsReducer'
 
 const reducers = combineReducers({
   auth,
@@ -15,7 +16,8 @@ const reducers = combineReducers({
   spaceQueriesReducer,
   manageAccountReducer,
   manageReserveReducer,
-  messagesReducer
+  messagesReducer,
+  chatRoomsReducer
 });
 
 export default reducers;

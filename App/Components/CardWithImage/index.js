@@ -29,7 +29,7 @@ const CardWithImage = ({
   onSnapToItem,
   onCardPress
 }) => {
-  console.log({item})
+  
   return (
     <>
       {item ? (

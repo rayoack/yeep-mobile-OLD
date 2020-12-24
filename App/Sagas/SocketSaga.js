@@ -5,7 +5,7 @@ import io from 'socket.io-client'
 import BaseURL from '../Config/BaseURL'
 import { store } from '../Stores/CreateStore'
 import { Images } from '../Theme'
-import { Types as ReserveTypes } from '../Stores/reducers/reservesReducer'
+// import { Types as ReserveTypes } from '../Stores/reducers/reservesReducer'
 import { Types as MessageTypes } from '../Stores/reducers/messagesReducer'
 import { Types as AuthTypes } from '../Stores/reducers/auth'
 

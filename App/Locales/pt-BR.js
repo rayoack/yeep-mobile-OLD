@@ -37,7 +37,6 @@ export default {
   accounts: 'Contas',
   balance: 'Saldo',
 
-
   // COUNTRIES
   Brazil: 'Brasil',
   Argentina: 'Argentina',
@@ -191,6 +190,9 @@ export default {
   errorOnSendMessage: 'Desculpe, tivemos um erro, ao tentar enviar sua mensagem.',
   errorOnLoadMessages: 'Desculpe, tivemos um erro, ao tentar carregar as mensagens.',
   messageInputLabel: 'Digite sua mensagem aqui...',
+
+  // CHAT ROOM
+  space_reserve: 'Reserva de espaço',
 
   // RESERVES
   reserveSpacesMessage: 'Olá, gostaria de alugar seu espaço para o meu evento.',

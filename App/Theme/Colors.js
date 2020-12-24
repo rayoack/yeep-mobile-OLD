@@ -30,7 +30,7 @@ export default {
   darkPrimary: '#FF3558',
   secondary: '#F9B0C3',
   terciary: '#407FC8',
-  lightSecondary: '#FFDDED',
+  lightSecondary: '#FBEFF3',
   tertiary: '#ede6f2',
   quaternary: '#736db0',
   brightPink: '#B0649E',

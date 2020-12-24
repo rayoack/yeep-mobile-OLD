@@ -189,6 +189,9 @@ export default {
   errorOnLoadMessages: 'Sorry, we had an error when trying to load messages.',
   messageInputLabel: 'Type your message here...',
 
+  // CHAT ROOM
+  space_reserve: 'Space reservation',
+
   // RESERVES
   reserveSpacesMessage: 'Hello, I would like to rent your space for my event.',
   eventDatesLabel: 'Event dates',
