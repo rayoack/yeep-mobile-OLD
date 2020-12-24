@@ -191,6 +191,7 @@ export default {
 
   // CHAT ROOM
   space_reserve: 'Space reservation',
+  chatListScreenTitle: 'Mensagens',
 
   // RESERVES
   reserveSpacesMessage: 'Hello, I would like to rent your space for my event.',

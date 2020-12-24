@@ -3,6 +3,7 @@ export const Types = {
     SET_CHAT_ROOMS: 'chatRoomsReducer/SET_CHAT_ROOMS',
     GET_CHAT_ROOMS: 'chatRoomsReducer/GET_CHAT_ROOMS',
     SET_CHAT_ROOMS_ERROR: 'chatRoomsReducer/SET_CHAT_ROOMS_ERROR',
+    SET_CHAT_ROOMS_LOADING: 'chatRoomsReducer/SET_CHAT_ROOMS_LOADING',
     CLEAN_CHAT_ROOMS: 'chatRoomsReducer/CLEAN_CHAT_ROOMS',
 };
 
@@ -23,6 +24,10 @@ export const Creators = {
       type: Types.SET_CHAT_ROOMS_ERROR,
       payload
     }),
+    setChatRoomsLoading: (payload) => ({
+      type: Types.SET_CHAT_ROOMS_LOADING,
+      payload
+    }),
     cleanChatRooms: (payload) => ({
       type: Types.CLEAN_CHAT_ROOMS,
       payload
@@ -31,7 +36,8 @@ export const Creators = {
 
 const INITIAL_STATE = {
     chatRooms: [],
-    chatRoomsError: false
+    chatRoomsError: false,
+    chatRoomsLoading: false
 };
 
 export default function chatRoomsReducer(state = INITIAL_STATE, action) {
@@ -54,6 +60,12 @@ export default function chatRoomsReducer(state = INITIAL_STATE, action) {
       return {
           ...state,
           chatRoomsError: action.payload
+      }
+
+    case Types.SET_CHAT_ROOMS_LOADING:
+      return {
+          ...state,
+          chatRoomsLoading: action.payload
       }
 
     case Types.CLEAN_CHAT_ROOMS:

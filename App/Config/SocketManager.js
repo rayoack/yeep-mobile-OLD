@@ -31,6 +31,8 @@ class SocketManager extends Component {
           return null
         }
 
+        if(this.socket.connected && !this.socket.disconnected) return null
+
         this.socket = io.connect(BaseURL.api,
             {
                 forceNode: true,
