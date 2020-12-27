@@ -8,9 +8,9 @@ import { ChatList } from '../../../Components'
 
 import {
     Container,
-    MessagesList,
     TitleContainer,
-    TitleText
+    TitleText,
+    ChatListContainer
 } from './styles'
 
 class ChatListScreen extends Component {
@@ -18,6 +18,16 @@ class ChatListScreen extends Component {
         super();
         this.state = {
         };
+    }
+
+    refreshChatList = () => {
+        return this.props.getChatRooms(1)
+    }
+
+    navigateToChatRoom = async (room) => {
+        this.props.navigation.push('RoomChat', {
+          room: room
+        })
     }
 
     render() {
@@ -29,13 +39,17 @@ class ChatListScreen extends Component {
                 <TitleContainer>
                     <TitleText>{translate('chatListScreenTitle')}</TitleText>
                 </TitleContainer>
-                <ChatList
-                    data={chatRooms}
-                    loading={chatRoomsLoading}
-                    onPress={() => null}
-                    onRefresh={() => null}
-                    refreshing={false}
-                />
+                <ChatListContainer
+                    contentContainerStyle={{ minHeight: '100%', paddingTop: 10 }}
+                >
+                    <ChatList
+                        data={chatRooms}
+                        loading={chatRoomsLoading}
+                        onPress={this.navigateToChatRoom}
+                        onRefresh={() => this.refreshChatList()}
+                        refreshing={false}
+                    />
+                </ChatListContainer>
             </Container>
         )
     }

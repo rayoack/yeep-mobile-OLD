@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
-import { connectToSocket, connectedSocket } from '../../Sagas/SocketSaga'
 import { GiftedChat, Bubble, Send } from 'react-native-gifted-chat'
 import * as RNLocalize from "react-native-localize";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -10,6 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import LinearGradient from 'react-native-linear-gradient';
 import ptBr from 'dayjs/locale/pt-br'
+import _ from 'lodash'
 
 import {
   AnimationLoading,
@@ -18,6 +18,7 @@ import {
 
 import { Creators as MessageActions } from '../../Stores/reducers/messagesReducer'
 
+import { socket } from '../../Config/SocketManager'
 import BaseURL from '../../Config/BaseURL'
 import api from '../../Services/api'
 import { Images, Colors } from 'App/Theme'
@@ -29,7 +30,7 @@ import {
   ChatSubTitle,
   ChatTitle,
   ChatImage,
-  ReserveDetailsButtonContainer
+  ChatButtonContainer
 } from './styles'
 
 export class RoomChat extends Component {
@@ -38,8 +39,9 @@ export class RoomChat extends Component {
     super(props)
     this.state = {
       loading: false,
-      reserveName: '',
-      reserveStatus: '',
+      room: {},
+      chatName: '',
+      chatSubInfo: '',
       reserveImage: Images.image_background,
       messages: [],
       users: [],
@@ -50,28 +52,29 @@ export class RoomChat extends Component {
       room_id: null,
     }
 
-    this.socket = {}
+    this.socket = socket;
   }
   
   componentDidMount = async () => {
     const room = this.props.navigation.getParam('room', null)
 
-    this.socket = await connectToSocket()
-    console.log('SOCKET', this.socket)
-
-    await this.socket.emit('joinRoom', `reserve${room.id}`)
+    await this.socket.emit('joinRoom', room.roomName)
 
     this.socket.on('message', newMessage => {
-      this.insertNewMessage(newMessage)
+      return this.insertNewMessage(newMessage)
     });
 
     this.setState({
-      room_id: room.id
+      room_id: room.id,
+      room,
     }, () => this.loadMessages())
   }
 
   componentWillUnmount = async () => {
-    await this.socket.emit('leavesRoom', `reserve${this.state.room_id}`)
+    if(this.state.room && this.state.room.roomName) {
+      await this.socket.emit('leavesRoom', this.state.room.roomName)
+    }
+    this.props.clearMessages()
   }
 
   getLanguageByDevice = () => {
@@ -106,7 +109,7 @@ export class RoomChat extends Component {
     this.setState({ loading: true })
 
     try {
-      const { data } = await api.get(`/messages/${this.state.room_id}`, {}, {
+      const { data } = await api.get(`/messages/${this.state.room.id}`, {}, {
         authorization: `Bearer ${this.props.user.token}`
       })
 
@@ -117,8 +120,8 @@ export class RoomChat extends Component {
       this.setState({
         // messages: mappedMessages,
         loading: false,
-        reserveName: room && room.name ? room.name : '',
-        reserveStatus: translate(room.status),
+        chatName: room && room.name ? room.name : '',
+        chatSubInfo: room.status ? room.status : '',
         reserveImage: room.image
       })
 
@@ -132,14 +135,16 @@ export class RoomChat extends Component {
   }
 
   updateRoom = () => {
-    const room = this.props.navigation.getParam('room', null)
+    // const room = this.props.navigation.getParam('room', null)
+    const { room } = this.state
     
     if(!room.read && room.last_message_target_id == this.props.user.id) {
+
       const data = {
         last_message_target_read: true
       }
       
-      const response = api.put(`/reserve/${room.id}`, {
+      api.put(`/room/${room.id}`, {
         ...data
       }, {
         authorization: `Bearer ${this.props.user.token}`
@@ -157,15 +162,18 @@ export class RoomChat extends Component {
   insertNewMessage = async (message) => {
     const { messages } = this.props
 
-    console.log(message)
+    // let messagesCopy = [...messages]
+
+    let sender = this.returnSenderUser(message.sender_id)
+
     const mappedMessage = {
-      _id: message.id,
+      _id: message._id,
       text: message.message,
       createdAt: message.createdAt,
       user: {
         _id: message.sender_id,
         name: message.sender_name,
-        avatar: message.sender_avatar ? message.sender_avatar : Images.profile_boy
+        avatar: (sender !== null && sender.avatar && sender.avatar.url) ? sender.avatar.url : Images.profile_boy
       },
       Image: message.Image
     }
@@ -175,40 +183,59 @@ export class RoomChat extends Component {
     await this.props.setMessages(updatedMessages)
   }
 
+  returnSenderUser = (senderId) => {
+    const { room } = this.state
+
+    if(senderId === room.organizer.id) {
+      return room.organizer
+    } else if(senderId === room.otherUser.id) {
+      return room.otherUser
+    } else {
+      return null
+    }
+  }
+
   mapMessages = (messages) => {
+    console.log('MESSAGES', messages)
     
     const mappedMessages = messages.map((msg, index) => {
       if(index == 0) {
-        this.setState({ users: [msg.sender.id, msg.receiver.id] })
+        this.setState({ users: [msg.sender_id, msg.receiver_id] })
       }
 
+      let sender = this.returnSenderUser(msg.sender_id)
+
       return {
-        _id: msg.id,
+        _id: msg._id,
         text: msg.message,
         createdAt: msg.createdAt,
         user: {
-          _id: msg.sender.id,
-          name: msg.sender.name,
-          avatar: msg.sender.avatar ? msg.sender.avatar.url : Images.profile_boy
+          _id: msg.sender_id,
+          name: msg.sender_name,
+          avatar: (sender !== null && sender.avatar && sender.avatar.url) ? sender.avatar.url : Images.profile_boy
         },
         Image: msg.Image
       }
     })
 
-    return mappedMessages
+    let messagesNoDuplicated = _.uniqBy(mappedMessages, function (msg) {
+      return msg._id;
+    });
+
+    return messagesNoDuplicated
   }
 
   onSend = async (message) => {
-    console.log(message)
 
     let usersCopy = [...this.state.users]
     const receiverUser =  usersCopy.filter(user => user != this.props.user.id)
 
     const newMessage = {
       message: message[0].text,
-      room_id: this.state.room_id,
+      room_id: this.state.room.id,
       sender_id: message[0].user._id,
-      receiver_id: receiverUser[0]
+      receiver_id: receiverUser[0],
+      room_name: this.state.room.roomName
     }
     
     try {
@@ -216,17 +243,17 @@ export class RoomChat extends Component {
         authorization: `Bearer ${this.props.user.token}`
       })
 
-      const mappedMessage = {
-        _id: data.id,
-        text: data.message,
-        createdAt: data.createdAt,
-        user: {
-          _id: data.sender_id,
-          name: data.sender_name,
-          avatar: data.sender_avatar ? data.sender_avatar : Images.profile_boy
-        },
-        Image: data.Image
-      }
+      // const mappedMessage = {
+      //   _id: data.id,
+      //   text: data.message,
+      //   createdAt: data.createdAt,
+      //   user: {
+      //     _id: data.sender_id,
+      //     name: data.sender_name,
+      //     avatar: data.sender_avatar ? data.sender_avatar : Images.profile_boy
+      //   },
+      //   Image: data.Image
+      // }
 
     } catch (error) {
       this.setShowToast(translate('errorOnSendMessage'))
@@ -273,7 +300,7 @@ export class RoomChat extends Component {
     return (
       <Send {...props}>
         <View style={{ justifyContent: 'center', alignItems: 'center', paddingRight: 10 }}>
-         <Icon size={40} name="send-circle" color={Colors.secondary} />
+         <Icon size={40} name="send-circle" color={Colors.primary} />
         </View>
       </Send>
     );
@@ -282,20 +309,20 @@ export class RoomChat extends Component {
  scrollToBottomComponent = () => {
     return (
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        <Ionicons size={34} name="ios-arrow-down" color={Colors.secondary} />
+        <Ionicons size={34} name="ios-arrow-down" color={Colors.primary} />
       </View>
     );
   }
 
   goBack = () => {
     
-    const newReserve = this.props.navigation.getParam('newReserve', false)
+    // const newReserve = this.props.navigation.getParam('newReserve', false)
 
-    if(newReserve) {
-      this.props.navigation.navigate('MyEventsScreen')
-    } else {
+    // if(newReserve) {
+    //   this.props.navigation.navigate('MyEventsScreen')
+    // } else {
       this.props.navigation.goBack()
-    }
+    // }
   }
 
   goToReserveDetails = () => {
@@ -309,8 +336,8 @@ export class RoomChat extends Component {
       loading,
       showToast,
       toastText,
-      reserveName,
-      reserveStatus,
+      chatName,
+      chatSubInfo,
       reserveImage
      } = this.state
 
@@ -324,7 +351,9 @@ export class RoomChat extends Component {
      '(\\#[-a-z\\d_]*)?$','i')
 
     return (
-      <>        
+      <>
+        <StatusBar translucent backgroundColor={Colors.lightSecondary} barStyle="dark-content"/>
+
         <CustomToast
           show={showToast} 
           text={toastText} 
@@ -349,21 +378,21 @@ export class RoomChat extends Component {
                 )}
 
                 <View>
-                  <ChatTitle>{reserveName}</ChatTitle>
-                  <ChatSubTitle>{reserveStatus}</ChatSubTitle>
+                  <ChatTitle>{chatName}</ChatTitle>
+                  <ChatSubTitle>{chatSubInfo}</ChatSubTitle>
                 </View>
               </ChatInfoContainer>
 
-              {/* <ReserveDetailsButtonContainer>
+              {/* <ChatButtonContainer>
                 <MaterialIcons size={30} name="more-vert" color={Colors.white} />
-              </ReserveDetailsButtonContainer> */}
+              </ChatButtonContainer> */}
               
-              <ReserveDetailsButtonContainer
+              <ChatButtonContainer
                 activeOpacity={0.8}
                 onPress={() => this.goBack()}
               >
-                <Icon size={30} name="close-circle-outline" color={Colors.white} />
-              </ReserveDetailsButtonContainer>
+                <Icon size={25} name="window-close" color={Colors.primary} />
+              </ChatButtonContainer>
             </ChatHeader>
 
             <GiftedChat
@@ -374,6 +403,16 @@ export class RoomChat extends Component {
               locale={this.getLanguageByDevice()}
               placeholder={translate('messageInputLabel')}
               renderSend={this.renderSend}
+              textInputStyle={{}}
+              listViewProps={{
+                style: {
+                  backgroundColor: 'white',
+                  borderBottomLeftRadius: 30,
+                  borderBottomRightRadius: 30,
+                  paddingTop: 20,
+                  marginTop: -20
+                },
+              }}
               scrollToBottom
               scrollToBottomComponent={this.scrollToBottomComponent}
               user={{

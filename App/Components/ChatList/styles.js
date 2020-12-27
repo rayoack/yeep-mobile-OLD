@@ -24,7 +24,7 @@ export const List = styled.FlatList`
 `
 
 export const CardContainer = styled.TouchableOpacity`
-  height: 140px;
+  height: 110px;
   width: ${Dimensions.get('window').width};
   padding: 40px 18px;
   flex-direction: row;

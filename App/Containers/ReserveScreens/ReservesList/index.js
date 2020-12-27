@@ -74,7 +74,6 @@ class ReservesList extends Component {
   }
 
   updateReservesList = (updatedReserve = {}) => {
-    console.log('updatedReserve', updatedReserve)
     const { reserves } = this.state
 
     let reservesCopy = [...reserves]
@@ -117,7 +116,6 @@ class ReservesList extends Component {
     if(!reserves.length) return []
 
     const mappedReserves = reserves.map(reserve => {
-      console.log({reserve})
       let subInfo = ''
       let image = this.getRoomImage(reserve, request_type)
 

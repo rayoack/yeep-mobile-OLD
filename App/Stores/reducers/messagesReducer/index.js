@@ -2,6 +2,7 @@ export const Types = {
     START_CHAT: 'messagesReducer/START_CHAT',
     END_CHAT: 'messagesReducer/END_CHAT',
     SET_MESSAGES: 'messagesReducer/SET_MESSAGES',
+    CLEAR_MESSAGES: 'manageReserveReducer/CLEAR_MESSAGES',
 };
 
 export const Creators = {
@@ -15,6 +16,10 @@ export const Creators = {
     }),
     setMessages: (payload) => ({
       type: Types.SET_MESSAGES,
+      payload
+    }),
+    clearMessages: (payload) => ({
+      type: Types.CLEAR_MESSAGES,
       payload
     }),
 }
@@ -32,6 +37,9 @@ export default function messagesReducer(state = INITIAL_STATE, action) {
                 ...state,
                 messages: action.payload
             }
+
+        case Types.CLEAR_MESSAGES:
+            return INITIAL_STATE
 
         default:
             return state;

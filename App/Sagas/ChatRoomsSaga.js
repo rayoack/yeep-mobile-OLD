@@ -18,7 +18,7 @@ export function* getChatRoomsList({payload}) {
         const request_type = user.role === 'organizer' ? 'organizer' : 'host' ;
         
         const response = yield call([api, 'get'], `/room/${user.id}/${payload}`, { request_type }, { authorization: `Bearer ${user.token}` });
-
+        
         const mappedChatRooms = yield mapChatRooms(response.data, request_type)
         
         if(payload === 1) {
@@ -31,6 +31,7 @@ export function* getChatRoomsList({payload}) {
         
 
      } catch (e) {
+        console.log({e})
         yield put({type: ChatRoomsTypes.SET_CHAT_ROOMS_ERROR, payload: true});
         yield put({type: ChatRoomsTypes.SET_CHAT_ROOMS_LOADING, payload: false});
      }

@@ -115,12 +115,12 @@ export class ReserveForm extends Component {
         loading: false,
       })
       
-      store.dispatch(ManagerReserveActions.setToastText(translate('loadReserveError')))
-      store.dispatch(ManagerReserveActions.setShowToast(true))
+      this.props.setToastText(translate('loadReserveError'))
+      this.props.setShowToast(true)
 
       this.interval = setInterval(() => {
-        store.dispatch(ManagerReserveActions.setToastText(translate('')))
-        store.dispatch(ManagerReserveActions.setShowToast(false))
+        this.props.setToastText(translate(''))
+        this.props.setShowToast(false)
 
         clearInterval(this.interval)
         this.props.navigation.goBack()
@@ -138,7 +138,6 @@ export class ReserveForm extends Component {
       await this.props.setReserveEventId(eventOfReserve.id)
     } else {
       const reserveWithFormatedDates = normalizedDates(reserve)
-      console.log({reserveWithFormatedDates})
       await this.props.setReserveDates(reserveWithFormatedDates.dates)
     }
     
@@ -267,6 +266,7 @@ export class ReserveForm extends Component {
     this.setState({ saveLoading: true })
 
     try {
+      console.log({reserve})
       
       const { data } = await api.post('/reserve', { ...reserve }, {
         authorization: `Bearer ${this.props.user.token}`
@@ -299,12 +299,12 @@ export class ReserveForm extends Component {
   }
 
   setShowToast = (text) => {
-    store.dispatch(ManagerReserveActions.setToastText(text))
-    store.dispatch(ManagerReserveActions.setShowToast(true))
+    this.props.setToastText(text)
+    this.props.setShowToast(true)
 
     this.interval = setInterval(() => {
-      store.dispatch(ManagerReserveActions.setToastText(translate('')))
-      store.dispatch(ManagerReserveActions.setShowToast(false))
+      this.props.setToastText(translate(''))
+      this.props.setShowToast(false)
       clearInterval(this.interval)
     }, 2000);
   }
@@ -425,8 +425,6 @@ export class ReserveForm extends Component {
     
     
     const { reserve, eventOfReserve, spaceOfReserve, isTimePickerVisible, showToast, toastText } = this.props
-
-    console.log({reserve})
 
     return (
       <>

@@ -3,10 +3,11 @@ import { View, Text } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
+import _ from 'lodash'
 import BaseURL from '../Config/BaseURL'
 import { Creators as ChatRoomsActions } from '../Stores/reducers/chatRoomsReducer'
 
-// let socket;
+export let socket = {};
 
 class SocketManager extends Component {
     constructor() {
@@ -14,15 +15,7 @@ class SocketManager extends Component {
         this.state = {
         };
 
-        // socket = io.connect(BaseURL.api,
-        //     {
-        //         forceNode: true,
-        //         query: {
-        //             user_id: user.id
-        //         }
-        //     }
-        // );
-        this.socket = {}
+        // this.socket = {}
     }
 
     init = () => {
@@ -31,9 +24,9 @@ class SocketManager extends Component {
           return null
         }
 
-        if(this.socket.connected && !this.socket.disconnected) return null
-
-        this.socket = io.connect(BaseURL.api,
+        if(socket.connected && !socket.disconnected) return null
+        
+        socket = io.connect(BaseURL.api,
             {
                 forceNode: true,
                 query: {
@@ -41,20 +34,15 @@ class SocketManager extends Component {
                 }
             }
         );
-
+            
+        console.log({socket})
         this.props.getChatRooms(1)
         this.monitoringSocket()
         return null
     }
 
-    componentWillUnmount = () => {
-        if (this.timelineRoom) {
-            this.socket.subscriptions.remove(this.timelineRoom)
-        }
-    }
-
     monitoringSocket = () => {
-        this.socket.on('newMessageToRoom', newMessage => {
+        socket.on('newMessageToRoom', newMessage => {
             console.log('newMessageToRoom', newMessage)
 
             let chatRoomsCopy = [...this.props.chatRooms]
@@ -69,24 +57,26 @@ class SocketManager extends Component {
                 return chatRoom
             })
 
-            this.props.setChatRooms(updatedchatRooms)
+            let orderedChatRoom = _.orderBy(updatedchatRooms, ['updatedAt'],['desc'])
+
+            this.props.setChatRooms(orderedChatRoom)
         });
 
-        this.socket.on('newReserve', newReserve => {
+        socket.on('newReserve', newReserve => {
             // ALTERAR DEVERÁ SER UMA NOVA ROOM PARA HOST
             console.log({newReserve})
         })
 
-        this.socket.on('notification', notification => {
+        socket.on('notification', notification => {
             console.log({notification})
         });
     }
     
     componentWillUnmount = () => {
-        if (this.socket) {
-            this.socket.off('newMessageToRoom')
-            this.socket.off('newReserve')
-            this.socket.off('notification')
+        if (socket) {
+            socket.off('newMessageToRoom')
+            socket.off('newReserve')
+            socket.off('notification')
         }
     }
 

@@ -2,15 +2,17 @@ import React, { Component } from 'react'
 import { View, Dimensions, BackHandler } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Images } from 'App/Theme'
 import * as RNLocalize from "react-native-localize";
 import LinearGradient from 'react-native-linear-gradient';
+
+import { Modal } from 'react-native'
 
 import { Creators as spaceQueriesActions } from '../../../Stores/reducers/spaceQueriesReducer'
 import { translate } from '../../../Locales'
 import countriesList from '../../../Services/countries.json'
 import currenciesList from '../../../Services/currencies.json'
 import spaceCategories from '../../../Services/spaces-categories.json'
+import { Images } from 'App/Theme'
 
 import {
   ScreensHeader,
@@ -143,13 +145,9 @@ export class PlacesFilterScreen extends Component {
     this.props.setSpacePriceMaxQuery(state)
   }
 
-  goBack = () => {
-    this.props.navigation.goBack()
-  }
-
-  navigateToPlacesListScreen = () => {
-    this.props.navigation.push('PlacesListScreen')
-  }
+  // goBack = () => {
+  //   this.props.navigation.goBack()
+  // }
 
   setCountryStates = (countryName) => {
     const actualCountry = countriesList.filter(country => country.name == countryName)
@@ -175,9 +173,9 @@ export class PlacesFilterScreen extends Component {
     return countries
   }
 
-  navigateToPlacesListScreen = () => {
-    this.props.navigation.navigate('PlacesListScreen')
-  }
+  // navigateToPlacesListScreen = () => {
+  //   this.props.navigation.navigate('PlacesListScreen')
+  // }
 
   mapCategories = () => {
     const categoriesMapped = spaceCategories.map(category => {
@@ -208,10 +206,13 @@ export class PlacesFilterScreen extends Component {
     })
 
     return (
-      <>
+      <Modal
+        visible={this.props.filterModalVisible}
+        animationType={'slide'}
+      >
         <Container>
           <ScreensHeader
-            onPress={() => this.goBack()}
+            onPress={() => this.props.closeFilterModal()}
             title={translate('spacesTabLabel')}
           />
 
@@ -330,12 +331,18 @@ export class PlacesFilterScreen extends Component {
         >
           <ButtonWithBackground
             text={translate('searchText')}
-            onPress={() => this.navigateToPlacesListScreen()}/>
+            onPress={() => this.props.goToSpaceResult()}/>
         </SearchButtonContainer>
-      </>
+      </Modal>
     )
   }
 }
+
+PlacesFilterScreen.defaultProps = {
+  filterModalVisible: false,
+  closeFilterModal: () => null,
+  goToSpaceResult: () => null
+};
 
 const mapStateToProps = (state) => ({
   spaceQueries: state.spaceQueriesReducer.queries

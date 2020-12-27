@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { View, Text, BackHandler, Dimensions, TouchableOpacity, StatusBar, Image } from 'react-native'
 
 // import { MAPBOX_KEY } from 'react-native-dotenv'
-import MapboxGL from '@react-native-mapbox-gl/maps'
+// import MapboxGL from '@react-native-mapbox-gl/maps'
 import FastImage from 'react-native-fast-image'
 import { connect } from 'react-redux'
 import Animated from 'react-native-reanimated';
@@ -74,7 +74,7 @@ class PlaceDetailsScreen extends PureComponent {
   }
 
   handleBackButton = () => {
-    this.props.navigation.goBack(null);
+    this.props.navigation.goBack();
     return true;
   }
 
@@ -259,7 +259,7 @@ class PlaceDetailsScreen extends PureComponent {
 
               </PlaceDetailsHeader>
 
-              {space.Images ? (
+              {space.Images && space.Images.length ? (
                 <CarouselContainer>
                   <Carousel
                     data={space.Images}

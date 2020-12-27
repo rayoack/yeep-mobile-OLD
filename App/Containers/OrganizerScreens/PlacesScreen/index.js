@@ -1,13 +1,19 @@
 import React from 'react';
 import { Text, View, Image, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { Creators as spaceQueriesActions } from '../../../Stores/reducers/spaceQueriesReducer';
-import {Images, Colors } from 'App/Theme';
-import { Header, CardWithImage, AnimationLoading, Feedback } from '../../../Components';
-import { translate, toNumber } from '../../../Locales';
 import * as RNLocalize from "react-native-localize";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { BottomModalProvider, useBottomModal } from 'react-native-bottom-modal'
+
+import { translate, toNumber } from '../../../Locales';
 import currencies from '../../../Services/currencies.json';
+
+import { PlacesFilterScreen } from '../../index'
+import { Header, CardWithImage, AnimationLoading, Feedback } from '../../../Components';
+
+import { Creators as spaceQueriesActions } from '../../../Stores/reducers/spaceQueriesReducer';
+
+import {Images, Colors } from 'App/Theme';
 
 import { 
   Category,
@@ -106,11 +112,6 @@ class PlacesScreen extends React.Component {
       this.props.navigation.navigate('PlacesListScreen')
     }
   }
-    
-  navigateToFilters = () => {
-    this.props.clearSpaceQueries();
-    this.props.navigation.navigate('PlacesFilterScreen')
-  }
 
   getCurrencySymbol = (actualCurrency) => {
     const symbol = currencies.filter(currency => {
@@ -161,91 +162,111 @@ class PlacesScreen extends React.Component {
     return mappedSpaces
   }
 
+  navigateToFilters = () => {
+    this.props.clearSpaceQueries();
+    this.setState({ filterModalVisible: true })
+
+    // this.props.navigation.navigate('PlacesFilterScreen')
+  }
+
+  closePlacesFilterModal = () => this.setState({ filterModalVisible: false })
+
+  goToSpaceResult = () => {
+    this.setState({ filterModalVisible: false })
+    this.props.navigation.navigate('PlacesListScreen')
+  }
+
   render() {
     const { categories, spaces, loading } = this.state;
     const { user } = this.props
+
     return (
       <>
-      <Header navigation={this.props.navigation}/>
-      {loading ? (
-        <AnimationLoading
-         loading={loading}
-         />
-      ) : (
-        <>
+        <Header navigation={this.props.navigation}/>
+        
         <ScrollView style={{ backgroundColor: Colors.backgroundGray }}>
           <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
-           <TextImageAdress>
-            {translate('placesScreenTitle')}
+            <TextImageAdress>
+              {translate('placesScreenTitle')}
             </TextImageAdress>
-          <ImageAdress  source={Images.AdressIllustration} />
 
-          <View style={{flexDirection: 'row', marginTop: 20}}>
-          <TouchableFilter onPress={() => this.navigateToFilters()}>
-            <Icon name={'search'} size={30} style={{color: Colors.primary}}/>
-            <TouchableFilterText >
-            {translate('searchSpace')}
-            </TouchableFilterText>
-          </TouchableFilter>
-          </View>
+            <ImageAdress  source={Images.AdressIllustration} />
 
-          <View style={{flexDirection: 'row', flexWrap: 'wrap', marginBottom: 30, marginLeft: 10, alignItems: 'center'}}>
-            {categories.map((category, index) => (  
-              <Category
-                onPress={() => this.navigateToCategory(category)
-              }
-                activeOpacity={0.6}
-                style={{backgroundColor: category.backgroundColor, alignItems: 'center', justifyContent: 'center'}}>
-                <Image style= {{width: 70, height: 70, marginBottom: 10}}source={category.image} />
-                <Text style={{textAlign: 'center', fontSize: 12, color: Colors.white, fontFamily: 'Nunito Regular'}}>
-                  {category.name}
-                </Text>
-              </Category>
-            ))}
-          </View>
+            <View style={{flexDirection: 'row', marginTop: 20}}>
+              <TouchableFilter onPress={() => this.navigateToFilters()}>
+                <Icon name={'search'} size={30} style={{color: Colors.primary}}/>
+                <TouchableFilterText >
+                {translate('searchSpace')}
+                </TouchableFilterText>
+              </TouchableFilter>
+            </View>
 
-          <View style={{width: 350}}>
-          <View style={{marginBottom: 20, marginLeft: 20}}> 
-            <Text style={{fontSize:20, fontFamily: 'Nunito Bold', color: Colors.labelBlack}}>{translate('nearbySpaces')}</Text>
-            <Text style={{fontSize: 15, fontFamily: 'Nunito Regular', color: Colors.textDefault}}>{translate('spaceState')}: {this.props.user.state} </Text>
+            <View style={{flexDirection: 'row', flexWrap: 'wrap', marginBottom: 30, marginLeft: 10, alignItems: 'center'}}>
+              {categories.map((category, index) => (  
+                <Category
+                  onPress={() => this.navigateToCategory(category)
+                }
+                  activeOpacity={0.6}
+                  style={{backgroundColor: category.backgroundColor, alignItems: 'center', justifyContent: 'center'}}>
+                  <Image style= {{width: 70, height: 70, marginBottom: 10}}source={category.image} />
+                  <Text style={{textAlign: 'center', fontSize: 12, color: Colors.white, fontFamily: 'Nunito Regular'}}>
+                    {category.name}
+                  </Text>
+                </Category>
+              ))}
+            </View>
+
+            <View style={{width: 350}}>
+              <View style={{marginBottom: 20, marginLeft: 20}}> 
+                <Text style={{fontSize:20, fontFamily: 'Nunito Bold', color: Colors.labelBlack}}>{translate('nearbySpaces')}</Text>
+                <Text style={{fontSize: 15, fontFamily: 'Nunito Regular', color: Colors.textDefault}}>{translate('spaceState')}: {this.props.user.state} </Text>
+              </View>
+
+              {loading ? (
+                <AnimationLoading
+                  loading={loading}
+                />
+              ) : (
+                <CardList
+                  data={spaces}
+                  onRefresh={() => this.loadSpaces()}
+                  refreshing={false}
+                  renderItem = {({item}) => (
+                    <CardWithImage
+                      item={item} 
+                      activeImageIndex={this.state.activeImageIndex} 
+                      onCardPress={this.goToPlaceDetails}
+                      onSnapToItem={this.onSnapToItem}
+                    />
+                  )}
+                  ListHeaderComponent={() => (
+                    <HeaderContainer>
+                      <ListTitle>
+                        {this.state.feedbackType != 'error' ?
+                        `${translate('spacesInTitle')}  ${user.state}`
+                        : ''
+                      }
+                      </ListTitle>
+                    </HeaderContainer>
+                  )}
+                  ListEmptyComponent={() => {
+                    return (
+                      <Feedback feedbackType={this.state.feedbackType} />
+                    )}}
+                />
+              )}
+            </View>
           </View>
-        <CardList
-          data={spaces}
-          onRefresh={() => this.loadSpaces()}
-          refreshing={false}
-          renderItem = {({item}) => (
-          <CardWithImage
-          item={item} 
-          activeImageIndex={this.state.activeImageIndex} 
-          onCardPress={this.goToPlaceDetails}
-          onSnapToItem={this.onSnapToItem}
-          />
-          )}
-          ListHeaderComponent={() => (
-            <HeaderContainer>
-              <ListTitle>
-                {this.state.feedbackType != 'error' ?
-                `${translate('spacesInTitle')}  ${user.state}`
-                : ''
-              }
-              </ListTitle>
-            </HeaderContainer>
-          )}
-          ListEmptyComponent={() => {
-            return (
-              <Feedback feedbackType={this.state.feedbackType} />
-            )
-          }}
-        />  
-      </View>
-    </View>
-  </ScrollView>
-  </>
-        )}
-        </>
-     )
-   }
-}
+        </ScrollView>
+
+        <PlacesFilterScreen
+          filterModalVisible={this.state.filterModalVisible}
+          closeFilterModal={() => this.closePlacesFilterModal()}
+          goToSpaceResult={() => this.goToSpaceResult()}
+        />
+      </>
+    )
+  }}
 
 PlacesScreen.propTypes = {
 }

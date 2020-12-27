@@ -8,7 +8,7 @@ export const Container = styled.View`
 `;
 
 export const ChatHeader = styled.View`
-  height: 60px;
+  height: 120px;
   width: ${Dimensions.get('window').width};
   padding: 20px;
   flex-direction: row;
@@ -16,7 +16,7 @@ export const ChatHeader = styled.View`
   justify-content: space-between;
   border-bottom-width: 1px;
   border-bottom-color: ${Colors.ligthGray};
-  background-color: ${Colors.secondary};
+  background-color: ${Colors.lightSecondary};
 `
 
 export const ChatInfoContainer = styled.TouchableOpacity`
@@ -35,21 +35,22 @@ export const ChatImage = styled(FastImage)`
 export const ChatTitle = styled.Text`
   width: 200px;
   font-size: 15px;
-  font-family: 'Nunito Semi Bold';
-  color: ${Colors.white};
+  font-family: 'Nunito Bold';
+  color: ${Colors.labelGray};
 `
 
 export const ChatSubTitle = styled.Text`
   width: 200px;
   font-size: 12px;
-  font-family: 'Nunito Regular';
-  color: ${Colors.white};
+  font-family: 'Nunito Semi Bold';
+  color: ${Colors.primary};
 `
 
-export const ReserveDetailsButtonContainer = styled.TouchableOpacity`
+export const ChatButtonContainer = styled.TouchableOpacity`
     height: 40px;
     width: 40px;
     align-items: center;
     justify-content: center;
-
+    background-color: ${Colors.white};
+    border-radius: 20px;
 `

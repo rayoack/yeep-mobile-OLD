@@ -24,5 +24,5 @@ export const HeaderTitle = styled.Text`
   text-align: right;
   font-size: 30px;
   font-family: 'Nunito Semi Bold';
-  color: ${Colors.labelBlack};
+  color: ${Colors.primary};
 `

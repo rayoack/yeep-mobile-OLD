@@ -15,7 +15,7 @@ export const Container = styled.View`
   shadow-color: #000;
   shadow-opacity: 0.1;
   shadow-radius: 0;
-  border-radius: 40px;
+  border-radius: 20px;
   align-items: center;
   justify-content: center;
   /* border-top-left-radius: 40px;
