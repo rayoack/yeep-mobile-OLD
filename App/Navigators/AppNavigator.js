@@ -45,6 +45,7 @@ import {
   HostScheduleScreen,
   // RESERVES
   ReservesList,
+  ReserveDetails,
   // CHAT
   RoomChat,
 } from '../Containers'
@@ -234,6 +235,7 @@ const StackNavigator = createStackNavigator(
     MyEventsSelectScreen: { screen: MyEventsSelectScreen },
     ReserveForm: { screen: ReserveForm },
     ReservesList: { screen: ReservesList },
+    ReserveDetails: { screen: ReserveDetails },
     RoomChat: { screen: RoomChat },
     ProfileScreen: { screen: ProfileScreen },
     AccountsScreen: { screen: AccountsScreen },

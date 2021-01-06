@@ -33,6 +33,7 @@ import RoomChat from './RoomChat'
 
 // RESERVES
 import ReservesList from './ReserveScreens/ReservesList'
+import ReserveDetails from './ReserveScreens/ReserveDetails'
 
 // USER
 import ProfileScreen from './User/ProfileScreen'
@@ -87,4 +88,5 @@ export {
 
   // RESERVES
   ReservesList,
+  ReserveDetails,
 }

@@ -162,8 +162,6 @@ export class RoomChat extends Component {
   insertNewMessage = async (message) => {
     const { messages } = this.props
 
-    // let messagesCopy = [...messages]
-
     let sender = this.returnSenderUser(message.sender_id)
 
     const mappedMessage = {
@@ -278,7 +276,7 @@ export class RoomChat extends Component {
         {...props}
         textStyle={{
           left: {
-            color: Colors.text,
+            color: Colors.white,
           },
           right: {
             color: 'white',
@@ -286,7 +284,7 @@ export class RoomChat extends Component {
         }}
         wrapperStyle={{
           left: {
-            backgroundColor: Colors.ligthGray,
+            backgroundColor: Colors.secondary,
           },
           right: {
             backgroundColor: Colors.saintBlue,
@@ -326,7 +324,7 @@ export class RoomChat extends Component {
   }
 
   goToReserveDetails = () => {
-    this.props.navigation.push('ReserveForm', {
+    this.props.navigation.push('ReserveDetails', {
       reserveId: this.state.room_id
     })
   }
