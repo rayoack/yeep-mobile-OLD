@@ -36,7 +36,7 @@
     "appcenter": "3.0.3",
     "appcenter-analytics": "3.0.3",
     "appcenter-crashes": "3.0.3",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "date-fns": "^2.13.0",
     "dayjs": "^1.8.28",
     "formik": "^2.1.4",
