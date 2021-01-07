@@ -18,7 +18,10 @@ import {
     SpaceImageNoFastImage,
     BoxContainerText,
     BoxContainerDescriptionLabel,
-    BoxContainerDescriptionValue
+    BoxContainerDescriptionValue,
+    UserProfilePicture,
+    UserProfilePictureNoFastImage,
+    BubbleImage
 } from './styles'
 
 export class ReserveDetails extends Component {
@@ -26,7 +29,8 @@ export class ReserveDetails extends Component {
         super(props)
         this.state = {
             loading: false,
-            reserve: null
+            reserve: null,
+            otherUser: null
         }
     }
 
@@ -44,12 +48,12 @@ export class ReserveDetails extends Component {
                 authorization: `Bearer ${this.props.user.token}`
             })
 
-            console.log({data})
-
             this.setState({
                 loading: false,
                 reserve: data
             })
+
+            this.setOtherUser()
 
         } catch (error) {
             console.log({error})
@@ -57,8 +61,31 @@ export class ReserveDetails extends Component {
         }
     }
 
-    render() {
+    setOtherUser = () => {
         const { reserve } = this.state
+        const { user } = this.props
+
+        console.log({reserve})
+
+        if(user.id !== reserve.organizer.id) {
+            let otherUserData = {
+                role: 'organizer',
+                ...reserve.organizer
+            }
+
+            this.setState({ otherUser: otherUserData })
+        } else {
+            let otherUserData = {
+                role: 'owner',
+                ...reserve.host
+            }
+
+            this.setState({ otherUser: otherUserData })
+        }
+    }
+
+    render() {
+        const { reserve, otherUser } = this.state
 
         return (
             <>
@@ -118,6 +145,44 @@ export class ReserveDetails extends Component {
                                 <BoxContainerText>{translate('noDateEventsLabel')}</BoxContainerText>
                             )}
                         </BoxContainer>
+
+                        {/* ORGANIZER OR HOST INFORMATION */}
+                        {otherUser ? (
+                            <>
+
+                                <BoxContainer>
+                                    <BoxContainerTitle style={{ marginBottom: 20 }}>{translate(otherUser.role)}</BoxContainerTitle>
+                                    
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <View style={{
+                                            width: '50%',
+                                            borderRightWidth: 1,
+                                            borderRightColor: Colors.ligthGray,
+                                            alignItems: 'center'
+                                        }}>
+                                            {otherUser.avatar && otherUser.avatar.url ? (
+                                                <UserProfilePicture source={{ uri: otherUser.avatar.url }}/>
+                                            ) : (
+                                                <UserProfilePictureNoFastImage source={Images.profile_boy}/>
+                                            )}
+
+                                            <Text style={{ fontSize: 18, fontFamily: 'Nunito Regular' }}>{otherUser.name}</Text>
+                                        </View>
+
+                                        <View style={{
+                                            width: '50%',
+                                            alignItems: 'center'
+                                        }}>
+                                            <BubbleImage source={Images.conversation_bubble}/>
+
+                                            <Text style={{ fontSize: 18, fontFamily: 'Nunito Regular' }}>{translate('sendMessage')}</Text>
+                                        </View>
+                                    </View>
+
+                                </BoxContainer>
+                            </>
+                        ) : null}
+
                     </Container>
                 ) : null}
             </>

@@ -214,6 +214,7 @@ export default {
   spaceBottomModalTitle: 'Do you want to link the reservation of this space to any of your events?',
   yesKey: 'Yes',
   noKey: 'No',
+  sendMessage: 'Send message',
 
   // Organizer
   selectEventInfo: 'Only events with dates will appear in the list.',

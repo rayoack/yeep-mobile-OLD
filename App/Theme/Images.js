@@ -66,6 +66,7 @@ export default {
   push_rectangle: require('App/Assets/Images/push_rectangle.png'),
   conversation_active: require('App/Assets/Images/conversation-active.png'),
   conversation_inactive: require('App/Assets/Images/conversation-inactive.png'),
+  conversation_bubble: require('App/Assets/Images/speech-bubble.png'),
 
   // SPACE FEATURES ICONS
   allowsLoudSound: require('App/Assets/Images/allowsLoudSound.png'),

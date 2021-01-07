@@ -47,3 +47,23 @@ export const SpaceImageNoFastImage = styled.Image`
     height: 165px;
     margin-bottom: 10px;
 `
+
+export const UserProfilePictureNoFastImage = styled.Image`
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    margin-bottom: 10px;
+`
+
+export const UserProfilePicture = styled(FastImage)`
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    margin-bottom: 10px;
+`
+
+export const BubbleImage = styled.Image`
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+`

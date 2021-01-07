@@ -216,6 +216,7 @@ export default {
   spaceBottomModalTitle: 'Quer vincular a reserva desse espaço há algum dos seus eventos?',
   yesKey: 'Sim',
   noKey: 'Não',
+  sendMessage: 'Enviar mensagem',
 
   // Organizer
   selectEventInfo: 'Somente eventos com datas aparecerão na lista.',
@@ -326,7 +327,6 @@ export default {
   viewLessRestrictions: 'Mostrar menos restrições',
   amenitiesTitle: 'Comodidades',
   restrictionsTitle: 'Restrições',
-  owner: 'Proprietário',
   capacity: 'Capacidade para',
   people: 'pessoas',
   spacesInTitle: 'Espaços em',
