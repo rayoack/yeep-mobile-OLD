@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { NavigationActions } from 'react-navigation';
 
 import { format, parseISO, isBefore, isAfter, parse } from 'date-fns';
+import isValid from 'date-fns/isValid'
 import setHours from 'date-fns/setHours'
 import setMinutes from 'date-fns/setMinutes'
 import setSeconds from 'date-fns/setSeconds'
@@ -40,6 +41,21 @@ export const normalizedDates = (dataToNormalize) => {
   })
 
   return dataToNormalizeCopy
+}
+
+export const normalizeOneDate = (date) => {
+  const locales = { enUS, ptBR }
+  const userLocal = getLanguageToDateFNS()
+
+  if(!isValid(date)) return ''
+
+  console.log({date})
+
+  let formatedDate = format(date, `hh:mm, PPPP`, {
+    locale: locales.hasOwnProperty(userLocal) ? locales[userLocal] : locales['enUS']
+  })
+
+  return formatedDate
 }
 
 let actualNavigation

@@ -67,6 +67,8 @@ export default {
   conversation_active: require('App/Assets/Images/conversation-active.png'),
   conversation_inactive: require('App/Assets/Images/conversation-inactive.png'),
   conversation_bubble: require('App/Assets/Images/speech-bubble.png'),
+  calendar_cancel: require('App/Assets/Images/calendar_cancel.png'),
+  calendar_edit: require('App/Assets/Images/calendar_edit.png'),
 
   // SPACE FEATURES ICONS
   allowsLoudSound: require('App/Assets/Images/allowsLoudSound.png'),

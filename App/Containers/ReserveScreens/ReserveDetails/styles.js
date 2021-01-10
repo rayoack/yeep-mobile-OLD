@@ -67,3 +67,23 @@ export const BubbleImage = styled.Image`
     height: 100px;
     margin-bottom: 10px;
 `
+
+export const MoreInfoButton = styled.TouchableOpacity`
+    height: 50px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom-width: 1px;
+    border-bottom-color: ${Colors.ligthGray};
+`
+
+export const MoreInfoIcon = styled.Image`
+    height: 30px;
+    width: 30px;
+`
+
+export const PriceInfoContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+`

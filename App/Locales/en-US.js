@@ -215,6 +215,11 @@ export default {
   yesKey: 'Yes',
   noKey: 'No',
   sendMessage: 'Send message',
+  moreInformations: 'More Information',
+  cancelationUntilText: 'Free cancellation until May',
+  changeReservationText: 'Change reservation',
+  cancelReservationText: 'Cancel reservation',
+  paymentInformationText: 'Payment Information',
 
   // Organizer
   selectEventInfo: 'Only events with dates will appear in the list.',

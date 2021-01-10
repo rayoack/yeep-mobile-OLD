@@ -2,10 +2,16 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { format, parseISO } from 'date-fns';
+import subDays from 'date-fns/subDays'
+import isValid from 'date-fns/isValid'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import api from '../../../Services/api'
-import { translate } from '../../../Locales'
+import { translate, toNumber } from '../../../Locales'
 import { Images, Colors } from 'App/Theme'
+import { normalizeOneDate } from '../../../Services/datesHelpers'
+import currencies from '../../../Services/currencies.json'
 import {
     HeaderWithBackButton
 } from '../../../Components'
@@ -21,7 +27,10 @@ import {
     BoxContainerDescriptionValue,
     UserProfilePicture,
     UserProfilePictureNoFastImage,
-    BubbleImage
+    BubbleImage,
+    MoreInfoButton,
+    MoreInfoIcon,
+    PriceInfoContainer
 } from './styles'
 
 export class ReserveDetails extends Component {
@@ -30,7 +39,9 @@ export class ReserveDetails extends Component {
         this.state = {
             loading: false,
             reserve: null,
-            otherUser: null
+            otherUser: null,
+            cancellationUntilDay: '',
+            bookingAmountMoreFeeTax: 0
         }
     }
 
@@ -54,6 +65,8 @@ export class ReserveDetails extends Component {
             })
 
             this.setOtherUser()
+            this.getCancellationDay()
+            this.getValueTotalOfReservationWithFeeTax()
 
         } catch (error) {
             console.log({error})
@@ -84,8 +97,41 @@ export class ReserveDetails extends Component {
         }
     }
 
+    getCancellationDay = () => {
+        const { reserve } = this.state
+
+        if(isValid(parseISO(reserve.dates[0].full_date))) {
+            const dayUntilCancellation = subDays(parseISO(reserve.dates[0].full_date), reserve.Space.days_before_cancellation)
+
+            const formattedDate = normalizeOneDate(dayUntilCancellation);
+            this.setState({ cancellationUntilDay: formattedDate })
+        }
+
+        return null
+    }
+    
+    getCurrencySymbol = (actualCurrency) => {
+        const symbol = currencies.filter(currency => {
+            if(currency.value == actualCurrency) {
+                return currency
+            }
+        })
+        
+        return symbol[0].symbol
+    }
+
+    getValueTotalOfReservationWithFeeTax = () => {
+        const { reserve } = this.state
+
+        const bookingFee = reserve.amount * 0.03
+        const bookingAmountMoreFeeTax = parseInt(reserve.amount) + bookingFee
+
+        this.setState({ bookingAmountMoreFeeTax })
+    }
+
     render() {
-        const { reserve, otherUser } = this.state
+        const { reserve, otherUser, cancellationUntilDay, bookingAmountMoreFeeTax } = this.state
+        const { user } = this.props
 
         return (
             <>
@@ -183,6 +229,123 @@ export class ReserveDetails extends Component {
                             </>
                         ) : null}
 
+                        {/* MORE INFO */}
+                        <BoxContainer>
+                            <BoxContainerTitle>{translate('moreInformations')}</BoxContainerTitle>
+
+                            <BoxContainerText style={{ marginBottom: 20 }}>{`${translate('cancelationUntilText')} ${cancellationUntilDay}`}</BoxContainerText>
+                        
+                            {user && user.role !== 'owner' ? (
+                                <MoreInfoButton onPress={() => null}>
+                                    <MoreInfoIcon source={Images.calendar_edit}/>
+
+                                    <Text style={{ fontSize: 18, fontFamily: 'Nunito Regular' }}>{translate('changeReservationText')}</Text>
+                                
+                                    <Icon name="keyboard-arrow-right" size={20} color={Colors.textDefault}/>   
+                                </MoreInfoButton>
+                            ) : null}
+                        
+                            <MoreInfoButton onPress={() => null}>
+                                <MoreInfoIcon source={Images.calendar_cancel}/>
+
+                                <Text style={{ fontSize: 18, fontFamily: 'Nunito Regular' }}>{translate('cancelReservationText')}</Text>
+                            
+                                <Icon name="keyboard-arrow-right" size={20} color={Colors.textDefault}/>   
+                            </MoreInfoButton>
+                        </BoxContainer>
+
+                        {/* PAYMENT INFORMATION */}
+                        <BoxContainer>
+                            <BoxContainerTitle style={{ marginBottom: 20 }}>{translate('paymentInformationText')}</BoxContainerTitle>
+
+                            <PriceInfoContainer>
+                                <Text
+                                    style={{
+                                        fontColor: Colors.textDefault,
+                                        fontFamily: 'Nunito Regular',
+                                        fontSize: 14
+                                    }}
+                                >
+                                    {translate('chargeType')}
+                                </Text>
+
+                                <Text
+                                    style={{
+                                        fontColor: Colors.textDefault,
+                                        fontFamily: 'Nunito Regular',
+                                        fontSize: 14
+                                    }}
+                                >
+                                    {translate(reserve.Space.charge_type)}
+                                </Text>
+                            </PriceInfoContainer>
+
+                            <PriceInfoContainer>
+                                <Text
+                                    style={{
+                                        fontColor: Colors.textDefault,
+                                        fontFamily: 'Nunito Regular',
+                                        fontSize: 14
+                                    }}
+                                >
+                                    {translate('quantity')}
+                                </Text>
+
+                                <Text
+                                    style={{
+                                        fontColor: Colors.textDefault,
+                                        fontFamily: 'Nunito Regular',
+                                        fontSize: 14
+                                    }}
+                                >
+                                    {`${reserve.quantity} ${translate(reserve.Space.charge_type == 'perDay' ? 'daysText' : 'hoursText')}`}
+                                </Text>
+                            </PriceInfoContainer>
+                            
+                            <PriceInfoContainer>
+                                <Text
+                                    style={{
+                                        fontColor: Colors.textDefault,
+                                        fontFamily: 'Nunito Regular',
+                                        fontSize: 14
+                                    }}
+                                >
+                                    {translate('serviceChargeLabel')}
+                                </Text>
+
+                                <Text
+                                    style={{
+                                        fontColor: Colors.textDefault,
+                                        fontFamily: 'Nunito Regular',
+                                        fontSize: 14
+                                    }}
+                                >
+                                    {`${this.getCurrencySymbol(reserve.Space.monetary_unit)}${toNumber(reserve.amount * 0.03)}`}
+                                </Text>
+                            </PriceInfoContainer>
+                            
+                            <PriceInfoContainer>
+                                <Text
+                                    style={{
+                                        fontColor: Colors.textDefault,
+                                        fontFamily: 'Nunito Bold',
+                                        fontSize: 20
+                                    }}
+                                >
+                                    {`${translate('totalLabel')} (${reserve.Space.monetary_unit})`}
+                                </Text>
+
+                                <Text
+                                    style={{
+                                        fontColor: Colors.textDefault,
+                                        fontFamily: 'Nunito Bold',
+                                        fontSize: 20
+                                    }}
+                                >
+                                    {`${this.getCurrencySymbol(reserve.Space.monetary_unit)}${toNumber(bookingAmountMoreFeeTax)}`}
+                                </Text>
+                            </PriceInfoContainer>
+                        </BoxContainer>
                     </Container>
                 ) : null}
             </>
