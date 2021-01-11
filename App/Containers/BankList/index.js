@@ -36,7 +36,7 @@ class BankList extends Component {
             const { data } = await api.post('/payments/access-token', {}, {
                 authorization: `Bearer ${this.props.user.token}`
             })
-            console.log({data})
+            
             let config = {
                 headers: {
                     'Content-Type': 'application/json',

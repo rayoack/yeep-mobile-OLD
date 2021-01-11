@@ -177,6 +177,23 @@ const HostNavigator = createBottomTabNavigator(
         title: translate('hostScheduleTabLabel')
       }
     },
+    ChatListScreen: {
+      screen: ChatListScreen,
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => {
+          return (
+            <>
+              {focused ? (
+                <Image style={{ height: 25, width: 25 }} source={Images.conversation_active}/>
+              ) : (
+                <Image style={{ height: 25, width: 25 }} source={Images.conversation_inactive}/>
+              )}
+            </>
+          )
+        },
+        title: translate('messagesTabLabel')
+      }
+    },
   },
   {
     initialRouteName: 'MyPlacesScreen',

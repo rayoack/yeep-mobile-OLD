@@ -87,3 +87,11 @@ export const PriceInfoContainer = styled.View`
   justify-content: space-between;
   margin-bottom: 10px;
 `
+
+export const BottomButton = styled.TouchableOpacity`
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    background-color: ${Colors.primary};
+    border-radius: 5px;
+`

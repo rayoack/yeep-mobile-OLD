@@ -33,8 +33,6 @@ export const mapChatRooms = (chatRooms = [], request_type = 'organizer') => {
       }
   })
 
-  console.log({mappedChatRooms})
-
   return _.orderBy(mappedChatRooms, ['updatedAt'],['desc'])
 }
 

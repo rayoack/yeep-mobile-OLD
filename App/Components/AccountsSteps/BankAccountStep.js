@@ -32,7 +32,6 @@ const BankAccountStep = ({
 }) => {
     
     const { bank_number, agency_number, account_number, account_complement_number, account_type } = bank
-    console.log({bank})
 
     const navigateToBankList = (setFieldValue) => {
         navigation.push('BankList', {

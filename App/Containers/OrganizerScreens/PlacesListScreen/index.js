@@ -82,8 +82,6 @@ export class PlacesListScreen extends Component {
     const { queries } = this.props
 
     const mappedFilters = this.mapQueries(queries);
-    
-    console.log({mappedFilters})
 
     this.setState({ loading: true, activeFilters: mappedFilters })
 
@@ -92,7 +90,7 @@ export class PlacesListScreen extends Component {
         authorization: `Bearer ${this.props.user.token}`
       })
       const mappedSpaces = this.mapSpaces(data)
-       console.log(mappedSpaces)
+      
       this.setState({
         spaces: mappedSpaces,
         loading: false,

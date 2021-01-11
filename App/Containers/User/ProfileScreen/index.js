@@ -61,7 +61,6 @@ const ProfileScreen = ({
             setBalance(`${getCurrencySymbol(user.monetary_unit)} ${toNumber(data.balance)}`)
             setLoadingBalance(false)
         } catch (error) {
-            console.log(error.response.data)
             if(error.response.status == 404 &&
                 user.role !== 'organizer' &&
                 (error.response.data.type == 'accountNotFound' ||

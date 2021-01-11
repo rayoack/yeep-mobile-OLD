@@ -93,8 +93,7 @@ const UploadDocumentScreen = ({
       })
           
       const response = await axios.post(`${junoUrlBase}/documents/${documentToUpload.id}/files`, formData, config)
-  
-      console.log({response})
+
       setLoading(false)
       navigation.goBack()
       

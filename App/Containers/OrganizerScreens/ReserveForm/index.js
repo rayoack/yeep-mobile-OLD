@@ -266,7 +266,6 @@ export class ReserveForm extends Component {
     this.setState({ saveLoading: true })
 
     try {
-      console.log({reserve})
       
       const { data } = await api.post('/reserve', { ...reserve }, {
         authorization: `Bearer ${this.props.user.token}`

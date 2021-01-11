@@ -104,7 +104,6 @@ class PlacesScreen extends React.Component {
   }
  
   navigateToCategory = (category) => {
-    console.log(this.props.setSpaceCategoryQuery)
     if(this.props.user && this.props.user.state && this.props.user.country) {
       this.props.setSpaceCategoryQuery(category.value)
       this.props.setSpaceStateQuery(this.props.user.state)

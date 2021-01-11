@@ -62,6 +62,7 @@ class PlaceDetailsScreen extends PureComponent {
       isModalOpen: false,
       amenitiesButtonText: translate('viewMoreAmenities'),
       restrictionsButtonText: translate('viewMoreRestrictions'),
+      comingReserveDetails: false
     }
     this.sheetRef = React.createRef();
   }
@@ -80,8 +81,9 @@ class PlaceDetailsScreen extends PureComponent {
 
   fetchSpaceDetails = async () => {
     const id = this.props.navigation.getParam('space_id', null)
+    let comingReserveDetails = this.props.navigation.getParam('comingReserveDetails', false)
 
-    this.setState({ loading: true })
+    this.setState({ loading: true, comingReserveDetails })
 
     try {
       const { data } = await api.get(`/space/${id}`, {}, {
@@ -236,7 +238,14 @@ class PlaceDetailsScreen extends PureComponent {
   setButtonRestrictionsText = (text) => this.setState({ restrictionsButtonText: text })
 
   render() {
-    const { space, activeImageIndex, isModalOpen, amenitiesButtonText, restrictionsButtonText } = this.state
+    const {
+      space,
+      activeImageIndex,
+      isModalOpen,
+      amenitiesButtonText,
+      restrictionsButtonText,
+      comingReserveDetails
+    } = this.state
 
     return (
       <>
@@ -454,30 +463,32 @@ class PlaceDetailsScreen extends PureComponent {
               </Container>
             </ScrollContainer>
 
-            <FooterContainer>
-              <PlaceText
-                fontColor={Colors.labelBlack}
-                fontFamily={'Nunito Bold'}
-                fontSize={'15px'}
-              >
-                {`${getCurrencySymbol(space.monetary_unit)}${toNumber(space.price)} / ${translate(space.charge_type)}`}
-              </PlaceText>
-
-              <CheckButton
-                activeOpacity={0.8}
-                onPress={() => this.sheetRef.current.snapTo(0)}
-              >
+            {!comingReserveDetails ? (
+              <FooterContainer>
                 <PlaceText
-                  fontColor={Colors.white}
+                  fontColor={Colors.labelBlack}
                   fontFamily={'Nunito Bold'}
-                  fontSize={'12px'}
-                  textAlign={'center'}
+                  fontSize={'15px'}
                 >
-                  {translate('checkAvailability')}
+                  {`${getCurrencySymbol(space.monetary_unit)}${toNumber(space.price)} / ${translate(space.charge_type)}`}
                 </PlaceText>
-              </CheckButton>
-              
-            </FooterContainer>
+
+                <CheckButton
+                  activeOpacity={0.8}
+                  onPress={() => this.sheetRef.current.snapTo(0)}
+                >
+                  <PlaceText
+                    fontColor={Colors.white}
+                    fontFamily={'Nunito Bold'}
+                    fontSize={'12px'}
+                    textAlign={'center'}
+                  >
+                    {translate('checkAvailability')}
+                  </PlaceText>
+                </CheckButton>
+                
+              </FooterContainer>
+            ) : null}
           </>
         ) : (
           <>

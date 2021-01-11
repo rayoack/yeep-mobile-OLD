@@ -30,6 +30,9 @@ export default {
   conversationIllustration: require('App/Assets/Images/conversation-feedback.png'),
   AdressIllustration: require('App/Assets/Images/Address-pana.png'),
   profile_interface: require('App/Assets/Images/profile_interface.png'),
+  success_reaction: require('App/Assets/Images/success_reaction.png'),
+  covid_mask: require('App/Assets/Images/covid_mask.png'),
+  opened_event: require('App/Assets/Images/opened_event.png'),
 
   // ANIMATIONS
   editing_animation: require('App/Assets/Images/editing-animation.json'),

@@ -43,7 +43,6 @@ class SocketManager extends Component {
 
     monitoringSocket = () => {
         socket.on('newMessageToRoom', newMessage => {
-            console.log('newMessageToRoom', newMessage)
 
             let chatRoomsCopy = [...this.props.chatRooms]
 

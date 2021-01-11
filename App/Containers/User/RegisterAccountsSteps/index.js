@@ -108,8 +108,6 @@ export class RegisterAccountsSteps extends Component {
                     authorization: `Bearer ${this.props.user.token}`
                 })
 
-                console.log({data})
-
                 if(data && data.juno_id) {
                     this.props.setJunoForm(data)
                 }

@@ -8,6 +8,7 @@ import { mapChatRooms } from '../Services/chatRooms'
 
 export function* getChatRoomsList({payload}) {
     try {
+        console.log('okkkk')
         yield put({type: ChatRoomsTypes.SET_CHAT_ROOMS_LOADING, payload: true});
 
         const state = store.getState();
@@ -20,6 +21,8 @@ export function* getChatRoomsList({payload}) {
         const response = yield call([api, 'get'], `/room/${user.id}/${payload}`, { request_type }, { authorization: `Bearer ${user.token}` });
         
         const mappedChatRooms = yield mapChatRooms(response.data, request_type)
+
+        console.log({mappedChatRooms})
         
         if(payload === 1) {
             yield put({type: ChatRoomsTypes.SET_CHAT_ROOMS, payload: mappedChatRooms});

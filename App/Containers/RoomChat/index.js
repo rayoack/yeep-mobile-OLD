@@ -194,7 +194,6 @@ export class RoomChat extends Component {
   }
 
   mapMessages = (messages) => {
-    console.log('MESSAGES', messages)
     
     const mappedMessages = messages.map((msg, index) => {
       if(index == 0) {

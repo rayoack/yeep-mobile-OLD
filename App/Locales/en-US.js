@@ -220,6 +220,7 @@ export default {
   changeReservationText: 'Change reservation',
   cancelReservationText: 'Cancel reservation',
   paymentInformationText: 'Payment Information',
+  authorizePayment: 'Authorize Payment',
 
   // Organizer
   selectEventInfo: 'Only events with dates will appear in the list.',

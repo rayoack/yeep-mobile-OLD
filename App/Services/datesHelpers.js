@@ -49,8 +49,6 @@ export const normalizeOneDate = (date) => {
 
   if(!isValid(date)) return ''
 
-  console.log({date})
-
   let formatedDate = format(date, `hh:mm, PPPP`, {
     locale: locales.hasOwnProperty(userLocal) ? locales[userLocal] : locales['enUS']
   })

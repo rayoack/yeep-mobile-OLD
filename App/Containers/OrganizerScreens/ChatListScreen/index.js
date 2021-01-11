@@ -33,7 +33,6 @@ class ChatListScreen extends Component {
     render() {
         const { chatRooms, chatRoomsLoading } = this.props
 
-        console.log({chatRoomsLoading})
         return (
             <Container>
                 <TitleContainer>

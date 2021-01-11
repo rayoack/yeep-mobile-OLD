@@ -222,6 +222,7 @@ export default {
   changeReservationText: 'Alterar reserva',
   cancelReservationText: 'Cancelar reserva',
   paymentInformationText: 'Informações de pagamento',
+  authorizePayment: 'Autorizar pagamento',
 
   // Organizer
   selectEventInfo: 'Somente eventos com datas aparecerão na lista.',
