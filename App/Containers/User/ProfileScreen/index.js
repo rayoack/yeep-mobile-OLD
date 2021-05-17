@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
+
+import { Creators as ChatRoomsActions } from '../../../Stores/reducers/chatRoomsReducer'
+
 import api from '../../../Services/api'
 import currencies from '../../../Services/currencies.json'
 import { Creators as AuthActions } from '../../../Stores/reducers/auth'
@@ -32,6 +35,7 @@ const ProfileScreen = ({
     user,
     setSignOut,
     signOutRequest,
+    cleanChatRooms,
     navigation
 }) => {
 
@@ -75,6 +79,7 @@ const ProfileScreen = ({
     const logout = async () => {
         await signOutRequest()
         await setSignOut()
+        await cleanChatRooms()
         navigation.navigate('AccessScreen');
     }
 
@@ -196,6 +201,7 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   {
-    ...AuthActions
+    ...AuthActions,
+    ...ChatRoomsActions
   }
 )(ProfileScreen)

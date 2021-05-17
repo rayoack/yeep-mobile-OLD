@@ -1,12 +1,12 @@
 //STAGING
-const BaseURL = {
-  api: 'https://klub-web.herokuapp.com'
-}
+// const BaseURL = {
+//   api: 'https://klub-web.herokuapp.com'
+// }
 
 //  LOCAL
-// const BaseURL = {
-//   api: 'https://230a449844da.ngrok.io'
-// }
+const BaseURL = {
+  api: 'https://8e18f253ba4f.ngrok.io'
+}
 
 
 // PRODUCTION

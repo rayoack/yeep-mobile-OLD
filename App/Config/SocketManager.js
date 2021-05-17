@@ -19,7 +19,7 @@ class SocketManager extends Component {
     }
 
     init = () => {
-        if (this.props.user == null) {
+        if (!this.props.user) {
           this.props.cleanChatRooms()
           return null
         }
